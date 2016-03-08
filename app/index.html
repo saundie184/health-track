@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Health Track</title>
+
+    <!-- Angular Material -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+  </head>
+
+  <body ng-app='templateApp' ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+          <!-- <md-icon md-svg-icon="img/icons/menu.svg"></md-icon> -->
+        </md-button>
+        <h2>
+          <span>Health Track</span>
+        </h2>
+
+      </div>
+    </md-toolbar>
+
+    <div ng-controller="MainController as MC">
+      <md-content>
+        <div layout='row' layout-align='center start'>
+          <div layout-fill>
+            <md-card>
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">{{MC.title}}</span>
+                  <span class="md-subhead">Choose an option below</span>
+                </md-card-title-text>
+                <md-card-title-media>
+                  <div class="md-media-lg card-media"></div>
+                </md-card-title-media>
+              </md-card-title>
+              <md-card-actions layout="row" layout-align="end center">
+                <md-button class='md-primary md-raised' >Yes</md-button>
+                <md-button ng-click='MC.release()' class='md-warn md-raised'>No</md-button>
+              </md-card-actions>
+            </md-card>
+          </div>
+        </div>
+
+      </md-content>
+    </div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    <!-- app files -->
+    <script src='js/app.js'></script>
+    <script src='js/controllers.js'></script>
+  </body>
+
+</html>
