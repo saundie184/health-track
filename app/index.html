@@ -12,37 +12,93 @@
   </head>
 
   <body ng-app='templateApp' ng-cloak>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings">
-          <!-- <md-icon md-svg-icon="img/icons/menu.svg"></md-icon> -->
-        </md-button>
-        <h2>
-          <span>Health Track</span>
-        </h2>
-
-      </div>
-    </md-toolbar>
-
+    <div layout='row'>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>
+            <span>Health Track</span>
+          </h2>
+          <md-button aria-label="Dashboard">Dashboard</md-button>
+          <span flex></span>
+          <md-button aria-label="Sign in">Sign in</md-button>
+          <md-button class='md-warn md-raised' aria-label="Sign up">
+            Sign up
+          </md-button>
+        </div>
+      </md-toolbar>
+    </div>
     <div ng-controller="MainController as MC">
-      <md-content>
-        <div layout='row' layout-align='center start'>
-          <div layout-fill>
+      <div class='container' layout='row'>
+        <md-content class="md-padding" layout="row">
+          <div flex layout='column'>
             <md-card>
+              <!-- <img ng-src="" class="md-card-image" alt="Washed Out"> -->
               <md-card-title>
                 <md-card-title-text>
-                  <span class="md-headline">{{MC.title}}</span>
-                  <span class="md-subhead">Choose an option below</span>
+                  <span class="md-headline">Keep track of your family's health history</span>
                 </md-card-title-text>
-                <md-card-title-media>
-                  <div class="md-media-lg card-media"></div>
-                </md-card-title-media>
               </md-card-title>
-              <md-card-actions layout="row" layout-align="end center">
-                <md-button class='md-primary md-raised' >Yes</md-button>
-                <md-button ng-click='MC.release()' class='md-warn md-raised'>No</md-button>
-              </md-card-actions>
+              <md-card-content>
+                <p>
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+                </p>
+
+              </md-card-content>
             </md-card>
+          </div>
+        </md-content>
+
+      </div>
+      <md-content>
+        <div flex layout='row' layout-align='center start'>
+          <div flex='50' layout='column'>
+            <div flex layout-fill>
+              <md-card>
+                <md-card-title>
+                  <md-card-title-text>
+                    <span class="md-headline">Know your health history</span>
+                  </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                  <p>
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+                  </p>
+                </md-card-content>
+              </md-card>
+            </div>
+          </div>
+          <div flex='30' layout='column'>
+            <div flex layout-fill>
+              <md-card>
+                <md-card-title>
+                  <md-card-title-text>
+                    <span class="md-headline">Get started today!</span>
+                  </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                  <ul>
+                    <li>
+                      Keep records of your entire family's health history
+                    </li>
+                    <li>
+                      Get a full picture of your own health history
+                    </li>
+                    <li>
+                      Track important health events in your life
+                    </li>
+                    <li>
+                      Share with your doctor
+                    </li>
+                  </ul>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                  <!-- <md-button ng-click='MC.release()' class='md-primary md-raised'>yes</md-button> -->
+                  <md-button class='md-warn md-raised' aria-label="Sign up">
+                    Sign up
+                  </md-button>
+                </md-card-actions>
+              </md-card>
+            </div>
           </div>
         </div>
 
