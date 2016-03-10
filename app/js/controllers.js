@@ -1,6 +1,7 @@
 'use strict';
 
 app.controller('MainController', ['$mdDialog', mainController]);
+app.controller('AccountCtrl', [accountController]);
 
 function mainController($mdDialog) {
   var vm = this;
@@ -13,4 +14,9 @@ function mainController($mdDialog) {
       ok: 'Okay'
     }));
   };
+}
+
+function accountController(){
+  var vm = this;
+  
 }

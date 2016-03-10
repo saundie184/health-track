@@ -9,46 +9,32 @@
 
     <!-- Angular Material -->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <!-- My styles -->
+    <link rel="stylesheet" href="/styles/styles.css" />
   </head>
 
-  <body ng-app='templateApp' ng-cloak>
+  <body ng-app='templateApp' ng-controller="MainController as MC" ng-cloak class="l-offset-nav">
     <div layout='row'>
       <md-toolbar>
         <div class="md-toolbar-tools">
           <h2>
             <span>Health Track</span>
           </h2>
-          <md-button aria-label="Dashboard">Dashboard</md-button>
+          <!-- <md-button aria-label="Dashboard">Dashboard</md-button> -->
           <span flex></span>
           <md-button aria-label="Sign in">Sign in</md-button>
-          <md-button class='md-warn md-raised' aria-label="Sign up">
+          <!-- TODO add angular routes on click -->
+          <md-button class='md-warn md-raised' aria-label="Sign up" href='/signup.html'>
             Sign up
           </md-button>
         </div>
       </md-toolbar>
     </div>
-    <div ng-controller="MainController as MC">
-      <div class='container' layout='row'>
-        <md-content class="md-padding" layout="row">
-          <div flex layout='column'>
-            <md-card>
-              <!-- <img ng-src="" class="md-card-image" alt="Washed Out"> -->
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Keep track of your family's health history</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
-                </p>
-
-              </md-card-content>
-            </md-card>
-          </div>
-        </md-content>
-
+    <header>
+      <div class='background'>
+<!-- TODO IMAGE GOES HERE -->
       </div>
+    </header>
       <md-content>
         <div flex layout='row' layout-align='center start'>
           <div flex='50' layout='column'>
@@ -103,7 +89,7 @@
         </div>
 
       </md-content>
-    </div>
+
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>

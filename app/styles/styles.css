@@ -2,3 +2,14 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+.background {
+  background-color: lightgray;
+  height: 300px;
+}
+.top-padding {
+  padding-top: 150px;
+}
+.form-header {
+  height: 100px;
+  position: relative;
+}
