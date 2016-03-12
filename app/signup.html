@@ -73,9 +73,9 @@
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
-                    <md-button class='md-default md-raised' ng-model="">Cancel</md-button>
+                    <!-- <md-button class='md-default md-raised' ng-model="">Cancel</md-button> -->
                     <!-- TODO add submit function -->
-                    <md-button class='md-warn md-raised' ng-model="">Submit</md-button>
+                    <md-button class='md-warn md-raised' ng-click="account.submit">Submit</md-button>
                   </md-input-container>
                 </div>
               </form>
@@ -97,6 +97,7 @@
     <!-- app files -->
     <script src='js/app.js'></script>
     <script src='js/controllers.js'></script>
+    <script src='js/services.js'></script>
   </body>
 
 </html>
