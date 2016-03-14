@@ -4,8 +4,11 @@ TABLE NAME users
 - lastname
 - email
 - password
+- DOB
+- sex
+- blood_type
 
-CREATE TABLE users (
+<!-- CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   firstname TEXT,
   lastname TEXT,
@@ -17,16 +20,10 @@ CREATE TABLE users (
   INSERT INTO users VALUES (2,'jane', 'doe', 'jane@email.com', 'password2');
   INSERT INTO users VALUES (3,'jim', 'doe', 'jim@email.com', 'password3');
   INSERT INTO users VALUES (4,'jess', 'doe', 'jess@email.com', 'password4');
-
+ -->
 
 
 -- Vitals --
-TABLE NAME vitals
-- user_id
-- DOB
-- sex
-- blood_type
-
 TABLE NAME height
 - user_id
 - height
@@ -40,90 +37,23 @@ TABLE NAME weight
 -- Health Events --
 TABLE NAME surgeries
 - user_id
+- type (surgeries, illnesses, procedures, injuries, other_events)
 - name
 - description
 - date
 
-TABLE NAME illness
-- user_id
-- name
-- description
-- date
-
-TABLE NAME procedures
-- user_id
-- name
-- description
-- date
-
-TABLE NAME injuries
-- user_id
-- name
-- description
-- date
-
-TABLE NAME other_events
-- user_id
-- name
-- description
-- date
 
 -- Health Categories --
-TABLE NAME food_allergies
+TABLE NAME health_categories
 - user_id
-- name
-- description
-- date
-
-TABLE NAME drug_allergies
-- user_id
-- name
-- description
-- date
-
-TABLE NAME other_conditions
-- user_id
+- type (food allergies, drug_allergies, other_categories)
 - name
 - description
 - date
 
 -- Relatives --
-
 TABLE NAME relations
+- id
 - user_id
-- sister_id ??
-- brother_id ??
-
-TABLE NAME brothers
-- user_id
-- brother_name
-- brother_id
-
-TABLE NAME sisters
-- user_id
-- sister_name
-- sister_id
-
-TABLE NAME grandparents
-- user_id
-- mothers_dad
-- mothers_mother
-- dads_dad
-- dads_mother
-
-TABLE NAME dads_brothers
-- user_id
-- uncle_name
-- fathers_brothers_name
-
-TABLE NAME dads_sisters
-- user_id
-- fathers_sisters_name
-
-TABLE NAME mothers_brothers
-- user_id
-- mothers_brothers_name
-
-TABLE NAME mothers_sisters
-- user_id
-- mothers_sisters_name
+- name
+- relationship

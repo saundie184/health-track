@@ -1,7 +1,7 @@
 'use strict';
 
 app.service('dbURL', [dbURL]);
-app.service('signUpService', ['$http', signUp]);
+app.service('AuthService', ['$http', 'dbURL', Auth]);
 
 function dbURL() {
   return {
@@ -9,17 +9,20 @@ function dbURL() {
   };
 }
 
-function signUp($http, dbURL) {
+function Auth($http, dbURL) {
   return {
     signUp: function(user) {
-console.log(user);
-      $http.post(dbURL + '/signUp', user).then(function(res) {
-        res.send(res);
+      console.log(user);
+      $http.post(dbURL.url + '/signup', user).then(function(res) {
+        // res.send(res);
         console.log('Success!');
       }, function(res) {
-        res.send(res);
-        console.log('ERROR');
+        // res.send(res);
+        console.log('ERROR: ' + res);
       });
+    },
+    signIn: function(user) {
+
     }
   };
 }

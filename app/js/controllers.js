@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('MainController', ['$mdDialog', mainController]);
-app.controller('AccountCtrl', ['signUpService', accountController]);
+app.controller('AccountCtrl', ['AuthService', accountController]);
 
 function mainController($mdDialog) {
   var vm = this;
@@ -16,13 +16,18 @@ function mainController($mdDialog) {
   };
 }
 
-function accountController(signUpService){
+function accountController(AuthService) {
   var vm = this;
-  var testUser = {
-    firstname: 'sally',
-    lastname: 'smith',
-    email: 'sally@email.com',
-    password: 'password7'
-  };
-vm.submit = signUpService.signUp(testUser);
+  // var testUser = {
+  //   firstname: 'doug',
+  //   lastname: 'jones',
+  //   email: 'doug@email.com',
+  //   password: 'password'
+  // };
+  vm.submit = submit;
+
+  function submit(user) {
+    AuthService.signUp(user);
+  }
+
 }

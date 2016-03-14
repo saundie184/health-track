@@ -40,42 +40,42 @@
 
           <md-content layout-padding>
             <div>
-              <form name="userForm">
+              <form name="userForm" ng-submit='account.submit({firstname: firstname, lastname: lastname, email: email, password: password})'>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
                     <label>First name</label>
-                    <input ng-model="user.firstName">
+                    <input ng-model="firstname" value='firstname'>
                   </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
                     <label>Last name</label>
-                    <input ng-model="user.lastName">
+                    <input ng-model="lastname" value='lastname'>
                   </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
                     <label>Email</label>
-                    <input ng-model="user.email">
+                    <input ng-model="email" value='email'>
                   </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
                     <label>Password</label>
-                    <input ng-model="user.password">
+                    <input ng-model="password" value='password'>
                   </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
                     <label>Retype password</label>
-                    <input ng-model="user.verifypass">
+                    <input ng-model="verifypass" value='verifypass'>
                   </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
-                    <!-- <md-button class='md-default md-raised' ng-model="">Cancel</md-button> -->
-                    <!-- TODO add submit function -->
-                    <md-button class='md-warn md-raised' ng-click="account.submit">Submit</md-button>
+                    <md-button class='md-default md-raised'>Cancel</md-button>        
+                    <md-button class='md-warn md-raised' type='submit'>Submit</md-button>
+
                   </md-input-container>
                 </div>
               </form>
