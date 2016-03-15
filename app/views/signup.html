@@ -1,0 +1,72 @@
+<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+  <md-grid-tile md-rowspan="2" md-colspan="2" md-colspan-sm="1"></md-grid-tile>
+  <md-grid-tile md-rowspan="2" md-colspan="2" md-colspan-sm="1">
+
+    <div ng-controller="AccountCtrl as account" layout="column" ng-cloak class="md-inline-form top-padding" flex>
+      <md-grid-tile-header class='form-header'>
+        Welcome to Health Track
+      </md-grid-tile-header>
+
+      <md-content layout-padding>
+        <div>
+          <form name="userForm" ng-submit='account.submit({firstname: firstname, lastname: lastname, email: email, password: password})'>
+            <div layout-gt-sm="row">
+
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>First name</label>
+                <input ng-model="firstname" value='firstname' name='firstname' required>
+                <div ng-messages="userForm.firstname.$error">
+                  <p ng-message="required">First name is required.</p>
+                </div>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Last name</label>
+                <input ng-model="lastname" value='lastname' name='lastname' required>
+                <div ng-messages="userForm.lastname.$error">
+                  <p ng-message="required">Last name is required.</p>
+                </div>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Email</label>
+                <input ng-model="email" value='email' name='email' name='email' required>
+                <div ng-messages="userForm.email.$error">
+                  <p ng-message="required">Email is required.</p>
+                </div>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Password</label>
+                <input ng-model="password" type='password' value='password' name='password' minlength='8' required>
+                <div ng-messages="userForm.password.$error">
+                  <p ng-message="minlength">Password must be at least 8 characters.</p>
+                </div>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Retype password</label>
+                <input ng-model="verifypass" type='password' value='verifypass' name='verifypass' required>
+                <div ng-messages="userForm.verifypassword.$error">
+                  <p ng-message="required" ng-show='password != verifypassword'>Passwords do not match.</p>
+                </div>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <md-button class='md-default md-raised'>Cancel</md-button>
+                <md-button class='md-warn md-raised' type='submit'>Submit</md-button>
+
+              </md-input-container>
+            </div>
+          </form>
+        </div>
+      </md-content>
+    </div>
+  </md-grid-tile>
+
+</md-grid-list>

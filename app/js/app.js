@@ -1,3 +1,3 @@
 'use strict';
 
-var app = angular.module('templateApp', ['ngMaterial']);
+var app = angular.module('templateApp', ['ngMaterial', 'ngRoute', 'ngMessages']);

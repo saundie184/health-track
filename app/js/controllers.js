@@ -30,4 +30,6 @@ function accountController(AuthService) {
     AuthService.signUp(user);
   }
 
+  // function passwordMatch
+
 }
