@@ -9,5 +9,13 @@ app.config(function($routeProvider){
   .when('/signup', {
     templateUrl: 'views/signup.html',
     controller: 'AccountCtrl as account'
+  })
+  .when('/dashboard', {
+    templateUrl: 'views/dashboard.html',
+    controller: 'DashboardCrtl as dash'
+  })
+  .when('/profile/:id', {
+    templateUrl: 'views/newProfile.html',
+    controller: 'ProfileCrtl as profile'
   });
 });
