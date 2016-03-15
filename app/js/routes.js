@@ -1,13 +1,17 @@
 'use strict';
 
-app.config(function($routeProvider){
+app.config(function($routeProvider, $httpProvider){
   $routeProvider
   .when('/', {
     templateUrl: 'views/main.html',
-    controller: 'MainController as main'
+    controller: 'AccountCtrl as account'
   })
   .when('/signup', {
     templateUrl: 'views/signup.html',
+    controller: 'AccountCtrl as account'
+  })
+  .when('/signin', {
+    templateUrl: 'views/signin.html',
     controller: 'AccountCtrl as account'
   })
   .when('/dashboard', {
@@ -15,7 +19,8 @@ app.config(function($routeProvider){
     controller: 'DashboardCrtl as dash'
   })
   .when('/profile/:id', {
-    templateUrl: 'views/newProfile.html',
+    templateUrl: 'views/viewProfile.html',
     controller: 'ProfileCrtl as profile'
   });
+  $httpProvider.interceptors.push("AuthInterceptor");
 });

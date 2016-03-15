@@ -2,6 +2,8 @@
 
 app.service('dbURL', [dbURL]);
 app.service('AuthService', ['$http', 'dbURL', Auth]);
+app.service('ProfileService', ['$http', 'dbURL', Profile]);
+app.service('AuthInterceptor', ['$window', '$location', '$q', AuthInterceptor]);
 
 function dbURL() {
   return {
@@ -9,20 +11,76 @@ function dbURL() {
   };
 }
 
+// --------------- Authorization -------------------
+
+function AuthInterceptor($window, $location, $q) {
+  return {
+    request: function(config) {
+      // prevent browser bar tampering for /api routes
+      config.headers['X-Requested-With'] = 'XMLHttpRequest';
+      var token = localStorage.getItem("token");
+      if (token)
+        config.headers.Authorization = "Bearer " + token;
+      return $q.resolve(config);
+    },
+    responseError: function(err) {
+      // if you mess around with the token, log them out and destroy it
+      if (err.data === "invalid token" || err.data === "invalid signature" || err.data === "jwt malformed") {
+        $location.path("/logout");
+        return $q.reject(err);
+      }
+      // if you try to access a user who is not yourself
+      if (err.status === 401) {
+        $location.path('/users');
+        return $q.reject(err);
+      }
+      return $q.reject(err);
+    }
+  };
+}
+
 function Auth($http, dbURL) {
   return {
     signUp: function(user) {
       console.log(user);
-      $http.post(dbURL.url + '/signup', user).then(function(res) {
+      return $http.post(dbURL.url + '/signup', user).then(function(res) {
         // res.send(res);
         console.log('Success!');
+        return res;
       }, function(res) {
         // res.send(res);
         console.log('ERROR: ' + res);
+        return res;
       });
     },
     signIn: function(user) {
+      return $http.post(dbURL.url + '/signin', user).then(function(res) {
+        //success logic goes here
+        console.log(res);
+        return res;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log('User not authenticated: ' + err);
+        return err;
+      });
 
+    }
+  };
+}
+
+// --------------- Health Profiles -------------------
+
+function Profile($http, dbURL) {
+  return {
+    getProfile: function(id) {
+      return $http.get(dbURL.url + '/profile/' + id).then(function(data) {
+        console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
     }
   };
 }

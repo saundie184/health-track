@@ -1,88 +1,64 @@
 'use strict';
 
-app.controller('MainController', ['$mdDialog', mainController]);
-app.controller('AccountCtrl', ['AuthService', accountController]);
+// app.controller('MainController', ['$mdDialog', mainController]);
+app.controller('AccountCtrl', ['AuthService', '$location', AccountController]);
 app.controller('DashboardCrtl', [DashboardController]);
-app.controller('ProfileCrtl', [ProfileController]);
+app.controller('ProfileCrtl', ['ProfileService', ProfileController]);
 
-function mainController($mdDialog) {
+// function mainController($mdDialog) {
+//   var vm = this;
+//   vm.title = "Hello World";
+//
+//   // vm.signin = function() {
+//   //   $mdDialog.show($mdDialog.alert({
+//   //     title: 'Sign in',
+//   //     textContent: 'This is a dialog box',
+//   //     ok: 'Okay'
+//   //   }));
+//   // };
+//
+// }
+
+function AccountController(AuthService, $location) {
   var vm = this;
-  vm.title = "Hello World";
-  vm.items = [1,2,3];
+  vm.signup = signup;
+  vm.signin = signin;
+  vm.signout = signout;
 
-  // vm.signin = function() {
-  //   $mdDialog.show($mdDialog.alert({
-  //     title: 'Sign in',
-  //     textContent: 'This is a dialog box',
-  //     ok: 'Okay'
-  //   }));
-  // };
-  vm.showSignin = showSignin;
-
-  function showSignin($event) {
-    var parentEl = angular.element(document.body);
-    $mdDialog.show({
-      parent: parentEl,
-      targetEvent: $event,
-      clickOutsideToClose: true,
-      template: '<md-dialog aria-label="List dialog">' +
-        '  <md-dialog-content>' +
-        '<form name="signinForm">' +
-        '<md-input-container class="md-block" flex-gt-sm>' +
-          '<label>Email</label>' +
-          '<input ng-model="email" value="email" name="email">' +
-        '</md-input-container>' +
-        '</form>' +
-        '  </md-dialog-content>' +
-        '  <md-dialog-actions>' +
-        '    <md-button ng-click="closeDialog()" class="md-primary">' +
-        '      Sign in' +
-        '    </md-button>' +
-        '  </md-dialog-actions>' +
-        '</md-dialog>',
-      locals: {
-        items: vm.items
-      },
-      controller: DialogController
+  function signup(user) {
+    AuthService.signUp(user).then(function(res) {
+      $location.path('/signin');
     });
+  }
 
-    function DialogController($mdDialog, items) {
-      var vm = this;
-      vm.items = items;
-      vm.closeDialog = function() {
-        $mdDialog.hide();
-      };
-    }
+  function signin(user) {
+    AuthService.signIn(user).then(function(res) {
+      // console.log(res);
+      localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
+      // console.log(localStorage.Authorization);
+      vm.signedIn = true;
+      $location.path('/dashboard');
+
+    });
+  }
+
+  function signout() {
+    localStorage.removeItem('Authorization', null);
+    $location.path('/');
+    vm.signedIn = false;
   }
 }
 
-
-
-
-
-
-
-
-
-
-function accountController(AuthService) {
+function ProfileController(ProfileService) {
   var vm = this;
-  // var testUser = {
-  //   firstname: 'doug',
-  //   lastname: 'jones',
-  //   email: 'doug@email.com',
-  //   password: 'password'
-  // };
-  vm.submit = submit;
+  vm.title = 'Your health profile';
+  vm.getprofile = getprofile;
 
-  function submit(user) {
-    AuthService.signUp(user);
+  function getprofile(id){
+    ProfileService.getProfile(id).then(function(data){
+      console.log(data);
+    });
   }
-}
-
-function ProfileController() {
-  var vm = this;
-  vm.title = 'Let\'s set up your health profile';
 }
 
 function DashboardController() {

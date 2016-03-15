@@ -9,7 +9,7 @@
 
       <md-content layout-padding>
         <div>
-          <form name="userForm" ng-submit='account.submit({firstname: firstname, lastname: lastname, email: email, password: password})'>
+          <form name="userForm" ng-submit='account.signup({firstname: firstname, lastname: lastname, email: email, password: password})'>
             <div layout-gt-sm="row">
 
               <md-input-container class="md-block" flex-gt-sm>
@@ -59,7 +59,7 @@
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                 <md-button class='md-default md-raised'>Cancel</md-button>
-                <md-button class='md-warn md-raised' type='submit'>Submit</md-button>
+                <md-button class='md-warn md-raised' type='submit' id='submit'>Submit</md-button>
               </md-input-container>
             </div>
           </form>
