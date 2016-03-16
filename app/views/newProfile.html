@@ -1,1 +1,77 @@
-<h2>{{profile.title}}</h2>
+<div flex layout='row' layout-align='center start'>
+  <h2>{{profile.title}}</h2>
+</div>
+
+<div layout="column" ng-cloak class="md-inline-form">
+  <md-content layout-gt-sm="row" layout-padding>
+    <div>
+      <h3>Vitals</h3>
+      <form name='vitalsForm'>
+        <md-input-container>
+          <label>First name</label>
+          <input placeholder='UsernameFirst' disabled>
+        </md-input-container>
+        <md-input-container>
+          <label>Last name</label>
+          <input placeholder='UsernameLast' disabled>
+        </md-input-container>
+        <md-input-container>
+          <label>Relation to you</label>
+          <input placeholder='Self' disabled>
+        </md-input-container>
+      </form>
+    </div>
+  </md-content>
+  <md-content layout-padding>
+    <div>
+      <h3>Health events</h3>
+      <form name="healthEventsForms">
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Date of Birth</label>
+            <input >
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Gender</label>
+            <!-- TODO fix controller to show-->
+            <md-select ng-model="profile.gender">
+             <md-option ng-repeat="gen in gender" value="{{gen.abbrev}}">
+               {{gen.abbrev}}
+             </md-option>
+           </md-select>
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Blood type</label>
+            <!-- TODO add controller for selector-->
+            <!-- <md-select ng-model="user.state">
+             <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+               {{state.abbrev}}
+             </md-option>
+           </md-select> -->
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Height</label>
+            <!-- TODO add controller for selector-->
+            <!-- <md-select ng-model="user.state">
+             <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+               {{state.abbrev}}
+             </md-option>
+           </md-select> -->
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Weight</label>
+          <input >
+          </md-input-container>
+        </div>
+      </form>
+    </div>
+  </md-content>
+</div>

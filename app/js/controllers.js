@@ -54,6 +54,10 @@ function ProfileController(ProfileService) {
   vm.title = 'Your health profile';
   vm.getprofile = getprofile;
 
+  vm.gender = ('F M').split(' ').map(function(gen) {
+       return {abbrev: gen};
+     });
+
   function getprofile(id){
     ProfileService.getProfile(id).then(function(data){
       console.log(data);
@@ -63,6 +67,6 @@ function ProfileController(ProfileService) {
 
 function DashboardController() {
   var vm = this;
-  vm.title = 'Welcome to your Health Track Dashboard!';
+  vm.title = 'Welcome username!';
 
 }

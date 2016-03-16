@@ -18,6 +18,10 @@ app.config(function($routeProvider, $httpProvider){
     templateUrl: 'views/dashboard.html',
     controller: 'DashboardCrtl as dash'
   })
+  .when('/profile/new', {
+    templateUrl: 'views/newProfile.html',
+    controller: 'ProfileCrtl as profile'
+  })
   .when('/profile/:id', {
     templateUrl: 'views/viewProfile.html',
     controller: 'ProfileCrtl as profile'

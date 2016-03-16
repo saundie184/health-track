@@ -1,1 +1,48 @@
-<h2>{{dash.title}}</h2>
+<div flex layout='row' layout-align='center start'>
+  <h2>{{dash.title}}</h2>
+</div>
+
+<md-content layout="column" layout-gt-xs="row">
+  <md-card flex flex-gt-md="30">
+    <md-card-content>
+      <h2 class="md-title">View your health profile</h2>
+      <p>
+        Managing your family's health starts with you. Be sure to log your health events as they happen to keep an accurate view of your overall health. You can add or edit your health profile at any time.
+      </p>
+    </md-card-content>
+    <div class="md-actions" layout="column" layout-align="end center">
+      <md-button class='md-warn'>Start health profile</md-button>
+      <md-button>View health profile</md-button>
+      <md-button>Add health event</md-button>
+    </div>
+  </md-card>
+  <br>
+
+  <md-card flex flex-gt-md="30">
+    <md-card-content>
+      <h2 class="md-title">Explore your family tree</h2>
+      <p>
+        Get a full prespective on your family's health. You can view a full family tree with all your relatives and see their health profiles.
+      </p>
+    </md-card-content>
+    <div class="md-actions" layout="column" layout-align="end center">
+      <md-button class='md-warn'>Set up family tree</md-button>
+      <md-button>View family tree</md-button>
+      <md-button>Add family member</md-button>
+    </div>
+
+  </md-card>
+  <br>
+
+  <md-card flex flex-gt-md="30">
+    <md-card-content>
+      <h2 class="md-title">Invite family members</h2>
+      <p>
+        Include your family members in your health track. Send them email invitations to join your family tree. They will be able to see your health profile too!
+      </p>
+    </md-card-content>
+    <div class="md-actions" layout="column" layout-align="end center">
+      <md-button class='md-warn'>Send email invite</md-button>
+    </div>
+  </md-card>
+</md-content>
