@@ -29,6 +29,9 @@ app.config(function($routeProvider, $httpProvider){
   .when('/profile/:id', {
     templateUrl: 'views/viewProfile.html',
     controller: 'ProfileCrtl as profile'
+  })
+  .otherwise({
+    redirectTo: '/'
   });
   $httpProvider.interceptors.push("AuthInterceptor");
 });

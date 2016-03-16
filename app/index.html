@@ -24,10 +24,9 @@
           </h2>
           <!-- <md-button aria-label="Dashboard">Dashboard</md-button> -->
           <span flex></span>
-          <md-button aria-label="Sign in" href='http://localhost:8080/#/signin'>Sign in</md-button>
-          <md-button ng-click='account.signout()' aria-label="Sign out">Sign out</md-button>
-          <!-- TODO add angular routes on click -->
-          <md-button class='md-warn md-raised' aria-label="Sign up" href='http://localhost:8080/#/signup'>
+          <md-button aria-label="Sign in" ng-click='account.signInLoad()'>Sign in</md-button>
+          <md-button aria-label="Sign out" ng-click='account.signout()'>Sign out</md-button>
+          <md-button class='md-warn md-raised' aria-label="Sign up" ng-click='account.signUpLoad()'>
             Sign up
           </md-button>
         </div>

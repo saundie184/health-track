@@ -5,25 +5,17 @@ app.controller('AccountCtrl', ['AuthService', '$location', AccountController]);
 app.controller('DashboardCrtl', ['$location', DashboardController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', 'ProfileService', ProfileController]);
 
-// function mainController($mdDialog) {
-//   var vm = this;
-//   vm.title = "Hello World";
-//
-//   // vm.signin = function() {
-//   //   $mdDialog.show($mdDialog.alert({
-//   //     title: 'Sign in',
-//   //     textContent: 'This is a dialog box',
-//   //     ok: 'Okay'
-//   //   }));
-//   // };
-//
-// }
-
 function AccountController(AuthService, $location) {
   var vm = this;
   vm.signup = signup;
   vm.signin = signin;
   vm.signout = signout;
+  vm.signUpLoad = function() {
+    $location.path('/signup');
+  };
+  vm.signInLoad = function() {
+    $location.path('/signin');
+  };
 
 
   function signup(user) {
@@ -55,31 +47,92 @@ function ProfileController($routeParams, $location, ProfileService) {
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
   vm.submitProfile = submitProfile;
-  // vm.submitHeightWeight = submitHeightWeight;
+  var id = parseInt($routeParams.id);
 
 
-  function submitProfile(user) {
-    ProfileService.submitProfile(id,user).then(function(res) {
-      console.log(res);
-      var data = {
-       user_id : id,
-       height: 65,
-       weight: 200
-     };
-      ProfileService.submitHeightWeight(id,data).then(function(res) {
-        console.log(res);
-        $location.path('/dashboard');
-      });
-      // $location.path('/dashboard');
-    });
+  var healthEventsArray = [];
+  vm.addToEventsArray = addToEventsArray;
+
+  function addToEventsArray(obj) {
+    // console.log(obj);
+    var newObj = {
+      user_id: id,
+      type: obj.type,
+      name: obj.name,
+      description: obj.description,
+      date: obj.date
+    };
+    healthEventsArray.push(newObj);
+  }
+
+  var healthCategoriesArray = [];
+  vm.addToCategoriesArray = addToCategoriesArray;
+
+  function addToCategoriesArray(obj) {
+    // console.log(obj);
+    var newObj = {
+      user_id: id,
+      type: obj.type,
+      name: obj.name,
+      description: obj.description,
+      date: obj.date
+    };
+    healthCategoriesArray.push(newObj);
   }
 
 
-  var id = parseInt($routeParams.id);
+  function submitProfile(user) {
+    ProfileService.submitProfile(id, user).then(function(res) {
+      //TODO handle errors here
+      // console.log(vm.dob);
+      submitHeightWeight();
+    });
+  }
+
+  function submitHeightWeight() {
+    var height = convertToInches(vm.feet, vm.inches);
+    var weight = vm.weight;
+    //TODO Date is not inserting in db even though the type is the same
+    var utc = new Date();
+    // console.log(utc);
+    var data = {
+      user_id: id,
+      height: height,
+      weight: weight,
+      date: utc
+    };
+    ProfileService.submitHeightWeight(id, data).then(function(res, err) {
+      //call next function
+      submitHealthEvents(healthEventsArray);
+    });
+  }
+
+  function submitHealthEvents(arr) {
+    ProfileService.submitHealthEvents(id, arr).then(function(res) {
+      //call next function
+      submitHealthCategories(healthCategoriesArray);
+      // console.log(res);
+    });
+  }
+
+  function submitHealthCategories(arr) {
+    ProfileService.submitHealthCategories(id, arr).then(function(res) {
+      $location.path('/dashboard');
+      // console.log(res);
+    });
+  }
+
+  function convertToInches(ft, n) {
+    var total = (ft * 12);
+    return total + parseInt(n);
+  }
+
   ProfileService.getProfile(id).then(function(data) {
     // console.log(data);
     vm.profileData = data;
   });
+
+
   vm.dob = new Date();
   vm.gender = ('F M').split(' ').map(function(gen) {
     return {

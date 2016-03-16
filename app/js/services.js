@@ -94,8 +94,28 @@ function Profile($http, dbURL) {
       });
     },
     submitHeightWeight: function(id, user){
-      console.log(user);
+      // console.log(user);
       return $http.post(dbURL.url + '/profile/' + id + '/hw/', user).then(function(res) {
+        console.log(res);
+        return res;
+      }, function(err) {
+        console.log(err);
+        return err;
+      });
+    },
+    submitHealthEvents: function(id, user){
+      // console.log(user);
+      return $http.post(dbURL.url + '/profile/' + id + '/events/', user).then(function(res) {
+        console.log(res);
+        return res;
+      }, function(err) {
+        console.log(err);
+        return err;
+      });
+    },
+    submitHealthCategories: function(id, user){
+      console.log(user);
+      return $http.post(dbURL.url + '/profile/' + id + '/categories/', user).then(function(res) {
         console.log(res);
         return res;
       }, function(err) {
