@@ -1,77 +1,91 @@
 <div flex layout='row' layout-align='center start'>
   <h2>{{profile.title}}</h2>
 </div>
-
-<div layout="column" ng-cloak class="md-inline-form">
-  <md-content layout-gt-sm="row" layout-padding>
-    <div>
+<div flex layout='row' layout-align='center start'>
+  <div layout="column" ng-cloak class="md-inline-form">
+    <md-content layout-padding>
       <h3>Vitals</h3>
-      <form name='vitalsForm'>
-        <md-input-container>
-          <label>First name</label>
-          <input placeholder='UsernameFirst' disabled>
-        </md-input-container>
-        <md-input-container>
-          <label>Last name</label>
-          <input placeholder='UsernameLast' disabled>
-        </md-input-container>
-        <md-input-container>
-          <label>Relation to you</label>
-          <input placeholder='Self' disabled>
-        </md-input-container>
-      </form>
-    </div>
-  </md-content>
-  <md-content layout-padding>
-    <div>
+      <div layout-gt-sm="row">
+        <form name='vitalsForm'>
+          <md-input-container>
+            <label>First name</label>
+            <input ng-model='profile.firstname' placeholder='UsernameFirst' name='firstname' disabled>
+          </md-input-container>
+          <md-input-container>
+            <label>Last name</label>
+            <input ng-model='profile.lastname' placeholder='UsernameLast' name='lastname' disabled>
+          </md-input-container>
+          <md-input-container>
+            <label>Relation to you</label>
+            <input ng-model='profile.relation' placeholder='Self' name='relation' disabled>
+          </md-input-container>
+        </form>
+      </div>
+      <div>
+        <form name="healthEventsForms" ng-submit='profile.submitProfile({dob: profile.dob, sex: profile.genders, blood_type: profile.bloodType})' >
+          <!-- <form name="healthEventsForms" ng-submit='profile.submitHeightWeight()' > -->
+          <label>Date of Birth</label>
+          <div layout-gt-xs="row">
+            <md-datepicker ng-model="profile.dob" name='dob' md-placeholder="Enter date"></md-datepicker>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Gender</label>
+              <md-select ng-model="profile.genders" name='gender'>
+                <md-option ng-repeat="gen in profile.gender" value="{{gen.abbrev}}">
+                  {{gen.abbrev}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Blood type</label>
+              <md-select ng-model="profile.bloodType" name='bloodType'>
+                <md-option ng-repeat="type in profile.blood" value="{{type.abbrev}}">
+                  {{type.abbrev}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Height, Feet</label>
+              <md-select ng-model="profile.feet" name='feet'>
+                <md-option ng-repeat="ft in profile.foot" value="{{ft.abbrev}}">
+                  {{ft.abbrev}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Height, Inches</label>
+              <md-select ng-model='profile.inches' name='inches'>
+                <md-option ng-repeat="in in profile.inch" value="{{in.abbrev}}">
+                  {{in.abbrev}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Weight in pounds</label>
+              <input ng-model='profile.weight' name='weight'/>
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <md-button class='md-raised'>Cancel</md-button>
+              <md-button class='md-warn md-raised' type='submit' id='submit'>Submit</md-button>
+            </md-input-container>
+          </div>
+        </form>
+      </div>
+    </md-content>
+    <md-content layout-padding>
       <h3>Health events</h3>
-      <form name="healthEventsForms">
-        <div layout-gt-xs="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Date of Birth</label>
-            <input >
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Gender</label>
-            <!-- TODO fix controller to show-->
-            <md-select ng-model="profile.gender">
-             <md-option ng-repeat="gen in gender" value="{{gen.abbrev}}">
-               {{gen.abbrev}}
-             </md-option>
-           </md-select>
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Blood type</label>
-            <!-- TODO add controller for selector-->
-            <!-- <md-select ng-model="user.state">
-             <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-               {{state.abbrev}}
-             </md-option>
-           </md-select> -->
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Height</label>
-            <!-- TODO add controller for selector-->
-            <!-- <md-select ng-model="user.state">
-             <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-               {{state.abbrev}}
-             </md-option>
-           </md-select> -->
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Weight</label>
-          <input >
-          </md-input-container>
-        </div>
-      </form>
-    </div>
-  </md-content>
+      <div></div>
+    </md-content>
+    <md-content layout-padding>
+      <h3>Health categories</h3>
+      <div></div>
+    </md-content>
+  </div>
 </div>

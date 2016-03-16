@@ -14,11 +14,15 @@ app.config(function($routeProvider, $httpProvider){
     templateUrl: 'views/signin.html',
     controller: 'AccountCtrl as account'
   })
+  .when('/signout', {
+    templateUrl: 'views/main.html',
+    controller: 'AccountCtrl as account'
+  })
   .when('/dashboard', {
     templateUrl: 'views/dashboard.html',
     controller: 'DashboardCrtl as dash'
   })
-  .when('/profile/new', {
+  .when('/profile/new/:id', {
     templateUrl: 'views/newProfile.html',
     controller: 'ProfileCrtl as profile'
   })

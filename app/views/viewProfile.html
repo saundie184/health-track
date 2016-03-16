@@ -1,4 +1,21 @@
 <h2>{{profile.title}}</h2>
-<p>
-  <md-button ng-click='profile.getprofile(56)' class='md-warn md-raised'>Get profile</md-button>
-</p>
+
+<div flex layout='row' layout-align='center start'>
+  <div flex='50' layout='column'>
+    <div flex layout-fill>
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Your Health Profile</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <p>
+            {{profile.profileData}}
+          </p>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+</div>
+</md-content>

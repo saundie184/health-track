@@ -18,15 +18,16 @@ function AuthInterceptor($window, $location, $q) {
     request: function(config) {
       // prevent browser bar tampering for /api routes
       config.headers['X-Requested-With'] = 'XMLHttpRequest';
-      var token = localStorage.getItem("token");
+      var token = localStorage.getItem("Authorization");
+      // console.log(token);
       if (token)
-        config.headers.Authorization = "Bearer " + token;
+        config.headers.Authorization = token;
       return $q.resolve(config);
     },
     responseError: function(err) {
       // if you mess around with the token, log them out and destroy it
       if (err.data === "invalid token" || err.data === "invalid signature" || err.data === "jwt malformed") {
-        $location.path("/logout");
+        $location.path("/signup");
         return $q.reject(err);
       }
       // if you try to access a user who is not yourself
@@ -56,7 +57,7 @@ function Auth($http, dbURL) {
     signIn: function(user) {
       return $http.post(dbURL.url + '/signin', user).then(function(res) {
         //success logic goes here
-        console.log(res);
+        // console.log(res);
         return res;
       }, function(err) {
         //TODO failed authentication goes here
@@ -74,10 +75,30 @@ function Profile($http, dbURL) {
   return {
     getProfile: function(id) {
       return $http.get(dbURL.url + '/profile/' + id).then(function(data) {
-        console.log(data);
+        // console.log(data);
         return data;
       }, function(err) {
         //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
+    submitProfile: function(id, user) {
+      // console.log(user);
+      return $http.post(dbURL.url + '/profile/' + id, user).then(function(res) {
+        console.log(res);
+        return res;
+      }, function(err) {
+        console.log(err);
+        return err;
+      });
+    },
+    submitHeightWeight: function(id, user){
+      console.log(user);
+      return $http.post(dbURL.url + '/profile/' + id + '/hw/', user).then(function(res) {
+        console.log(res);
+        return res;
+      }, function(err) {
         console.log(err);
         return err;
       });
