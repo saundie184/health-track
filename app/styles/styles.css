@@ -13,3 +13,8 @@
   height: 100px;
   position: relative;
 }
+
+.material-icons.md-40 {
+  font-size: 40px;
+}
+.material-icons.lightblue300 { color: #02A8F3; }

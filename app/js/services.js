@@ -86,7 +86,7 @@ function Profile($http, dbURL) {
     submitProfile: function(id, user) {
       // console.log(user);
       return $http.post(dbURL.url + '/profile/' + id, user).then(function(res) {
-        console.log(res);
+        // console.log(res);
         return res;
       }, function(err) {
         console.log(err);
@@ -94,9 +94,9 @@ function Profile($http, dbURL) {
       });
     },
     submitHeightWeight: function(id, user){
-      // console.log(user);
+      console.log(user);
       return $http.post(dbURL.url + '/profile/' + id + '/hw/', user).then(function(res) {
-        console.log(res);
+        // console.log(res);
         return res;
       }, function(err) {
         console.log(err);
@@ -114,9 +114,9 @@ function Profile($http, dbURL) {
       });
     },
     submitHealthCategories: function(id, user){
-      console.log(user);
+      // console.log(user);
       return $http.post(dbURL.url + '/profile/' + id + '/categories/', user).then(function(res) {
-        console.log(res);
+        // console.log(res);
         return res;
       }, function(err) {
         console.log(err);

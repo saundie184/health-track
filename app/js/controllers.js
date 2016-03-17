@@ -69,7 +69,7 @@ function ProfileController($routeParams, $location, ProfileService) {
   vm.addToCategoriesArray = addToCategoriesArray;
 
   function addToCategoriesArray(obj) {
-    // console.log(obj);
+    console.log(typeof obj.date);
     var newObj = {
       user_id: id,
       type: obj.type,
@@ -93,13 +93,23 @@ function ProfileController($routeParams, $location, ProfileService) {
     var height = convertToInches(vm.feet, vm.inches);
     var weight = vm.weight;
     //TODO Date is not inserting in db even though the type is the same
-    var utc = new Date();
+    // var utc = new Date();
     // console.log(utc);
+    Date.prototype.yyyymmdd = function() {
+      var yyyy = this.getFullYear().toString();
+      var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+      var dd = this.getDate().toString();
+      return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]) + " 00:00:00-06"; // padding
+    };
+
+    var d = new Date();
+    d.yyyymmdd();
+    // console.log(d.yyyymmdd());
     var data = {
       user_id: id,
       height: height,
       weight: weight,
-      date: utc
+      date: d.yyyymmdd()
     };
     ProfileService.submitHeightWeight(id, data).then(function(res, err) {
       //call next function
