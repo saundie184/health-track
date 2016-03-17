@@ -12,7 +12,7 @@
               <i class="material-icons md-40 lightblue300">face</i>
             </md-icon>
             <div class="md-list-item-text" layout="column">
-              <h3>Firstname Lastname</h3>
+              <h3>{{profile.profileData.firstname}} {{profile.profileData.lastname}}</h3>
               <h4>Name</h4>
             </div>
           </md-list-item>
@@ -52,7 +52,7 @@
               <i class="material-icons md-40 lightblue300">date_range</i>
             </md-icon>
             <div class="md-list-item-text" layout="column">
-              <h3>September 19, 1985</h3>
+              <h3>{{profile.profileData.dob | date:"MM/dd/yyyy"}}</h3>
               <h4>Date of Birth</h4>
             </div>
           </md-list-item>
@@ -70,7 +70,7 @@
               <i class="material-icons md-40 lightblue300">child_friendly</i>
             </md-icon>
             <div class="md-list-item-text" layout="column">
-              <h3>Female</h3>
+              <h3>{{profile.profileData.sex}}</h3>
               <h4>Gender</h4>
             </div>
           </md-list-item>
@@ -88,7 +88,7 @@
               <i class="material-icons md-40 lightblue300">opacity</i>
             </md-icon>
               <div class="md-list-item-text" layout="column">
-                <h3>O+</h3>
+                <h3>{{profile.profileData.blood_type}}</h3>
                 <h4>Blood Type</h4>
               </div>
             </md-list-item>
@@ -114,10 +114,10 @@
               <i class="material-icons md-40 lightblue300">swap_vert</i>
             </md-icon>
             <div class="md-list-item-text" layout="column">
-              <h3>5 feet 5 inches</h3>
+              <h3>{{profile.hwData.height}}</h3>
               <h4>Height</h4>
               <p>
-                Updated on: 03-12-2016
+                Updated on: {{profile.hwData.date | date:"MM/dd/yyyy"}}
               </p>
             </div>
           </md-list-item>
@@ -136,10 +136,10 @@
               <i class="material-icons md-40 lightblue300">settings_input_svideo</i>
             </md-icon>
             <div class="md-list-item-text" layout="column">
-              <h3>135 pounds</h3>
+              <h3>{{profile.hwData.weight}}</h3>
               <h4>Weight</h4>
               <p>
-                Updated on: 03-12-2016
+                Updated on: {{profile.hwData.date | date:"MM/dd/yyyy"}}
               </p>
             </div>
           </md-list-item>

@@ -83,6 +83,16 @@ function Profile($http, dbURL) {
         return err;
       });
     },
+    getHeightWeight: function(id){
+      return $http.get(dbURL.url + '/profile/' + id + '/hw/').then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
     submitProfile: function(id, user) {
       // console.log(user);
       return $http.post(dbURL.url + '/profile/' + id, user).then(function(res) {

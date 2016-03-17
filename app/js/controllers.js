@@ -16,6 +16,9 @@ function AccountController(AuthService, $location) {
   vm.signInLoad = function() {
     $location.path('/signin');
   };
+  vm.dashboardLoad = function() {
+    $location.path('/dashboard');
+  };
 
 
   function signup(user) {
@@ -47,11 +50,13 @@ function ProfileController($routeParams, $location, ProfileService) {
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
   vm.submitProfile = submitProfile;
+
   var id = parseInt($routeParams.id);
-
-
   var healthEventsArray = [];
+  var healthCategoriesArray = [];
   vm.addToEventsArray = addToEventsArray;
+  vm.addToCategoriesArray = addToCategoriesArray;
+
 
   function addToEventsArray(obj) {
     // console.log(obj);
@@ -65,8 +70,7 @@ function ProfileController($routeParams, $location, ProfileService) {
     healthEventsArray.push(newObj);
   }
 
-  var healthCategoriesArray = [];
-  vm.addToCategoriesArray = addToCategoriesArray;
+
 
   function addToCategoriesArray(obj) {
     console.log(typeof obj.date);
@@ -99,7 +103,7 @@ function ProfileController($routeParams, $location, ProfileService) {
       var yyyy = this.getFullYear().toString();
       var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
       var dd = this.getDate().toString();
-      return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]) + " 00:00:00-06"; // padding
+      return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]); // padding
     };
 
     var d = new Date();
@@ -138,8 +142,35 @@ function ProfileController($routeParams, $location, ProfileService) {
   }
 
   ProfileService.getProfile(id).then(function(data) {
-    // console.log(data);
-    vm.profileData = data;
+    // console.log(data.data[0]);
+    vm.profileData = data.data[0];
+  });
+
+  ProfileService.getHeightWeight(id).then(function(data) {
+    //TODO return most recent height and date
+    var objArray = data.data;
+    var dates = [];
+    for (var i = 0; i < objArray.length; i++) {
+      dates.push(new Date(objArray[i].date));
+    }
+    var maxDate = new Date(Math.max.apply(null, dates));
+
+    console.log('maxDAte is: ' + maxDate);
+    // console.log(Date.parse(maxDate));
+
+    //loop throught array of objects
+    for (var j = 0; j < objArray.length; j++) {
+      var date = Date.parse(new Date(objArray[j].date));
+      var parsedMaxDate = Date.parse(maxDate);
+        //find object where the value of key date is maxDate
+      if (date === parsedMaxDate) {
+        var recentRecord = objArray[j];
+        vm.hwData = recentRecord;
+        console.log(objArray[j]);
+      }
+    }
+
+    // vm.hwData = data.data[0];
   });
 
 
