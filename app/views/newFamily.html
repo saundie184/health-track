@@ -1,0 +1,262 @@
+<div flex layout='row' layout-align='center start'>
+  <h1>Set up family tree</h1>
+</div>
+<!-- <div>
+  <pre>
+  {{family.familyData}}
+</pre>
+  <md-button class='md-primary md-raised' ng-click='family.test()'>Click to send data</md-button>
+</div> -->
+
+<div flex layout='row' layout-align='center start'>
+  <!-- <div flex></div> -->
+  <div flex='70'>
+    <md-content class="md-padding">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
+    </md-content>
+  </div>
+  <!-- <div flex></div> -->
+</div>
+
+<div layout='row' flex>
+  <div flex='20'></div>
+  <div flex>
+    <div ng-cloak>
+      <h3>Mother's Side</h3>
+      <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+          <md-tab label="Parents">
+            <md-content class="md-padding">
+              <form name='mothersForm'>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Name</label>
+                    <input ng-model='family.mName' name='mName'>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Relation to your mother</label>
+                    <md-select ng-model="family.relations" name='relations'>
+                      <sw-relation-selector></sw-relation-selector>
+                    </md-select>
+                  </md-input-container>
+                </div>
+
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Birth</label>
+                    <md-datepicker ng-model="family.dob" name='dob' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Death</label>
+                    <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div class="md-actions" layout="column" layout-align="center start">
+                  <md-button ng-click='family.submitMothersSide()' class='md-primary md-raised'>Add</md-button>
+                </div>
+              </form>
+            </md-content>
+          </md-tab>
+          <md-tab label="Sisters">
+            <md-content class="md-padding">
+              <form name='mothersForm'>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Name</label>
+                    <input ng-model='family.mName' name='mName'>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Relation to your mother</label>
+                    <md-select ng-model="family.relations" name='relations'>
+                      <sw-relation-selector></sw-relation-selector>
+                    </md-select>
+                  </md-input-container>
+                </div>
+
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Birth</label>
+                    <md-datepicker ng-model="family.dob" name='dob' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Death</label>
+                    <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div class="md-actions" layout="column" layout-align="center start">
+                  <md-button ng-click='family.submitMothersSide()' class='md-primary md-raised'>Add</md-button>
+                </div>
+              </form>
+            </md-content>
+          </md-tab>
+          <md-tab label="Brothers">
+            <md-content class="md-padding">
+              <form name='mothersForm'>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Name</label>
+                    <input ng-model='family.mName' name='mName'>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Relation to your mother</label>
+                    <md-select ng-model="family.relations" name='relations'>
+                    <sw-relation-selector></sw-relation-selector>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Birth</label>
+                    <md-datepicker ng-model="family.dob" name='dob' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Death</label>
+                    <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div class="md-actions" layout="column" layout-align="center start">
+                  <md-button ng-click='family.submitMothersSide()' class='md-primary md-raised'>Add</md-button>
+                </div>
+              </form>
+            </md-content>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+    </div>
+  </div>
+  <div flex='20'></div>
+</div>
+
+
+<div layout='row' flex>
+  <div flex='20'></div>
+  <div flex>
+    <div ng-cloak>
+      <h3>Father's Side</h3>
+      <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+          <md-tab label="Parents">
+            <md-content class="md-padding">
+              <form name='fathersForm'>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Name</label>
+                    <input ng-model='family.fName' name='fName'>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Relation to your father</label>
+                    <md-select ng-model="family.relations" name='relations'>
+                      <sw-relation-selector></sw-relation-selector>
+                    </md-select>
+                  </md-input-container>
+                </div>
+
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Birth</label>
+                    <md-datepicker ng-model="family.dob" name='dob' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Death</label>
+                    <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div class="md-actions" layout="column" layout-align="center start">
+                  <md-button ng-click='family.submitFathersSide()' class='md-primary md-raised'>Add</md-button>
+                </div>
+              </form>
+            </md-content>
+          </md-tab>
+          <md-tab label="Sisters">
+            <md-content class="md-padding">
+              <form name='mothersForm'>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Name</label>
+                    <input ng-model='family.fName' name='fName'>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Relation to your father</label>
+                    <md-select ng-model="family.relations" name='relations'>
+                      <sw-relation-selector></sw-relation-selector>
+                    </md-select>
+                  </md-input-container>
+                </div>
+
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Birth</label>
+                    <md-datepicker ng-model="family.dob" name='dob' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Death</label>
+                    <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div class="md-actions" layout="column" layout-align="center start">
+                  <md-button ng-click='family.submitFathersSide()' class='md-primary md-raised'>Add</md-button>
+                </div>
+              </form>
+            </md-content>
+          </md-tab>
+          <md-tab label="Brothers">
+            <md-content class="md-padding">
+              <form name='mothersForm'>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Name</label>
+                    <input ng-model='family.fName' name='fName'>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container>
+                    <label>Relation to your father</label>
+                    <md-select ng-model="family.relations" name='relations'>
+                    <sw-relation-selector></sw-relation-selector>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Birth</label>
+                    <md-datepicker ng-model="family.dob" name='dob' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div layout-gt-sm='row'>
+                  <md-input-continer>
+                    <label>Date of Death</label>
+                    <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                  </md-input-continer>
+                </div>
+                <div class="md-actions" layout="column" layout-align="center start">
+                  <md-button ng-click='family.submitFathersSide()' class='md-primary md-raised'>Add</md-button>
+                </div>
+              </form>
+            </md-content>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+    </div>
+  </div>
+  <div flex='20'></div>
+</div>

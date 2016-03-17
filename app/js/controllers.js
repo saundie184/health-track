@@ -68,6 +68,10 @@ function DashboardController($location, $routeParams) {
     var id = 56;
     $location.path('/family/' + id);
   };
+  vm.newFamilyMemberLoad = function() {
+    var id = 56;
+    $location.path('/family/new/' + id);
+  };
 
 
 }
@@ -226,25 +230,47 @@ function FamilyController($routeParams, $location, FamilyService) {
   var id = parseInt($routeParams.id);
 
   vm.title = 'Your family';
+  vm.submitMothersSide = submitMothersSide;
+  vm.submitFathersSide = submitFathersSide;
 
-  var testData = {
-    user_id: 56,
-    name: 'Joan',
-    relationship: 'mothers mother'
-  };
-  vm.test = test;
-
-  function test() {
-    FamilyService.submitFamilyMember(id, testData).then(function(data) {
+  function submitMothersSide() {
+    var data = {
+      user_id: id,
+      name: vm.mName,
+      relationship: 'mothers ' + vm.relations
+    };
+    // console.log(data);
+    FamilyService.submitFamilyMember(id, data).then(function(data) {
+      // console.log(data);
+    });
+  }
+  function submitFathersSide() {
+    var data = {
+      user_id: id,
+      name: vm.fName,
+      relationship: 'fathers ' + vm.relations
+    };
+    // console.log(data);
+    FamilyService.submitFamilyMember(id, data).then(function(data) {
       // console.log(data);
     });
   }
 
 
-  FamilyService.getFamily(id).then(function(data) {
-    // console.log(data.data[0]);
-    vm.familyData = data.data[0];
+  FamilyService.getMothersSide(id).then(function(data) {
+    // console.log(data);
+    vm.mothersSideArray = data.data;
   });
 
+  FamilyService.getFathersSide(id).then(function(data) {
+    console.log(data);
+    vm.fathersSideArray = data.data;
+  });
+
+  vm.relationsOptions = ('mother father sister brother').split(' ').map(function(m) {
+    return {
+      abbrev: m
+    };
+  });
 
 }
