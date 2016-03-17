@@ -2,8 +2,11 @@
 
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', AccountController]);
-app.controller('DashboardCrtl', ['$location', DashboardController]);
+app.controller('DashboardCrtl', ['$location', '$routeParams', DashboardController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', 'ProfileService', ProfileController]);
+app.controller('FamilyCrtl', ['$routeParams', '$location', 'FamilyService', FamilyController]);
+
+// ---------- Account --------------
 
 function AccountController(AuthService, $location) {
   var vm = this;
@@ -45,6 +48,32 @@ function AccountController(AuthService, $location) {
   }
 }
 
+// ---------- Dashboard --------------
+
+function DashboardController($location, $routeParams) {
+  var vm = this;
+  vm.title = 'Welcome username!';
+  // var id = parseInt($routeParams.id);
+  //TODO get user id from JWT?????
+
+  vm.newProfileLoad = function() {
+    var id = 56;
+    $location.path('/profile/new/' + id);
+  };
+  vm.profileLoad = function() {
+    var id = 56;
+    $location.path('/profile/' + id);
+  };
+  vm.familyTreeLoad = function() {
+    var id = 56;
+    $location.path('/family/' + id);
+  };
+
+
+}
+
+// ---------- Profile --------------
+
 function ProfileController($routeParams, $location, ProfileService) {
   var vm = this;
   vm.title = 'Your health profile';
@@ -73,7 +102,7 @@ function ProfileController($routeParams, $location, ProfileService) {
 
 
   function addToCategoriesArray(obj) {
-    console.log(typeof obj.date);
+    // console.log(typeof obj.date);
     var newObj = {
       user_id: id,
       type: obj.type,
@@ -96,9 +125,7 @@ function ProfileController($routeParams, $location, ProfileService) {
   function submitHeightWeight() {
     var height = convertToInches(vm.feet, vm.inches);
     var weight = vm.weight;
-    //TODO Date is not inserting in db even though the type is the same
-    // var utc = new Date();
-    // console.log(utc);
+
     Date.prototype.yyyymmdd = function() {
       var yyyy = this.getFullYear().toString();
       var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
@@ -108,7 +135,7 @@ function ProfileController($routeParams, $location, ProfileService) {
 
     var d = new Date();
     d.yyyymmdd();
-    // console.log(d.yyyymmdd());
+
     var data = {
       user_id: id,
       height: height,
@@ -155,22 +182,16 @@ function ProfileController($routeParams, $location, ProfileService) {
     }
     var maxDate = new Date(Math.max.apply(null, dates));
 
-    console.log('maxDAte is: ' + maxDate);
-    // console.log(Date.parse(maxDate));
-
-    //loop throught array of objects
+    //loop through array of objects to get most recent entry
     for (var j = 0; j < objArray.length; j++) {
       var date = Date.parse(new Date(objArray[j].date));
       var parsedMaxDate = Date.parse(maxDate);
-        //find object where the value of key date is maxDate
+      //find object where the value of key date is maxDate
       if (date === parsedMaxDate) {
         var recentRecord = objArray[j];
         vm.hwData = recentRecord;
-        console.log(objArray[j]);
       }
     }
-
-    // vm.hwData = data.data[0];
   });
 
 
@@ -198,20 +219,32 @@ function ProfileController($routeParams, $location, ProfileService) {
 
 }
 
-function DashboardController($location) {
-  var vm = this;
-  vm.title = 'Welcome username!';
+// ---------- Family --------------
 
-  vm.newProfileLoad = function() {
-    // console.log(id);
-    var id = '56';
-    $location.path('/profile/new/' + id);
+function FamilyController($routeParams, $location, FamilyService) {
+  var vm = this;
+  var id = parseInt($routeParams.id);
+
+  vm.title = 'Your family';
+
+  var testData = {
+    user_id: 56,
+    name: 'Joan',
+    relationship: 'mothers mother'
   };
-  vm.profileLoad = function() {
-    // console.log(id);
-    var id = '56';
-    $location.path('/profile/' + id);
-  };
+  vm.test = test;
+
+  function test() {
+    FamilyService.submitFamilyMember(id, testData).then(function(data) {
+      // console.log(data);
+    });
+  }
+
+
+  FamilyService.getFamily(id).then(function(data) {
+    // console.log(data.data[0]);
+    vm.familyData = data.data[0];
+  });
 
 
 }
