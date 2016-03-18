@@ -25,13 +25,18 @@
               <span>Health Track</span>
             </a>
           </h2>
-          <md-button aria-label="Dashboard" ng-click='account.dashboardLoad()'>Dashboard</md-button>
           <span flex></span>
-          <md-button aria-label="Sign in" ng-click='account.signInLoad()'>Sign in</md-button>
-          <md-button aria-label="Sign out" ng-click='account.signout()'>Sign out</md-button>
-          <md-button class='md-warn md-raised' aria-label="Sign up" ng-click='account.signUpLoad()'>
-            Sign up
-          </md-button>
+          <div ng-show='!isSignedIn'>
+            <md-button aria-label="Sign in" ng-click='account.signInLoad()'>Sign in</md-button>
+            <md-button class='md-warn md-raised' aria-label="Sign up" ng-click='account.signUpLoad()'>Sign up</md-button>
+          </div>
+          <div ng-show='isSignedIn'>
+            <md-button aria-label="Dashboard" ng-click='account.dashboardLoad()' ng-hide='account.isSignedIn'>Dashboard</md-button>
+            <span class='md-body-2'>
+              {{signedInUser}}
+            </span>
+            <md-button aria-label="Sign out" ng-click='account.signout()' ng-hide='account.isSignedIn'>Sign out</md-button>
+          </div>
         </div>
       </md-toolbar>
     </div>

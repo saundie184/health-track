@@ -1,18 +1,19 @@
 'use strict';
 
 // app.controller('MainController', ['$mdDialog', mainController]);
-app.controller('AccountCtrl', ['AuthService', '$location', AccountController]);
+app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', AccountController]);
 app.controller('DashboardCrtl', ['$location', '$routeParams', DashboardController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', 'ProfileService', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', 'FamilyService', FamilyController]);
 
 // ---------- Account --------------
 
-function AccountController(AuthService, $location) {
+function AccountController(AuthService, $location, $rootScope) {
   var vm = this;
   vm.signup = signup;
   vm.signin = signin;
   vm.signout = signout;
+
   vm.signUpLoad = function() {
     $location.path('/signup');
   };
@@ -21,6 +22,7 @@ function AccountController(AuthService, $location) {
   };
   vm.dashboardLoad = function() {
     $location.path('/dashboard');
+    // console.log(vm.isSignedIn);
   };
 
 
@@ -32,19 +34,19 @@ function AccountController(AuthService, $location) {
 
   function signin(user) {
     AuthService.signIn(user).then(function(res) {
-      // console.log(res);
+      //set username for dashboard
+      $rootScope.signedInUser = res.data.email;
+      //set token in localStorage
       localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
-      // console.log(localStorage.Authorization);
-      vm.signedIn = true;
       $location.path('/dashboard');
-
+      $rootScope.isSignedIn = true;
     });
   }
 
   function signout() {
     localStorage.removeItem('Authorization', null);
     $location.path('/');
-    vm.signedIn = false;
+    $rootScope.isSignedIn = false;
   }
 }
 
@@ -100,7 +102,15 @@ function ProfileController($routeParams, $location, ProfileService) {
       description: obj.description,
       date: obj.date
     };
-    healthEventsArray.push(newObj);
+    // healthEventsArray.push(newObj);
+    //reset form
+    var master = {
+      name: ''
+    };
+    vm.temp = angular.copy(master);
+    // vm.temp.$setPristine();
+    // console.log(newObj);
+    submitHealthEvents(newObj);
   }
 
 
@@ -114,7 +124,14 @@ function ProfileController($routeParams, $location, ProfileService) {
       description: obj.description,
       date: obj.date
     };
-    healthCategoriesArray.push(newObj);
+    // healthCategoriesArray.push(newObj);
+    //reset form
+    var master = {
+      name: ''
+    };
+    vm.temp = angular.copy(master);
+    submitHealthCategories(newObj);
+
   }
 
 
@@ -147,22 +164,19 @@ function ProfileController($routeParams, $location, ProfileService) {
       date: d.yyyymmdd()
     };
     ProfileService.submitHeightWeight(id, data).then(function(res, err) {
-      //call next function
-      submitHealthEvents(healthEventsArray);
+      //TODO add pop to let user know about filling in below info
     });
   }
 
   function submitHealthEvents(arr) {
     ProfileService.submitHealthEvents(id, arr).then(function(res) {
-      //call next function
-      submitHealthCategories(healthCategoriesArray);
-      // console.log(res);
+      console.log(res);
     });
   }
 
   function submitHealthCategories(arr) {
     ProfileService.submitHealthCategories(id, arr).then(function(res) {
-      $location.path('/dashboard');
+      // $location.path('/dashboard');
       // console.log(res);
     });
   }
@@ -244,6 +258,7 @@ function FamilyController($routeParams, $location, FamilyService) {
       // console.log(data);
     });
   }
+
   function submitFathersSide() {
     var data = {
       user_id: id,
