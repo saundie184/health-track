@@ -94,6 +94,26 @@ function Profile($http, dbURL) {
         return err;
       });
     },
+    getHealthEvents: function(id){
+      return $http.get(dbURL.url + '/profile/' + id + '/events/').then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
+    getHealthCategories: function(id){
+      return $http.get(dbURL.url + '/profile/' + id + '/categories/').then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
     submitProfile: function(id, user) {
       // console.log(user);
       return $http.post(dbURL.url + '/profile/' + id, user).then(function(res) {

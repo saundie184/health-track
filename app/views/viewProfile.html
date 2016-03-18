@@ -152,4 +152,23 @@
 <md-divider ></md-divider>
 <div flex layout='row' layout-align='center start'>
   <h3>Health Events Timeline</h3>
+
+</div>
+<div>
+  <timeline>
+   <timeline-event ng-repeat="event in profile.healthDataArray |orderBy: '-date'">
+     <!-- <timeline-badge class="icon-illness"></timeline-badge> -->
+     <!-- <timeline-badge ng-class='{"icon-illness": "{{event.type}}" === "illness", "icon-surgery": "{{event.type}}" === "surgery"}'></timeline-badge> -->
+<sw-health-icons></sw-health-icons>
+     <timeline-panel class="{{event.badgeClass}}">
+       <timeline-heading>
+         <h4>{{event.date | date:"MM/dd/yyyy"}}</h4>
+       </timeline-heading>
+       <h3>{{event.name}}</h3>
+       <h3>{{event.height}}</h3>
+       <h3>{{event.weight}}</h3>
+       <p>{{event.description}}</p>
+     </timeline-panel>
+   </timeline-event>
+ </timeline>
 </div>

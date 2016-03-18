@@ -89,3 +89,29 @@
     border: 0;
   }
 }
+
+/*---medical icons----*/
+.icon-surgery {
+  background-image:url('assets/ic_surgeon.png');
+}
+.icon-procedure {
+  background-image:url('assets/ic_sthetoscope.png');
+}
+.icon-illness {
+  background-image:url('assets/ic_pharmacy.png');
+}
+.icon-injury {
+  background-image:url('assets/ic_crutch.png');
+}
+.icon-other {
+  background-image:url('assets/ic_first_aid_kit.png');
+}
+.icon-food-allergy {
+  background-image:url('assets/ic_antibiotic2.png');
+}
+.icon-drug-allergy {
+  background-image:url('assets/ic_antibiotic.png');
+}
+.icon-hw {
+  background-image:url('assets/ic_patient_information.png');
+}

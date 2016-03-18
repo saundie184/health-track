@@ -87,11 +87,10 @@ function ProfileController($routeParams, $location, ProfileService) {
   vm.submitProfile = submitProfile;
 
   var id = parseInt($routeParams.id);
-  var healthEventsArray = [];
-  var healthCategoriesArray = [];
+  // var healthEventsArray = [];
+  // var healthCategoriesArray = [];
   vm.addToEventsArray = addToEventsArray;
   vm.addToCategoriesArray = addToCategoriesArray;
-
 
   function addToEventsArray(obj) {
     // console.log(obj);
@@ -124,7 +123,6 @@ function ProfileController($routeParams, $location, ProfileService) {
       description: obj.description,
       date: obj.date
     };
-    // healthCategoriesArray.push(newObj);
     //reset form
     var master = {
       name: ''
@@ -176,8 +174,7 @@ function ProfileController($routeParams, $location, ProfileService) {
 
   function submitHealthCategories(arr) {
     ProfileService.submitHealthCategories(id, arr).then(function(res) {
-      // $location.path('/dashboard');
-      // console.log(res);
+      console.log(res);
     });
   }
 
@@ -192,12 +189,12 @@ function ProfileController($routeParams, $location, ProfileService) {
   });
 
   ProfileService.getHeightWeight(id).then(function(data) {
-    //TODO return most recent height and date
     var objArray = data.data;
-    var dates = [];
-    for (var i = 0; i < objArray.length; i++) {
-      dates.push(new Date(objArray[i].date));
+    var hw = data.data;
+    for(var i = 0; i < hw.length; i++){
+      vm.healthDataArray.push(hw[i]);
     }
+    var dates = makeDatesArray(objArray);
     var maxDate = new Date(Math.max.apply(null, dates));
 
     //loop through array of objects to get most recent entry
@@ -212,7 +209,32 @@ function ProfileController($routeParams, $location, ProfileService) {
     }
   });
 
+  vm.healthDataArray = [];
+  console.log(vm.healthDataArray);
+  ProfileService.getHealthEvents(id).then(function(data) {
+    var events = data.data;
+    for(var i = 0; i < events.length; i++){
+      vm.healthDataArray.push(events[i]);
+    }
+  });
 
+  ProfileService.getHealthCategories(id).then(function(data) {
+    vm.healthCategoriesArray = data.data;
+    var categories = data.data;
+    for(var i = 0; i < categories.length; i++){
+      vm.healthDataArray.push(categories[i]);
+    }
+  });
+
+  function makeDatesArray(objArray) {
+    var dates = [];
+    for (var i = 0; i < objArray.length; i++) {
+      dates.push(new Date(objArray[i].date));
+    }
+    return dates;
+  }
+
+  //TODO put these in a custom directive instead
   vm.dob = new Date();
   vm.gender = ('F M').split(' ').map(function(gen) {
     return {
