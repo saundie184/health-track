@@ -3,7 +3,7 @@
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', AccountController]);
 app.controller('DashboardCrtl', ['$location', '$routeParams', DashboardController]);
-app.controller('ProfileCrtl', ['$routeParams', '$location', 'ProfileService', ProfileController]);
+app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', 'ProfileService', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', 'FamilyService', FamilyController]);
 
 // ---------- Account --------------
@@ -80,7 +80,7 @@ function DashboardController($location, $routeParams) {
 
 // ---------- Profile --------------
 
-function ProfileController($routeParams, $location, ProfileService) {
+function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
   var vm = this;
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
@@ -191,8 +191,9 @@ function ProfileController($routeParams, $location, ProfileService) {
   ProfileService.getHeightWeight(id).then(function(data) {
     var objArray = data.data;
     var hw = data.data;
-    for(var i = 0; i < hw.length; i++){
-      vm.healthDataArray.push(hw[i]);
+    for (var i = 0; i < hw.length; i++) {
+      //TODO determine if I want hw in timeline
+      // vm.healthDataArray.push(hw[i]);
     }
     var dates = makeDatesArray(objArray);
     var maxDate = new Date(Math.max.apply(null, dates));
@@ -213,7 +214,7 @@ function ProfileController($routeParams, $location, ProfileService) {
   console.log(vm.healthDataArray);
   ProfileService.getHealthEvents(id).then(function(data) {
     var events = data.data;
-    for(var i = 0; i < events.length; i++){
+    for (var i = 0; i < events.length; i++) {
       vm.healthDataArray.push(events[i]);
     }
   });
@@ -221,10 +222,43 @@ function ProfileController($routeParams, $location, ProfileService) {
   ProfileService.getHealthCategories(id).then(function(data) {
     vm.healthCategoriesArray = data.data;
     var categories = data.data;
-    for(var i = 0; i < categories.length; i++){
+    for (var i = 0; i < categories.length; i++) {
       vm.healthDataArray.push(categories[i]);
     }
   });
+  // ---Timeline buttons----
+  // vm.showDetails = function(ev) {
+  //   // Appending dialog to document.body to cover sidenav in docs app
+  //   // Modal dialogs should fully cover application
+  //   // to prevent interaction outside of dialog
+  //   $mdDialog.show(
+  //     $mdDialog.alert()
+  //       .parent(angular.element(document.querySelector('#popupContainer')))
+  //       .clickOutsideToClose(true)
+  //       .title('This is an alert title')
+  //       .textContent('You can specify some description text in here.')
+  //       .ariaLabel('Alert Dialog Demo')
+  //       .ok('Got it!')
+  //       .targetEvent(ev)
+  //   );
+  // };
+  vm.showDetails = function(details) {
+    vm.detailsObj = details;
+    var dets = document.querySelector('#dets');
+
+    $mdDialog.show(
+      $mdDialog.alert()
+      .parent(angular.element(document.querySelector('#popupContainer')))
+      .clickOutsideToClose(true)
+      .title(details.date)
+      .textContent(details.name)
+      .ariaLabel('Alert Dialog Demo')
+      .ok('Close')
+      .targetEvent()
+      .hasBackdrop(false)
+    );
+    console.log(details);
+  };
 
   function makeDatesArray(objArray) {
     var dates = [];
@@ -258,6 +292,14 @@ function ProfileController($routeParams, $location, ProfileService) {
   });
 
 }
+
+
+
+
+
+
+
+
 
 // ---------- Family --------------
 

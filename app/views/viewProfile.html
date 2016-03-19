@@ -1,4 +1,4 @@
-<div flex layout='row' layout-align='center start'>
+<div flex layout='row' layout-align='center start' id="popupContainer">
   <h2>{{profile.title}}</h2>
 </div>
 
@@ -12,7 +12,8 @@
               <i class="material-icons md-40 lightblue300">face</i>
             </md-icon>
             <div class="md-list-item-text" layout="column">
-              <h3>{{profile.profileData.firstname}} {{profile.profileData.lastname}}</h3>
+              <h3>{{profile.profileData.firstname}}
+                {{profile.profileData.lastname}}</h3>
               <h4>Name</h4>
             </div>
           </md-list-item>
@@ -80,23 +81,23 @@
     </md-content>
   </div>
   <div layout="row" ng-cloak class="md-inline-form">
-      <md-content layout-padding>
-        <div layout-gt-sm="row">
-          <md-list flex>
-            <md-list-item class="md-3-line">
-              <md-icon>
+    <md-content layout-padding>
+      <div layout-gt-sm="row">
+        <md-list flex>
+          <md-list-item class="md-3-line">
+            <md-icon>
               <i class="material-icons md-40 lightblue300">opacity</i>
             </md-icon>
-              <div class="md-list-item-text" layout="column">
-                <h3>{{profile.profileData.blood_type}}</h3>
-                <h4>Blood Type</h4>
-              </div>
-            </md-list-item>
-          </md-list>
-          <md-divider ></md-divider>
-        </div>
-      </md-content>
-    </div>
+            <div class="md-list-item-text" layout="column">
+              <h3>{{profile.profileData.blood_type}}</h3>
+              <h4>Blood Type</h4>
+            </div>
+          </md-list-item>
+        </md-list>
+        <md-divider ></md-divider>
+      </div>
+    </md-content>
+  </div>
 </div>
 
 <md-divider ></md-divider>
@@ -117,7 +118,8 @@
               <h3>{{profile.hwData.height}}</h3>
               <h4>Height</h4>
               <p>
-                Updated on: {{profile.hwData.date | date:"MM/dd/yyyy"}}
+                Updated on:
+                {{profile.hwData.date | date:"MM/dd/yyyy"}}
               </p>
             </div>
           </md-list-item>
@@ -139,7 +141,8 @@
               <h3>{{profile.hwData.weight}}</h3>
               <h4>Weight</h4>
               <p>
-                Updated on: {{profile.hwData.date | date:"MM/dd/yyyy"}}
+                Updated on:
+                {{profile.hwData.date | date:"MM/dd/yyyy"}}
               </p>
             </div>
           </md-list-item>
@@ -154,21 +157,40 @@
   <h3>Health Events Timeline</h3>
 
 </div>
-<div>
-  <timeline>
-   <timeline-event ng-repeat="event in profile.healthDataArray |orderBy: '-date'">
-     <!-- <timeline-badge class="icon-illness"></timeline-badge> -->
-     <!-- <timeline-badge ng-class='{"icon-illness": "{{event.type}}" === "illness", "icon-surgery": "{{event.type}}" === "surgery"}'></timeline-badge> -->
-<sw-health-icons></sw-health-icons>
-     <timeline-panel class="{{event.badgeClass}}">
-       <timeline-heading>
-         <h4>{{event.date | date:"MM/dd/yyyy"}}</h4>
-       </timeline-heading>
-       <h3>{{event.name}}</h3>
-       <h3>{{event.height}}</h3>
-       <h3>{{event.weight}}</h3>
-       <p>{{event.description}}</p>
-     </timeline-panel>
-   </timeline-event>
- </timeline>
+
+<div layout='row' flex>
+  <div flex='20'></div>
+  <div flex>
+    <timeline>
+      <timeline-event ng-repeat="event in profile.healthDataArray |orderBy: '-date'">
+        <timeline-badge>
+          <md-button class="md-icon-button" aria-label="event icon" ng-click='profile.showDetails(event)'>
+            <md-icon md-svg-icon="styles/assets/tool.svg"></md-icon>
+
+          </md-button>
+        </timeline-badge>
+        <!-- <sw-health-icons></sw-health-icons> -->
+
+        <timeline-panel >
+          <timeline-heading >
+            <h4>{{event.date | date:"MM/dd/yyyy"}}</h4>
+          </timeline-heading>
+<div id='dets'>
+
+</div>
+          <!-- <div >
+            <h3>{{event.name}}</h3>
+            <p>{{event.description}}</p>
+            <h3>{{event.height}}</h3>
+            <h3>{{event.weight}}</h3>
+          </div> -->
+        </timeline-panel>
+      </timeline-event>
+      <div>
+        {{profile.detailsObj}}
+      </div>
+    </timeline>
+  </div>
+  <div flex='20'></div>
+
 </div>
