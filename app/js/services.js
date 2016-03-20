@@ -153,6 +153,16 @@ function Profile($http, dbURL) {
         console.log(err);
         return err;
       });
+    },
+    submitRelationProfile: function(id, user){
+      // console.log(user);
+      return $http.post(dbURL.url + '/family/' + id + '/events', user).then(function(res) {
+        // console.log(res);
+        return res;
+      }, function(err) {
+        console.log(err);
+        return err;
+      });
     }
   };
 }

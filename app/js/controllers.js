@@ -2,7 +2,6 @@
 
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', AccountController]);
-app.controller('DashboardCrtl', ['$location', '$routeParams', DashboardController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', 'ProfileService', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', 'FamilyService', FamilyController]);
 
@@ -22,7 +21,22 @@ function AccountController(AuthService, $location, $rootScope) {
   };
   vm.dashboardLoad = function() {
     $location.path('/dashboard');
-    // console.log(vm.isSignedIn);
+  };
+
+  vm.profileLoad = function() {
+    $location.path('/profile/' + $rootScope.signedInUserID);
+  };
+  vm.newProfileLoad = function() {
+    $location.path('/profile/new/' + $rootScope.signedInUserID);
+  };
+  vm.familyTreeLoad = function() {
+    $location.path('/family/' + $rootScope.signedInUserID);
+  };
+  vm.newFamilyMemberLoad = function() {
+    $location.path('/family/new/' + $rootScope.signedInUserID);
+  };
+  vm.newRelationProfileLoad = function() {
+    $location.path('/family/' + $rootScope.signedInUserID + '/profile');
   };
 
 
@@ -31,9 +45,11 @@ function AccountController(AuthService, $location, $rootScope) {
       $location.path('/signin');
     });
   }
-
+  // var signedInUser;
   function signin(user) {
     AuthService.signIn(user).then(function(res) {
+      //set signedInUserID
+      $rootScope.signedInUserID = res.data.id;
       //set username for dashboard
       $rootScope.signedInUser = res.data.email;
       //set token in localStorage
@@ -43,6 +59,8 @@ function AccountController(AuthService, $location, $rootScope) {
     });
   }
 
+
+
   function signout() {
     localStorage.removeItem('Authorization', null);
     $location.path('/');
@@ -50,33 +68,6 @@ function AccountController(AuthService, $location, $rootScope) {
   }
 }
 
-// ---------- Dashboard --------------
-
-function DashboardController($location, $routeParams) {
-  var vm = this;
-  vm.title = 'Welcome username!';
-  // var id = parseInt($routeParams.id);
-  //TODO get user id from JWT?????
-
-  vm.newProfileLoad = function() {
-    var id = 56;
-    $location.path('/profile/new/' + id);
-  };
-  vm.profileLoad = function() {
-    var id = 56;
-    $location.path('/profile/' + id);
-  };
-  vm.familyTreeLoad = function() {
-    var id = 56;
-    $location.path('/family/' + id);
-  };
-  vm.newFamilyMemberLoad = function() {
-    var id = 56;
-    $location.path('/family/new/' + id);
-  };
-
-
-}
 
 // ---------- Profile --------------
 
@@ -85,6 +76,7 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
   vm.submitProfile = submitProfile;
+  vm.submitRelationProfile = submitRelationProfile;
 
   var id = parseInt($routeParams.id);
   // var healthEventsArray = [];
@@ -129,7 +121,6 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
     };
     vm.temp = angular.copy(master);
     submitHealthCategories(newObj);
-
   }
 
 
@@ -291,6 +282,20 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
     };
   });
 
+  // ---Relations Profile--
+  function submitRelationProfile() {
+    var user = {
+      relation_id: 54,
+      name: 'Cynthia',
+      type: 'illness',
+      description: 'Chickenpox',
+      date: '2000-04-01'
+    };
+    ProfileService.submitRelationProfile(id, user).then(function(res) {
+      console.log(res);
+    });
+  }
+
 }
 
 
@@ -312,16 +317,14 @@ function FamilyController($routeParams, $location, FamilyService) {
   vm.submitFathersSide = submitFathersSide;
   vm.submitYourFamily = submitYourFamily;
 
-  function submitYourFamily() {
-    var data = {
-      user_id: id,
-      name: vm.name,
-      relationship: vm.relations
-    };
+  function submitYourFamily(data) {
+    // console.log(data);
     FamilyService.submitFamilyMember(id, data).then(function(data) {
-      console.log(data);
+      // console.log(data);
       vm.name = '';
       vm.relations = '';
+      vm.dob = '';
+      vm.dod = '';
     });
   }
 
@@ -329,16 +332,18 @@ function FamilyController($routeParams, $location, FamilyService) {
     var data = {
       user_id: id,
       name: vm.mName,
-      relationship: 'mothers ' + vm.relations
+      relationship: 'mothers ' + vm.mRelations,
+      dob: vm.mDob,
+      dod: vm.mDod
     };
     // console.log(data);
-
     FamilyService.submitFamilyMember(id, data).then(function(data) {
       // console.log(data);
-
       //reset form
       vm.mName = '';
-      vm.relations = '';
+      vm.mRelations = '';
+      vm.mDob = '';
+      vm.mDod = '';
     });
   }
 
@@ -346,29 +351,32 @@ function FamilyController($routeParams, $location, FamilyService) {
     var data = {
       user_id: id,
       name: vm.fName,
-      relationship: 'fathers ' + vm.relations
+      relationship: 'fathers ' + vm.fRelations,
+      dob: vm.fDob,
+      dod: vm.fDod
     };
     // console.log(data);
     FamilyService.submitFamilyMember(id, data).then(function(data) {
       // console.log(data);
-
       //reset form
       vm.fName = '';
-      vm.relations = '';
+      vm.fRelations = '';
+      vm.fDob = '';
+      vm.fDod = '';
     });
   }
 
   FamilyService.getImmediateFamily(id).then(function(data) {
     vm.familyArray = data.data;
   });
-  
+
   FamilyService.getMothersSide(id).then(function(data) {
     // console.log(data);
     vm.mothersSideArray = data.data;
   });
 
   FamilyService.getFathersSide(id).then(function(data) {
-    console.log(data);
+    // console.log(data);
     vm.fathersSideArray = data.data;
   });
 
@@ -377,5 +385,4 @@ function FamilyController($routeParams, $location, FamilyService) {
       abbrev: m
     };
   });
-
 }

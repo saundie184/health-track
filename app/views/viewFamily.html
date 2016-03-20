@@ -2,7 +2,7 @@
   <h2>{{family.title}}</h2>
 </div>
 
-<div flex layout='row' layout-align='center start'>
+<div flex layout='row' layout-align='center start' ng-controller='AccountCtrl as account'>
   <div id='table'>
     <h2>Your immediate family</h2>
     <div>
@@ -17,13 +17,17 @@
             <th></th>
           </tr>
         </thead>
-        <tbody ng-repeat = 'fam in family.familyArray'>
+        <tbody ng-repeat='fam in family.familyArray'>
           <tr>
             <td >{{fam.name}}</td>
             <td >{{fam.relationship}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{fam.dob | date:"MM/dd/yyyy"}}</td>
+            <td>{{fam.dod | date:"MM/dd/yyyy"}}</td>
+            <td>
+              <md-button class="md-fab md-warn" aria-label="Edit profile" ng-click='account.newRelationProfileLoad()'>
+                <md-icon class="material-icons">mode_edit</md-icon>
+              </md-button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -46,12 +50,12 @@
             <th></th>
           </tr>
         </thead>
-        <tbody ng-repeat = 'mother in family.mothersSideArray'>
+        <tbody ng-repeat='mother in family.mothersSideArray'>
           <tr>
             <td >{{mother.name}}</td>
             <td >{{mother.relationship}}</td>
-            <td></td>
-            <td></td>
+            <td>{{mother.dob | date:"MM/dd/yyyy"}}</td>
+            <td>{{mother.dod | date:"MM/dd/yyyy"}}</td>
             <td></td>
           </tr>
         </tbody>
@@ -75,12 +79,12 @@
             <th></th>
           </tr>
         </thead>
-        <tbody ng-repeat = 'father in family.fathersSideArray'>
+        <tbody ng-repeat='father in family.fathersSideArray'>
           <tr>
             <td >{{father.name}}</td>
             <td >{{father.relationship}}</td>
-            <td></td>
-            <td></td>
+            <td>{{father.dob | date:"MM/dd/yyyy"}}</td>
+            <td>{{father.dod | date:"MM/dd/yyyy"}}</td>
             <td></td>
           </tr>
         </tbody>

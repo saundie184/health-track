@@ -20,7 +20,7 @@ app.config(function($routeProvider, $httpProvider){
   })
   .when('/dashboard', {
     templateUrl: 'views/dashboard.html',
-    controller: 'DashboardCrtl as dash'
+    controller: 'AccountCtrl as account'
   })
   .when('/profile/new/:id', {
     templateUrl: 'views/newProfile.html',
@@ -37,6 +37,10 @@ app.config(function($routeProvider, $httpProvider){
   .when('/family/:id', {
     templateUrl: 'views/viewFamily.html',
     controller: 'FamilyCrtl as family'
+  })
+  .when('/family/:id/profile', {
+    templateUrl: 'views/newRelationProfile.html',
+    controller: 'ProfileCrtl as profile'
   })
   .otherwise({
     redirectTo: '/'
