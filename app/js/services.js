@@ -161,6 +161,16 @@ function Profile($http, dbURL) {
 // --------------- Family Profiles -------------------
 function Family($http, dbURL) {
   return {
+    getImmediateFamily: function(id){
+      return $http.get(dbURL.url + '/family/' + id).then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
     getMothersSide: function(id){
       return $http.get(dbURL.url + '/family/' + id + '/mothers').then(function(data) {
         // console.log(data);

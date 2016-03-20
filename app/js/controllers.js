@@ -310,6 +310,20 @@ function FamilyController($routeParams, $location, FamilyService) {
   vm.title = 'Your family';
   vm.submitMothersSide = submitMothersSide;
   vm.submitFathersSide = submitFathersSide;
+  vm.submitYourFamily = submitYourFamily;
+
+  function submitYourFamily() {
+    var data = {
+      user_id: id,
+      name: vm.name,
+      relationship: vm.relations
+    };
+    FamilyService.submitFamilyMember(id, data).then(function(data) {
+      console.log(data);
+      vm.name = '';
+      vm.relations = '';
+    });
+  }
 
   function submitMothersSide() {
     var data = {
@@ -318,8 +332,13 @@ function FamilyController($routeParams, $location, FamilyService) {
       relationship: 'mothers ' + vm.relations
     };
     // console.log(data);
+
     FamilyService.submitFamilyMember(id, data).then(function(data) {
       // console.log(data);
+
+      //reset form
+      vm.mName = '';
+      vm.relations = '';
     });
   }
 
@@ -332,10 +351,17 @@ function FamilyController($routeParams, $location, FamilyService) {
     // console.log(data);
     FamilyService.submitFamilyMember(id, data).then(function(data) {
       // console.log(data);
+
+      //reset form
+      vm.fName = '';
+      vm.relations = '';
     });
   }
 
-
+  FamilyService.getImmediateFamily(id).then(function(data) {
+    vm.familyArray = data.data;
+  });
+  
   FamilyService.getMothersSide(id).then(function(data) {
     // console.log(data);
     vm.mothersSideArray = data.data;

@@ -4,6 +4,35 @@
 
 <div flex layout='row' layout-align='center start'>
   <div id='table'>
+    <h2>Your immediate family</h2>
+    <div>
+      <!-- Table starts here -->
+      <table id="table" class="table table-hover table-mc-light-blue">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Relative</th>
+            <th>DOB</th>
+            <th>DOD</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody ng-repeat = 'fam in family.familyArray'>
+          <tr>
+            <td >{{fam.name}}</td>
+            <td >{{fam.relationship}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div flex layout='row' layout-align='center start'>
+  <div id='table'>
     <h2>Mother's side</h2>
     <div>
       <!-- Table starts here -->
