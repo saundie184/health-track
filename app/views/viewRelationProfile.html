@@ -1,5 +1,6 @@
 <div flex layout='row' layout-align='center start' id="popupContainer">
-  <h2>Health Profile for: </h2>
+  <h2>Health Profile for:
+  </h2>
 </div>
 <!-- <md-button class='md-warn md-raised' ng-click='profile.getRelationProfile()'>get profile</md-button> -->
 
@@ -13,7 +14,11 @@
               <i class="material-icons md-40 lightblue300">face</i>
             </md-icon>
             <div class="md-list-item-text" layout="column">
-              <h3>{{profile.relationship.name}}</h3>
+              <h3 ng-hide='profile.showEditInput'>{{profile.relationship.name}}</h3>
+              <!-- <h3 ng-hide='profile.showEditInput'>{{profile.relationship.name}}</h3> -->
+              <div ng-show='profile.showEditInput'>
+                <input ng-model='profile.editName' value=''/>
+              </div>
               <h4>Name</h4>
             </div>
           </md-list-item>
@@ -97,7 +102,14 @@
         <md-divider ></md-divider>
       </div>
     </md-content>
+
   </div>
+
+</div>
+<!-- Edit button -->
+<div flex layout='row' layout-align='center start' ng-controller='FamilyCrtl as family'>
+  <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='profile.showEditInput = true; profile.editName = profile.relationship.name; profile.submitBtn = true' ng-hide='profile.submitBtn'>Edit</md-button>
+  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitBtn' ng-click='profile.updateRelationProfile(profile.relationship.id, {name: profile.editName}); profile.submitBtn = false; profile.showEditInput = false' >Submit</md-button>
 </div>
 
 <md-divider ></md-divider>
@@ -155,6 +167,7 @@
 <md-divider ></md-divider>
 <div flex layout='row' layout-align='center start'>
   <div layout='row'>
+    <h3>Health Events</h3>
     <pre>
       {{profile.relationProfileData}}
     </pre>

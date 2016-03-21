@@ -88,11 +88,11 @@
                 <div layout-gt-sm='row'>
                   <md-input-continer>
                     <label>Date of Death</label>
-                    <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                    <md-datepicker ng-model="family.dod" name='dod' md-placeholder="Enter date"></md-datepicker>
                   </md-input-continer>
                 </div>
                 <div class="md-actions" layout="column" layout-align="center start">
-                  <md-button ng-click='family.submitYourFamily()' class='md-primary md-raised'>Add</md-button>
+                  <md-button ng-click='family.submitYourFamily({name: family.name, relationship: family.relations, dob: family.dob, dod: family.dod})' class='md-primary md-raised'>Add</md-button>
                 </div>
               </form>
             </md-content>

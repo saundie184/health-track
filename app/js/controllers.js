@@ -2,7 +2,7 @@
 
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', AccountController]);
-app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', 'ProfileService', ProfileController]);
+app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', 'ProfileService', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', 'FamilyService', FamilyController]);
 
 // ---------- Account --------------
@@ -72,12 +72,13 @@ function AccountController(AuthService, $location, $rootScope) {
 
 // ---------- Profile --------------
 
-function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
+function ProfileController($routeParams, $location, $mdDialog, $route, ProfileService) {
   var vm = this;
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
   vm.submitProfile = submitProfile;
   vm.submitRelationProfile = submitRelationProfile;
+  vm.updateRelationProfile = updateRelationProfile;
 
   var id = parseInt($routeParams.id);
   var relation_id = parseInt($routeParams.relation_id);
@@ -204,7 +205,7 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
   });
 
   vm.healthDataArray = [];
-  console.log(vm.healthDataArray);
+  // console.log(vm.healthDataArray);
   ProfileService.getHealthEvents(id).then(function(data) {
     var events = data.data;
     for (var i = 0; i < events.length; i++) {
@@ -288,7 +289,7 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
   function submitRelationProfile() {
     var user = {
       relation_id: 54,
-      name: 'Cynthia',
+      name: 'chickenpox',
       type: 'illness',
       description: 'Chickenpox',
       date: '2000-04-01'
@@ -299,16 +300,27 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
   }
 
 
-  ProfileService.getRelationProfile(id, relation_id).then(function(data) {
+  ProfileService.getRelationProfile(id, relation_id).then(function(data, err) {
     vm.relationProfileData = data.data;
     // console.log(data);
     ProfileService.getRelationship(id, relation_id).then(function(data) {
-      // console.log(data.data[0]);
+      console.log(data.data[0]);
       vm.relationship = data.data[0];
     });
   });
 
 
+
+
+  function updateRelationProfile(relation_id, data) {
+    console.log(data.name);
+    // vm.relationProfileData.name = data.name;
+    ProfileService.updateRelationProfile(id, relation_id, data).then(function(res) {
+      console.log(res);
+      //TODO is there a better solution to reload page so the db updates???
+      $route.reload();
+    });
+  }
 
 
 }
@@ -332,9 +344,10 @@ function FamilyController($routeParams, $location, FamilyService) {
   vm.submitMothersSide = submitMothersSide;
   vm.submitFathersSide = submitFathersSide;
   vm.submitYourFamily = submitYourFamily;
+  // vm.updateRelationProfile = updateRelationProfile;
 
   function submitYourFamily(data) {
-    // console.log(data);
+    console.log(data);
     FamilyService.submitFamilyMember(id, data).then(function(data) {
       // console.log(data);
       vm.name = '';
@@ -396,6 +409,15 @@ function FamilyController($routeParams, $location, FamilyService) {
     // console.log(data);
     vm.fathersSideArray = data.data;
   });
+
+
+  // function updateRelationProfile(relation_id, data) {
+  //   console.log(data);
+  //   vm.newName = data.name;
+  //   FamilyService.updateRelationProfile(id, relation_id, data).then(function(res) {
+  //     console.log(res);
+  //   });
+  // }
 
   vm.relationsOptions = ('mother father sister brother').split(' ').map(function(m) {
     return {

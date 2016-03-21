@@ -120,12 +120,22 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        console.log('User is not authorized.');
         return err;
       });
     },
     getRelationship: function(id, relation_id){
       return $http.get(dbURL.url + '/family/' + id + '/relation/' + relation_id).then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
+    updateRelationProfile: function(id,relation_id, data){
+      return $http.post(dbURL.url + '/family/' + id + '/edit/' + relation_id, data).then(function(data) {
         // console.log(data);
         return data;
       }, function(err) {
@@ -221,6 +231,16 @@ function Family($http, dbURL) {
         return err;
       });
     },
+    // updateRelationProfile: function(id,relation_id, data){
+    //   return $http.post(dbURL.url + '/family/' + id + '/edit/' + relation_id, data).then(function(data) {
+    //     // console.log(data);
+    //     return data;
+    //   }, function(err) {
+    //     //TODO failed authentication goes here
+    //     console.log(err);
+    //     return err;
+    //   });
+    // },
     submitFamilyMember: function(id, user) {
       return $http.post(dbURL.url + '/family/' + id, user).then(function(res) {
         console.log(res);
