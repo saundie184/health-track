@@ -33,7 +33,7 @@ function AuthInterceptor($window, $location, $q) {
       }
       // if you try to access a user who is not yourself
       if (err.status === 401) {
-        $location.path('/users');
+        $location.path('/');
         return $q.reject(err);
       }
       return $q.reject(err);
@@ -62,7 +62,7 @@ function Auth($http, dbURL) {
         return res;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log('User not authenticated: ' + err);
+        console.log(err);
         return err;
       });
 
@@ -80,7 +80,7 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log('You do not have access to this page');
         return err;
       });
     },
@@ -90,7 +90,7 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -100,7 +100,7 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -110,7 +110,7 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -120,7 +120,7 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log('User is not authorized.');
+        // console.log('User is not authorized.');
         return err;
       });
     },
@@ -130,7 +130,7 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -140,7 +140,7 @@ function Profile($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -150,7 +150,7 @@ function Profile($http, dbURL) {
         return res;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -160,7 +160,7 @@ function Profile($http, dbURL) {
         // console.log(res);
         return res;
       }, function(err) {
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -170,17 +170,17 @@ function Profile($http, dbURL) {
         // console.log(res);
         return res;
       }, function(err) {
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
     submitHealthEvents: function(id, user) {
       // console.log(user);
       return $http.post(dbURL.url + '/profile/' + id + '/events/', user).then(function(res) {
-        console.log(res);
+        // console.log(res);
         return res;
       }, function(err) {
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -190,7 +190,7 @@ function Profile($http, dbURL) {
         // console.log(res);
         return res;
       }, function(err) {
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -200,7 +200,7 @@ function Profile($http, dbURL) {
         // console.log(res);
         return res;
       }, function(err) {
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -210,7 +210,7 @@ function Profile($http, dbURL) {
         // console.log(res);
         return res;
       }, function(err) {
-        console.log(err);
+        // console.log(err);
         return err;
       });
     }
@@ -227,7 +227,7 @@ function Family($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -237,7 +237,7 @@ function Family($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -247,7 +247,7 @@ function Family($http, dbURL) {
         return data;
       }, function(err) {
         //TODO failed authentication goes here
-        console.log(err);
+        // console.log(err);
         return err;
       });
     },
@@ -263,10 +263,10 @@ function Family($http, dbURL) {
     // },
     submitFamilyMember: function(id, user) {
       return $http.post(dbURL.url + '/family/' + id, user).then(function(res) {
-        console.log(res);
+        // console.log(res);
         return res;
       }, function(err) {
-        console.log(err);
+        // console.log(err);
         return err;
       });
     }

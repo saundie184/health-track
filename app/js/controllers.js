@@ -13,6 +13,10 @@ function AccountController(AuthService, $location, $rootScope) {
   vm.signin = signin;
   vm.signout = signout;
 
+  vm.homePageLoad = function(){
+    $location.path('/');
+  };
+
   vm.signUpLoad = function() {
     $location.path('/signup');
   };
@@ -49,14 +53,21 @@ function AccountController(AuthService, $location, $rootScope) {
   // var signedInUser;
   function signin(user) {
     AuthService.signIn(user).then(function(res) {
-      //set signedInUserID
-      $rootScope.signedInUserID = res.data.id;
-      //set username for dashboard
-      $rootScope.signedInUser = res.data.email;
-      //set token in localStorage
-      localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
-      $location.path('/dashboard');
-      $rootScope.isSignedIn = true;
+      // console.log(res);
+      if(res.data === 'error'){
+        // console.log('Wrong username and password.');
+        vm.wrongPassword = 'Username and password do not match.';
+      } else {
+        //set signedInUserID
+        $rootScope.signedInUserID = res.data.id;
+        //set username for dashboard
+        $rootScope.signedInUser = res.data.email;
+        //set token in localStorage
+        localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
+        $location.path('/dashboard');
+        $rootScope.isSignedIn = true;
+      }
+
     });
   }
 

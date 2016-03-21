@@ -116,7 +116,9 @@
   background-image:url('assets/ic_patient_information.png');
 }
 
-
+.errorMsg {
+  color: #E64A19;
+}
 /*---timeline----*/
 /*md-backdrop {
   display: none;

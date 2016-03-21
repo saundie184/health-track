@@ -10,7 +10,7 @@
       <md-content layout-padding>
         <div>
           <form name="userForm" ng-submit='account.signin({email: email, password: password})'>
-
+            <p class='errorMsg'>{{account.wrongPassword}}</p>
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                 <label>Email</label>
@@ -29,7 +29,8 @@
 
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
-                <md-button class='md-default md-raised'>Cancel</md-button>
+
+                <md-button class='md-default md-raised' ng-click='account.homePageLoad()'>Cancel</md-button>
                 <md-button class='md-warn md-raised' type='submit'>Sign in</md-button>
               </md-input-container>
             </div>
