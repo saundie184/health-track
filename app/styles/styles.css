@@ -119,6 +119,9 @@
 .errorMsg {
   color: #E64A19;
 }
+footer {
+  background-color: lightgray;
+}
 /*---timeline----*/
 /*md-backdrop {
   display: none;
