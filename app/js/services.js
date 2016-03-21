@@ -23,7 +23,7 @@ function AuthInterceptor($window, $location, $q) {
       // console.log(token);
       if (token)
         config.headers.Authorization = token;
-        return $q.resolve(config);
+      return $q.resolve(config);
     },
     responseError: function(err) {
       // if you mess around with the token, log them out and destroy it
@@ -94,7 +94,7 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    getHealthEvents: function(id){
+    getHealthEvents: function(id) {
       return $http.get(dbURL.url + '/profile/' + id + '/events/').then(function(data) {
         // console.log(data);
         return data;
@@ -104,8 +104,28 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    getHealthCategories: function(id){
+    getHealthCategories: function(id) {
       return $http.get(dbURL.url + '/profile/' + id + '/categories/').then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
+    getRelationProfile: function(id, relation_id) {
+      return $http.get(dbURL.url + '/family/' + id + '/profile/' + relation_id).then(function(data) {
+        console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
+    getRelationship: function(id, relation_id){
+      return $http.get(dbURL.url + '/family/' + id + '/relation/' + relation_id).then(function(data) {
         // console.log(data);
         return data;
       }, function(err) {
@@ -154,7 +174,7 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    submitRelationProfile: function(id, user){
+    submitRelationProfile: function(id, user) {
       // console.log(user);
       return $http.post(dbURL.url + '/family/' + id + '/events', user).then(function(res) {
         // console.log(res);
@@ -171,7 +191,7 @@ function Profile($http, dbURL) {
 // --------------- Family Profiles -------------------
 function Family($http, dbURL) {
   return {
-    getImmediateFamily: function(id){
+    getImmediateFamily: function(id) {
       return $http.get(dbURL.url + '/family/' + id).then(function(data) {
         // console.log(data);
         return data;
@@ -181,7 +201,7 @@ function Family($http, dbURL) {
         return err;
       });
     },
-    getMothersSide: function(id){
+    getMothersSide: function(id) {
       return $http.get(dbURL.url + '/family/' + id + '/mothers').then(function(data) {
         // console.log(data);
         return data;
@@ -191,7 +211,7 @@ function Family($http, dbURL) {
         return err;
       });
     },
-    getFathersSide: function(id){
+    getFathersSide: function(id) {
       return $http.get(dbURL.url + '/family/' + id + '/fathers').then(function(data) {
         // console.log(data);
         return data;

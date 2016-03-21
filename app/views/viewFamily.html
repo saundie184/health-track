@@ -14,7 +14,7 @@
             <th>Relative</th>
             <th>DOB</th>
             <th>DOD</th>
-            <th></th>
+            <td></td>
           </tr>
         </thead>
         <tbody ng-repeat='fam in family.familyArray'>
@@ -24,8 +24,11 @@
             <td>{{fam.dob | date:"MM/dd/yyyy"}}</td>
             <td>{{fam.dod | date:"MM/dd/yyyy"}}</td>
             <td>
-              <md-button class="md-fab md-warn" aria-label="Edit profile" ng-click='account.newRelationProfileLoad()'>
-                <md-icon class="material-icons">mode_edit</md-icon>
+              <md-button class="md-raised md-warn" aria-label="Edit profile">
+                Edit
+              </md-button>
+              <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(fam.id)'>
+                View
               </md-button>
             </td>
           </tr>
@@ -52,11 +55,17 @@
         </thead>
         <tbody ng-repeat='mother in family.mothersSideArray'>
           <tr>
-            <td >{{mother.name}}</td>
+            <td >{{mother.name}}
+            </td>
             <td >{{mother.relationship}}</td>
             <td>{{mother.dob | date:"MM/dd/yyyy"}}</td>
             <td>{{mother.dod | date:"MM/dd/yyyy"}}</td>
-            <td></td>
+            <td>  <md-button class="md-raised md-warn" aria-label="Edit profile">
+                Edit
+              </md-button>
+              <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(fam.id)'>
+                View
+              </md-button></td>
           </tr>
         </tbody>
       </table>
@@ -85,7 +94,12 @@
             <td >{{father.relationship}}</td>
             <td>{{father.dob | date:"MM/dd/yyyy"}}</td>
             <td>{{father.dod | date:"MM/dd/yyyy"}}</td>
-            <td></td>
+            <td>  <md-button class="md-raised md-warn" aria-label="Edit profile">
+                Edit
+              </md-button>
+              <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(fam.id)'>
+                View
+              </md-button></td>
           </tr>
         </tbody>
       </table>

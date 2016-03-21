@@ -35,8 +35,9 @@ function AccountController(AuthService, $location, $rootScope) {
   vm.newFamilyMemberLoad = function() {
     $location.path('/family/new/' + $rootScope.signedInUserID);
   };
-  vm.newRelationProfileLoad = function() {
-    $location.path('/family/' + $rootScope.signedInUserID + '/profile');
+  vm.newRelationProfileLoad = function(relation_id) {
+    // console.log('id is: ' +relation_id);
+    $location.path('/family/' + $rootScope.signedInUserID + '/profile/' + relation_id);
   };
 
 
@@ -79,6 +80,7 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
   vm.submitRelationProfile = submitRelationProfile;
 
   var id = parseInt($routeParams.id);
+  var relation_id = parseInt($routeParams.relation_id);
   // var healthEventsArray = [];
   // var healthCategoriesArray = [];
   vm.addToEventsArray = addToEventsArray;
@@ -296,6 +298,19 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
     });
   }
 
+
+  ProfileService.getRelationProfile(id, relation_id).then(function(data) {
+    vm.relationProfileData = data.data;
+    // console.log(data);
+    ProfileService.getRelationship(id, relation_id).then(function(data) {
+      // console.log(data.data[0]);
+      vm.relationship = data.data[0];
+    });
+  });
+
+
+
+
 }
 
 
@@ -311,6 +326,7 @@ function ProfileController($routeParams, $location, $mdDialog, ProfileService) {
 function FamilyController($routeParams, $location, FamilyService) {
   var vm = this;
   var id = parseInt($routeParams.id);
+
 
   vm.title = 'Your family';
   vm.submitMothersSide = submitMothersSide;
@@ -367,6 +383,7 @@ function FamilyController($routeParams, $location, FamilyService) {
   }
 
   FamilyService.getImmediateFamily(id).then(function(data) {
+    // console.log(data.data);
     vm.familyArray = data.data;
   });
 

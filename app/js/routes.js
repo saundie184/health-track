@@ -38,12 +38,12 @@ app.config(function($routeProvider, $httpProvider){
     templateUrl: 'views/viewFamily.html',
     controller: 'FamilyCrtl as family'
   })
-  .when('/family/:id/profile', {
-    templateUrl: 'views/newRelationProfile.html',
+  .when('/family/:id/profile/:relation_id', {
+    templateUrl: 'views/viewRelationProfile.html',
     controller: 'ProfileCrtl as profile'
-  })
-  .otherwise({
-    redirectTo: '/'
   });
+  // .otherwise({
+  //   redirectTo: '/'
+  // });
   $httpProvider.interceptors.push("AuthInterceptor");
 });
