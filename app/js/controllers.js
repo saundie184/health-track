@@ -79,6 +79,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, ProfileSe
   vm.submitProfile = submitProfile;
   vm.submitRelationProfile = submitRelationProfile;
   vm.updateRelationProfile = updateRelationProfile;
+  vm.submitRelationHWProfile = submitRelationHWProfile;
 
   var id = parseInt($routeParams.id);
   var relation_id = parseInt($routeParams.relation_id);
@@ -304,16 +305,36 @@ function ProfileController($routeParams, $location, $mdDialog, $route, ProfileSe
     vm.relationProfileData = data.data;
     // console.log(data);
     ProfileService.getRelationship(id, relation_id).then(function(data) {
-      console.log(data.data[0]);
+      // console.log(data.data[0]);
       vm.relationship = data.data[0];
+      ProfileService.getRelationHeightWeight(id, relation_id).then(function(data){
+        // console.log(data.data);
+        var objArray = data.data;
+        // var hw = data.data;
+        // for (var i = 0; i < hw.length; i++) {
+        //   //TODO determine if I want hw in timeline
+        //   // vm.healthDataArray.push(hw[i]);
+        // }
+        var dates = makeDatesArray(objArray);
+        var maxDate = new Date(Math.max.apply(null, dates));
+
+        //loop through array of objects to get most recent entry
+        for (var j = 0; j < objArray.length; j++) {
+          var date = Date.parse(new Date(objArray[j].date));
+          var parsedMaxDate = Date.parse(maxDate);
+          //find object where the value of key date is maxDate
+          if (date === parsedMaxDate) {
+            var recentRecord = objArray[j];
+            vm.relationHWData = recentRecord;
+          }
+        }
+      });
     });
   });
 
 
-
-
   function updateRelationProfile(relation_id, data) {
-    console.log(data.name);
+    // console.log(data.name);
     // vm.relationProfileData.name = data.name;
     ProfileService.updateRelationProfile(id, relation_id, data).then(function(res) {
       console.log(res);
@@ -321,6 +342,22 @@ function ProfileController($routeParams, $location, $mdDialog, $route, ProfileSe
       $route.reload();
     });
   }
+
+  function submitRelationHWProfile(relation_id, data) {
+    var height = convertToInches(data.feet, data.inches);
+    var d = new Date();
+    var user = {
+      height: height,
+      weight: data.weight,
+      date: d
+    };
+    ProfileService.submitRelationHWProfile(id, relation_id, user).then(function(res) {
+      console.log(res);
+      //TODO is there a better solution to reload page so the db updates???
+      $route.reload();
+    });
+  }
+
 
 
 }

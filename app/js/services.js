@@ -116,7 +116,7 @@ function Profile($http, dbURL) {
     },
     getRelationProfile: function(id, relation_id) {
       return $http.get(dbURL.url + '/family/' + id + '/profile/' + relation_id).then(function(data) {
-        console.log(data);
+        // console.log(data);
         return data;
       }, function(err) {
         //TODO failed authentication goes here
@@ -134,10 +134,20 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    updateRelationProfile: function(id,relation_id, data){
-      return $http.post(dbURL.url + '/family/' + id + '/edit/' + relation_id, data).then(function(data) {
+    getRelationHeightWeight: function(id, relation_id){
+      return $http.get(dbURL.url + '/family/' + id + '/hw/' + relation_id).then(function(data) {
         // console.log(data);
         return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        console.log(err);
+        return err;
+      });
+    },
+    updateRelationProfile: function(id,relation_id, data){
+      return $http.post(dbURL.url + '/family/' + id + '/edit/' + relation_id, data).then(function(res) {
+        // console.log(data);
+        return res;
       }, function(err) {
         //TODO failed authentication goes here
         console.log(err);
@@ -187,6 +197,16 @@ function Profile($http, dbURL) {
     submitRelationProfile: function(id, user) {
       // console.log(user);
       return $http.post(dbURL.url + '/family/' + id + '/events', user).then(function(res) {
+        // console.log(res);
+        return res;
+      }, function(err) {
+        console.log(err);
+        return err;
+      });
+    },
+    submitRelationHWProfile: function(id, relation_id, data) {
+      console.log(data);
+      return $http.post(dbURL.url + '/family/' + id + '/hw/' + relation_id, data).then(function(res) {
         // console.log(res);
         return res;
       }, function(err) {
