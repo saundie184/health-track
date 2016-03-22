@@ -2,7 +2,7 @@
 
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', AccountController]);
-app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', 'ProfileService', ProfileController]);
+app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', 'FamilyService', FamilyController]);
 
 // ---------- Account --------------
@@ -52,6 +52,7 @@ function AccountController(AuthService, $location, $rootScope) {
   }
   // var signedInUser;
   function signin(user) {
+
     AuthService.signIn(user).then(function(res) {
       // console.log(res);
       if (res.data === 'error') {
@@ -67,7 +68,6 @@ function AccountController(AuthService, $location, $rootScope) {
         $location.path('/dashboard');
         $rootScope.isSignedIn = true;
       }
-
     });
   }
 
@@ -78,12 +78,14 @@ function AccountController(AuthService, $location, $rootScope) {
     $location.path('/');
     $rootScope.isSignedIn = false;
   }
+
+
 }
 
 
 // ---------- Profile --------------
 
-function ProfileController($routeParams, $location, $mdDialog, $route, ProfileService) {
+function ProfileController($routeParams, $location, $mdDialog, $route, $rootScope, ProfileService) {
   var vm = this;
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
@@ -98,6 +100,18 @@ function ProfileController($routeParams, $location, $mdDialog, $route, ProfileSe
   // var healthCategoriesArray = [];
   vm.addToEventsArray = addToEventsArray;
   vm.addToCategoriesArray = addToCategoriesArray;
+
+
+// -----------Check if user is signed in------------
+  //check localStorage for token
+  var token = localStorage.getItem('Authorization');
+  // console.log(localStorage);
+  if (token) {
+    //TODO add useremail to dashboard
+    $rootScope.isSignedIn = true;
+  }
+
+
 
   function addToEventsArray(obj) {
     // console.log(obj);
@@ -233,36 +247,11 @@ function ProfileController($routeParams, $location, $mdDialog, $route, ProfileSe
     }
   });
   // ---Timeline buttons----
-  // vm.showDetails = function(ev) {
-  //   // Appending dialog to document.body to cover sidenav in docs app
-  //   // Modal dialogs should fully cover application
-  //   // to prevent interaction outside of dialog
-  //   $mdDialog.show(
-  //     $mdDialog.alert()
-  //       .parent(angular.element(document.querySelector('#popupContainer')))
-  //       .clickOutsideToClose(true)
-  //       .title('This is an alert title')
-  //       .textContent('You can specify some description text in here.')
-  //       .ariaLabel('Alert Dialog Demo')
-  //       .ok('Got it!')
-  //       .targetEvent(ev)
-  //   );
-  // };
   vm.showDetailsToggle = function(details) {
-    // vm.detailsObj = details;
-    // var name = '<h3>' + details.name + '</h3>';
-    // var des = '<p>' + details.description + '</p>';
-    // var data = name + des;
-    // var data = '<p>HEllo!!!</p>';
-    // var dets = angular.element(document.getElementById(details.id));
-    // $(dets).append(data);
-    console.log(details);
-
-    // $( '.md-icon-button' ).click(function() {
-      $( "#"+ details.id ).toggle( "slow", function() {
-        // Animation complete.
-      });
-    // });
+    // console.log(details);
+    $("#" + details.id).toggle("slow", function() {
+      // Animation complete.
+    });
   };
 
   function makeDatesArray(objArray) {
