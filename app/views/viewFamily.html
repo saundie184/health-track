@@ -62,12 +62,16 @@
             <td >{{mother.relationship}}</td>
             <td>{{mother.dob | date:"MM/dd/yyyy"}}</td>
             <td>{{mother.dod | date:"MM/dd/yyyy"}}</td>
-            <td>  <md-button class="md-raised md-warn" aria-label="Edit profile">
-                Edit
-              </md-button>
+            <td>
               <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(mother.id)'>
-                View
-              </md-button></td>
+                View profile
+              </md-button>
+            </td>
+            <td>
+              <md-button class="md-raised md-warn" aria-label="Edit profile"ng-click='account.newRelationEventLoad(mother.id)'>
+                Add health event
+              </md-button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -96,12 +100,16 @@
             <td >{{father.relationship}}</td>
             <td>{{father.dob | date:"MM/dd/yyyy"}}</td>
             <td>{{father.dod | date:"MM/dd/yyyy"}}</td>
-            <td>  <md-button class="md-raised md-warn" aria-label="Edit profile">
-                Edit
-              </md-button>
+            <td>
               <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(father.id)'>
-                View
-              </md-button></td>
+                View profile
+              </md-button>
+            </td>
+            <td>
+              <md-button class="md-raised md-warn" aria-label="Edit profile"ng-click='account.newRelationEventLoad(father.id)'>
+                Add health event
+              </md-button>
+            </td>
           </tr>
         </tbody>
       </table>

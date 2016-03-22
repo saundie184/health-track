@@ -13,6 +13,8 @@ function AccountController(AuthService, $location, $rootScope) {
   vm.signin = signin;
   vm.signout = signout;
 
+  // var id;
+
   // -----------Check if user is signed in------------
   //check localStorage for token
   var token = localStorage.getItem('Authorization');
@@ -33,7 +35,8 @@ function AccountController(AuthService, $location, $rootScope) {
     $location.path('/signin');
   };
   vm.dashboardLoad = function() {
-    $location.path('/dashboard');
+    // console.log(id);
+    $location.path('/dashboard/' +  $rootScope.signedInUserID);
   };
 
   vm.profileLoad = function() {
@@ -43,7 +46,9 @@ function AccountController(AuthService, $location, $rootScope) {
     $location.path('/profile/new/' + $rootScope.signedInUserID);
   };
   vm.familyTreeLoad = function() {
+    // console.log(id);
     $location.path('/family/' + $rootScope.signedInUserID);
+    // $location.path('/family/' + id);
   };
   vm.newFamilyMemberLoad = function() {
     $location.path('/family/new/' + $rootScope.signedInUserID);
@@ -77,7 +82,7 @@ function AccountController(AuthService, $location, $rootScope) {
         $rootScope.signedInUser = res.data.email;
         //set token in localStorage
         localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
-        $location.path('/dashboard');
+        $location.path('/dashboard/' + $rootScope.signedInUserID);
         $rootScope.isSignedIn = true;
       }
     });
@@ -109,7 +114,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.addToRelationsCategories = addToRelationsCategories;
   vm.addToRelationsEvents = addToRelationsEvents;
 
-  var id = parseInt($routeParams.id);
+  // var id = parseInt($routeParams.id);
+  var id = $rootScope.signedInUserID;
   var relation_id = parseInt($routeParams.relation_id);
   // var healthEventsArray = [];
   // var healthCategoriesArray = [];
@@ -308,7 +314,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       date: '2000-04-01'
     };
     ProfileService.submitRelationProfile(id, user).then(function(res) {
-      console.log(res);
+      // console.log(res);
     });
   }
 
@@ -416,8 +422,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     });
   }
 
-  function submitRelationsCategories(data){
-    ProfileService.submitRelationsCategories(id, relation_id, data).then(function(res){
+  function submitRelationsCategories(data) {
+    ProfileService.submitRelationsCategories(id, relation_id, data).then(function(res) {
       console.log(res);
     });
   }
@@ -436,8 +442,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 function FamilyController($routeParams, $location, $rootScope, FamilyService) {
   var vm = this;
-  var id = parseInt($routeParams.id);
-
+  // var id = parseInt($routeParams.id);
+  var id = $rootScope.signedInUserID;
 
   vm.title = 'Your family';
   vm.submitMothersSide = submitMothersSide;
@@ -504,6 +510,7 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService) {
   }
 
   FamilyService.getImmediateFamily(id).then(function(data) {
+
     // console.log(data.data);
     vm.familyArray = data.data;
   });

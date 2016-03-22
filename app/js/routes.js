@@ -18,7 +18,7 @@ app.config(function($routeProvider, $httpProvider){
     templateUrl: 'views/main.html',
     controller: 'AccountCtrl as account'
   })
-  .when('/dashboard', {
+  .when('/dashboard/:id', {
     templateUrl: 'views/dashboard.html',
     controller: 'AccountCtrl as account'
   })

@@ -215,7 +215,7 @@ function Profile($http, dbURL) {
       });
     },
     submitRelationEvents: function(id, relation_id, data) {
-      console.log(data);
+      // console.log(data);
       return $http.post(dbURL.url + '/family/' + id + '/events/' + relation_id, data).then(function(res) {
         // console.log(res);
         return res;
@@ -225,7 +225,7 @@ function Profile($http, dbURL) {
       });
     },
     submitRelationsCategories: function(id, relation_id, data) {
-      console.log(data);
+      // console.log(data);
       return $http.post(dbURL.url + '/family/' + id + '/categories/' + relation_id, data).then(function(res) {
         // console.log(res);
         return res;
