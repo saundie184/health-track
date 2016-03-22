@@ -41,6 +41,10 @@ app.config(function($routeProvider, $httpProvider){
   .when('/family/:id/profile/:relation_id', {
     templateUrl: 'views/viewRelationProfile.html',
     controller: 'ProfileCrtl as profile'
+  })
+  .when('/family/:id/events/:relation_id', {
+    templateUrl: 'views/newRelationHealthEvents.html',
+    controller: 'ProfileCrtl as profile'
   });
   // .otherwise({
   //   redirectTo: '/'

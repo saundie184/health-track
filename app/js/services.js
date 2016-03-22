@@ -205,8 +205,28 @@ function Profile($http, dbURL) {
       });
     },
     submitRelationHWProfile: function(id, relation_id, data) {
-      console.log(data);
+      // console.log(data);
       return $http.post(dbURL.url + '/family/' + id + '/hw/' + relation_id, data).then(function(res) {
+        // console.log(res);
+        return res;
+      }, function(err) {
+        // console.log(err);
+        return err;
+      });
+    },
+    submitRelationEvents: function(id, relation_id, data) {
+      console.log(data);
+      return $http.post(dbURL.url + '/family/' + id + '/events/' + relation_id, data).then(function(res) {
+        // console.log(res);
+        return res;
+      }, function(err) {
+        // console.log(err);
+        return err;
+      });
+    },
+    submitRelationsCategories: function(id, relation_id, data) {
+      console.log(data);
+      return $http.post(dbURL.url + '/family/' + id + '/categories/' + relation_id, data).then(function(res) {
         // console.log(res);
         return res;
       }, function(err) {

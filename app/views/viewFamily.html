@@ -24,11 +24,13 @@
             <td>{{fam.dob | date:"MM/dd/yyyy"}}</td>
             <td>{{fam.dod | date:"MM/dd/yyyy"}}</td>
             <td>
-              <md-button class="md-raised md-warn" aria-label="Edit profile">
-                Edit
-              </md-button>
               <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(fam.id)'>
-                View
+                View profile
+              </md-button>
+            </td>
+            <td>
+              <md-button class="md-raised md-warn" aria-label="Edit profile"ng-click='account.newRelationEventLoad(fam.id)'>
+                Add health event
               </md-button>
             </td>
           </tr>

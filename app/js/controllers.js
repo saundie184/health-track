@@ -3,7 +3,7 @@
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', ProfileController]);
-app.controller('FamilyCrtl', ['$routeParams', '$location', 'FamilyService', FamilyController]);
+app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', FamilyController]);
 
 // ---------- Account --------------
 
@@ -12,6 +12,15 @@ function AccountController(AuthService, $location, $rootScope) {
   vm.signup = signup;
   vm.signin = signin;
   vm.signout = signout;
+
+  // -----------Check if user is signed in------------
+  //check localStorage for token
+  var token = localStorage.getItem('Authorization');
+  // console.log(localStorage);
+  if (token) {
+    //TODO add useremail to dashboard
+    $rootScope.isSignedIn = true;
+  }
 
   vm.homePageLoad = function() {
     $location.path('/');
@@ -42,6 +51,9 @@ function AccountController(AuthService, $location, $rootScope) {
   vm.newRelationProfileLoad = function(relation_id) {
     // console.log('id is: ' +relation_id);
     $location.path('/family/' + $rootScope.signedInUserID + '/profile/' + relation_id);
+  };
+  vm.newRelationEventLoad = function(relation_id) {
+    $location.path('/family/' + $rootScope.signedInUserID + '/events/' + relation_id);
   };
 
 
@@ -93,6 +105,9 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.submitRelationProfile = submitRelationProfile;
   vm.updateRelationProfile = updateRelationProfile;
   vm.submitRelationHWProfile = submitRelationHWProfile;
+  vm.submitRelationEvents = submitRelationEvents;
+  vm.addToRelationsCategories = addToRelationsCategories;
+  vm.addToRelationsEvents = addToRelationsEvents;
 
   var id = parseInt($routeParams.id);
   var relation_id = parseInt($routeParams.relation_id);
@@ -102,7 +117,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.addToCategoriesArray = addToCategoriesArray;
 
 
-// -----------Check if user is signed in------------
+  // -----------Check if user is signed in------------
   //check localStorage for token
   var token = localStorage.getItem('Authorization');
   // console.log(localStorage);
@@ -128,8 +143,6 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       name: ''
     };
     vm.temp = angular.copy(master);
-    // vm.temp.$setPristine();
-    // console.log(newObj);
     submitHealthEvents(newObj);
   }
 
@@ -358,6 +371,56 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   }
 
 
+  function addToRelationsEvents(obj) {
+    // console.log(obj);
+    var newObj = {
+      // user_id: id,
+      type: obj.type,
+      name: obj.name,
+      description: obj.description,
+      date: obj.date
+    };
+    // healthEventsArray.push(newObj);
+    //reset form
+    var master = {
+      name: ''
+    };
+    vm.temp = angular.copy(master);
+    submitRelationEvents(newObj);
+  }
+
+
+
+  function addToRelationsCategories(obj) {
+    // console.log(typeof obj.date);
+    var newObj = {
+      // user_id: id,
+      type: obj.type,
+      name: obj.name,
+      description: obj.description,
+      date: obj.date
+    };
+    //reset form
+    var master = {
+      name: ''
+    };
+    vm.temp = angular.copy(master);
+    submitRelationsCategories(newObj);
+  }
+
+
+  function submitRelationEvents(data) {
+    ProfileService.submitRelationEvents(id, relation_id, data).then(function(res) {
+      console.log(res);
+      submitRelationsCategories();
+    });
+  }
+
+  function submitRelationsCategories(data){
+    ProfileService.submitRelationsCategories(id, relation_id, data).then(function(res){
+      console.log(res);
+    });
+  }
 
 }
 
@@ -371,7 +434,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 // ---------- Family --------------
 
-function FamilyController($routeParams, $location, FamilyService) {
+function FamilyController($routeParams, $location, $rootScope, FamilyService) {
   var vm = this;
   var id = parseInt($routeParams.id);
 
@@ -381,6 +444,15 @@ function FamilyController($routeParams, $location, FamilyService) {
   vm.submitFathersSide = submitFathersSide;
   vm.submitYourFamily = submitYourFamily;
   // vm.updateRelationProfile = updateRelationProfile;
+
+  // -----------Check if user is signed in------------
+  //check localStorage for token
+  var token = localStorage.getItem('Authorization');
+  // console.log(localStorage);
+  if (token) {
+    //TODO add useremail to dashboard
+    $rootScope.isSignedIn = true;
+  }
 
   function submitYourFamily(data) {
     console.log(data);
