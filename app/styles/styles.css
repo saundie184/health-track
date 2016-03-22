@@ -126,3 +126,42 @@ footer {
 .detailsCards {
   display: none;
 }
+
+/*---Family Tree---*/
+/*circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+text {
+	font-size:10px;
+}
+
+path.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}*/
+
+
+
+text {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.about {
+  fill: #777;
+  font-size: smaller;
+}
+
+.link {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}

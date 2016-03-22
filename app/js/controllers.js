@@ -442,8 +442,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 function FamilyController($routeParams, $location, $rootScope, FamilyService) {
   var vm = this;
-  // var id = parseInt($routeParams.id);
-  var id = $rootScope.signedInUserID;
+  var id = parseInt($routeParams.id);
+  // var id = $rootScope.signedInUserID;
 
   vm.title = 'Your family';
   vm.submitMothersSide = submitMothersSide;
@@ -539,4 +539,6 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService) {
       abbrev: m
     };
   });
+
+  
 }
