@@ -164,26 +164,23 @@
     <timeline>
       <timeline-event ng-repeat="event in profile.healthDataArray |orderBy: '-date'">
         <timeline-badge>
-          <md-button class="md-icon-button" aria-label="event icon" ng-click='profile.showDetails(event)'>
+          <md-button class="md-icon-button" aria-label="event icon" ng-click='profile.showDetailsToggle(event)'>
+            <!-- <md-button class="md-icon-button" aria-label="event icon"> -->
             <md-icon md-svg-icon="styles/assets/tool.svg"></md-icon>
 
           </md-button>
         </timeline-badge>
         <!-- <sw-health-icons></sw-health-icons> -->
-
         <timeline-panel >
           <timeline-heading >
             <h4>{{event.date | date:"MM/dd/yyyy"}}</h4>
           </timeline-heading>
-<div id='dets'>
-
-</div>
-          <!-- <div >
+          <div id='{{event.id}}' class='detailsCards'>
             <h3>{{event.name}}</h3>
             <p>{{event.description}}</p>
-            <h3>{{event.height}}</h3>
-            <h3>{{event.weight}}</h3>
-          </div> -->
+            <!-- <h3>{{event.height}}</h3>
+            <h3>{{event.weight}}</h3> -->
+          </div>
         </timeline-panel>
       </timeline-event>
       <!-- <div>

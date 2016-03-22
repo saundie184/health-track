@@ -13,7 +13,7 @@ function AccountController(AuthService, $location, $rootScope) {
   vm.signin = signin;
   vm.signout = signout;
 
-  vm.homePageLoad = function(){
+  vm.homePageLoad = function() {
     $location.path('/');
   };
 
@@ -54,7 +54,7 @@ function AccountController(AuthService, $location, $rootScope) {
   function signin(user) {
     AuthService.signIn(user).then(function(res) {
       // console.log(res);
-      if(res.data === 'error'){
+      if (res.data === 'error') {
         // console.log('Wrong username and password.');
         vm.wrongPassword = 'Username and password do not match.';
       } else {
@@ -248,22 +248,21 @@ function ProfileController($routeParams, $location, $mdDialog, $route, ProfileSe
   //       .targetEvent(ev)
   //   );
   // };
-  vm.showDetails = function(details) {
-    vm.detailsObj = details;
-    var dets = document.querySelector('#dets');
-
-    $mdDialog.show(
-      $mdDialog.alert()
-      .parent(angular.element(document.querySelector('#popupContainer')))
-      .clickOutsideToClose(true)
-      .title(details.date)
-      .textContent(details.name)
-      .ariaLabel('Alert Dialog Demo')
-      .ok('Close')
-      .targetEvent()
-      .hasBackdrop(false)
-    );
+  vm.showDetailsToggle = function(details) {
+    // vm.detailsObj = details;
+    // var name = '<h3>' + details.name + '</h3>';
+    // var des = '<p>' + details.description + '</p>';
+    // var data = name + des;
+    // var data = '<p>HEllo!!!</p>';
+    // var dets = angular.element(document.getElementById(details.id));
+    // $(dets).append(data);
     console.log(details);
+
+    // $( '.md-icon-button' ).click(function() {
+      $( "#"+ details.id ).toggle( "slow", function() {
+        // Animation complete.
+      });
+    // });
   };
 
   function makeDatesArray(objArray) {
@@ -318,7 +317,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, ProfileSe
     ProfileService.getRelationship(id, relation_id).then(function(data) {
       // console.log(data.data[0]);
       vm.relationship = data.data[0];
-      ProfileService.getRelationHeightWeight(id, relation_id).then(function(data){
+      ProfileService.getRelationHeightWeight(id, relation_id).then(function(data) {
         // console.log(data.data);
         var objArray = data.data;
         // var hw = data.data;

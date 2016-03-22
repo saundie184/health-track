@@ -122,10 +122,7 @@
 footer {
   background-color: lightgray;
 }
-/*---timeline----*/
-/*md-backdrop {
+/*---health timeline----*/
+.detailsCards {
   display: none;
 }
-body{
-  /*overflow: hidden*/
-/*}*/
