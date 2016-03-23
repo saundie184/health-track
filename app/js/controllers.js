@@ -16,7 +16,7 @@ function AccountController(AuthService, $location, $rootScope, CheckSignedIn) {
   vm.user_id = $rootScope.signedInUserID;
   CheckSignedIn.check();
 
-vm.signedInUser = localStorage.signedInUser;
+  vm.signedInUser = localStorage.signedInUser;
   var id = localStorage.signedInUserID;
 
   vm.homePageLoad = function() {
@@ -117,20 +117,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.addToEventsArray = addToEventsArray;
   vm.addToCategoriesArray = addToCategoriesArray;
 
-  console.log(localStorage.signedInUserID);
-
-
   CheckSignedIn.check();
-  // // -----------Check if user is signed in------------
-  // //check localStorage for token
-  // var token = localStorage.getItem('Authorization');
-  // // console.log(localStorage);
-  // if (token) {
-  //   //TODO add useremail to dashboard
-  //   $rootScope.isSignedIn = true;
-  // }
-
-
 
   function addToEventsArray(obj) {
     // console.log(obj);
@@ -310,48 +297,55 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     });
   }
 
-  vm.relationHealthEventsArray = [];
-  ProfileService.getRelationProfile(id, relation_id).then(function(data) {
-    // vm.relationProfileData = data.data;
-    // console.log(data);
-    var events = data.data;
-    for (var i = 0; i < events.length; i++) {
-      vm.relationHealthEventsArray.push(events[i]);
-    }
-    ProfileService.getRelationCategories(id, relation_id).then(function(data) {
-      // console.log(data);
-      var categories = data.data;
-      for (var i = 0; i < categories.length; i++) {
-        vm.relationHealthEventsArray.push(categories[i]);
+  //Only get relation profiles if relation_id exists and is NaN
+  if (!isNaN(relation_id)) {
+    //run profile code
+    vm.relationHealthEventsArray = [];
+    // console.log(id);
+    // console.log(relation_id);
+    ProfileService.getRelationProfile(id, relation_id).then(function(data) {
+      var events = data.data;
+      for (var i = 0; i < events.length; i++) {
+        vm.relationHealthEventsArray.push(events[i]);
       }
-      ProfileService.getRelationship(id, relation_id).then(function(data) {
-        // console.log(data.data[0]);
-        vm.relationship = data.data[0];
-        ProfileService.getRelationHeightWeight(id, relation_id).then(function(data) {
-          // console.log(data.data);
-          var objArray = data.data;
-          // var hw = data.data;
-          // for (var i = 0; i < hw.length; i++) {
-          //   //TODO determine if I want hw in timeline
-          //   // vm.healthDataArray.push(hw[i]);
-          // }
-          var dates = makeDatesArray(objArray);
-          var maxDate = new Date(Math.max.apply(null, dates));
+      ProfileService.getRelationCategories(id, relation_id).then(function(data) {
+        // console.log(data);
+        var categories = data.data;
+        for (var i = 0; i < categories.length; i++) {
+          vm.relationHealthEventsArray.push(categories[i]);
+        }
+        ProfileService.getRelationship(id, relation_id).then(function(data) {
+          // console.log(data.data[0]);
+          vm.relationship = data.data[0];
+          ProfileService.getRelationHeightWeight(id, relation_id).then(function(data) {
+            // console.log(data.data);
+            var objArray = data.data;
+            // var hw = data.data;
+            // for (var i = 0; i < hw.length; i++) {
+            //   //TODO determine if I want hw in timeline
+            //   // vm.healthDataArray.push(hw[i]);
+            // }
+            var dates = makeDatesArray(objArray);
+            var maxDate = new Date(Math.max.apply(null, dates));
 
-          //loop through array of objects to get most recent entry
-          for (var j = 0; j < objArray.length; j++) {
-            var date = Date.parse(new Date(objArray[j].date));
-            var parsedMaxDate = Date.parse(maxDate);
-            //find object where the value of key date is maxDate
-            if (date === parsedMaxDate) {
-              var recentRecord = objArray[j];
-              vm.relationHWData = recentRecord;
+            //loop through array of objects to get most recent entry
+            for (var j = 0; j < objArray.length; j++) {
+              var date = Date.parse(new Date(objArray[j].date));
+              var parsedMaxDate = Date.parse(maxDate);
+              //find object where the value of key date is maxDate
+              if (date === parsedMaxDate) {
+                var recentRecord = objArray[j];
+                vm.relationHWData = recentRecord;
+              }
             }
-          }
+          });
         });
       });
     });
-  });
+  } else {
+    console.log('it is NaN');
+    //skip it
+  }
 
 
 
@@ -446,8 +440,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 function FamilyController($routeParams, $location, $rootScope, FamilyService, CheckSignedIn, FamilyTree) {
   var vm = this;
-  var id = parseInt($routeParams.id);
-  // var id = $rootScope.signedInUserID;
+  // var id = parseInt($routeParams.id);
+  var id = localStorage.signedInUserID;
 
   vm.title = 'Your family';
   vm.submitMothersSide = submitMothersSide;
