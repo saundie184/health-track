@@ -325,7 +325,46 @@ function Family($http, dbURL) {
 
 function FamilyTree() {
   return {
-    draw: function() {
+    createFamilyObj: function(id, arr) {
+
+      // console.log(arr);
+      var newObj = {
+        'name': id,
+        'parents': [
+
+        ]
+      };
+      var immediate = arr[0];
+      // var mothers = arr[1];
+      // var fathers = arr[2];
+
+      // for arr[0], loop through and find 'mother, add to parents array'
+      for (var i = 0; i < immediate.length; i++) {
+        if (immediate[i].relationship === 'father') {
+          // console.log(immediate[i]);
+          var fatherObj = {
+            'name': immediate[i].name,
+            'relationship': immediate[i].relationship,
+            "id": immediate[i].id,
+            "parents": []
+          };
+          newObj.parents.push(fatherObj);
+        }
+        if( immediate[i].relationship === 'mother'){
+          var motherObj = {
+            'name': immediate[i].name,
+            'relationship': immediate[i].relationship,
+            "id": immediate[i].id,
+            "parents": []
+          };
+          newObj.parents.push(motherObj);
+        }
+      }
+      console.log(newObj);
+      return newObj;
+    },
+    draw: function(obj) {
+      // console.log(obj);
       var margin = {
           top: 0,
           right: 320,
@@ -350,51 +389,40 @@ function FamilyTree() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      d3.json("tree.json", function(error, json) {
-        if (error) throw error;
+      var json = obj;
 
-        var nodes = tree.nodes(json);
+      var nodes = tree.nodes(json);
 
-        var link = svg.selectAll(".link")
-          .data(tree.links(nodes))
-          .enter().append("path")
-          .attr("class", "link")
-          .attr("d", elbow);
+      var link = svg.selectAll(".link")
+        .data(tree.links(nodes))
+        .enter().append("path")
+        .attr("class", "link")
+        .attr("d", elbow);
 
-        var node = svg.selectAll(".node")
-          .data(nodes)
-          .enter().append("g")
-          .attr("class", "node")
-          .attr("transform", function(d) {
-            return "translate(" + d.y + "," + d.x + ")";
-          })
+      var node = svg.selectAll(".node")
+        .data(nodes)
+        .enter().append("g")
+        .attr("class", "node")
+        .attr("transform", function(d) {
+          return "translate(" + d.y + "," + d.x + ")";
+        })
 
-        node.append("text")
-          .attr("class", "name")
-          .attr("x", 8)
-          .attr("y", -6)
-          .text(function(d) {
-            return d.name;
-          });
+      node.append("text")
+        .attr("class", "name")
+        .attr("x", 8)
+        .attr("y", -6)
+        .text(function(d) {
+          return d.name;
+        });
 
-        node.append("text")
-          .attr("x", 8)
-          .attr("y", 8)
-          .attr("dy", ".71em")
-          .attr("class", "about lifespan")
-          .text(function(d) {
-            return d.born + "–" + d.died;
-          });
-
-        node.append("text")
-          .attr("x", 8)
-          .attr("y", 8)
-          .attr("dy", "1.86em")
-          .attr("class", "about location")
-          .text(function(d) {
-            return d.location;
-          });
-      });
+      node.append("text")
+        .attr("x", 8)
+        .attr("y", 8)
+        .attr("dy", ".71em")
+        .attr("class", "about relation")
+        .text(function(d) {
+          return d.relation;
+        });
 
       function elbow(d, i) {
         return "M" + d.source.y + "," + d.source.x + "H" + d.target.y + "V" + d.target.x + (d.target.children ? "" : "h" + margin.right);

@@ -3,7 +3,7 @@
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
-app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn','FamilyTree', FamilyController]);
+app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', 'createObjService', FamilyController]);
 
 // ---------- Account --------------
 
@@ -439,7 +439,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 // ---------- Family --------------
 
-function FamilyController($routeParams, $location, $rootScope, FamilyService, CheckSignedIn, FamilyTree) {
+function FamilyController($routeParams, $location, $rootScope, FamilyService, CheckSignedIn, FamilyTree, createObjService) {
   var vm = this;
   var id = parseInt($routeParams.id);
   // var id = $rootScope.signedInUserID;
@@ -501,22 +501,40 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
     });
   }
 
+
+  var fullFamilyArray = [];
+
   FamilyService.getImmediateFamily(id).then(function(data) {
+      // console.log(data.data);
+      vm.familyArray = data.data;
+      fullFamilyArray.push(data.data);
 
-    // console.log(data.data);
-    vm.familyArray = data.data;
-  });
+    }).then(function() {
+      FamilyService.getMothersSide(id).then(function(data) {
+        // console.log(data);
+        vm.mothersSideArray = data.data;
+        fullFamilyArray.push(data.data);
+      });
+    }).then(function() {
+      FamilyService.getFathersSide(id).then(function(data) {
+        // console.log(data);
+        vm.fathersSideArray = data.data;
+        fullFamilyArray.push(data.data);
+        // console.log(fullFamilyArray);
+      });
+    })
+    .then(function() {
+      var user_id = 56;
+      // var newObj = createObjService.create(user_id);
+      var newObj = FamilyTree.createFamilyObj(user_id, fullFamilyArray);
+      console.log(newObj);
+      FamilyTree.draw(newObj);
+    });
+  // console.log(createObjService.create('hello'));
 
-  FamilyService.getMothersSide(id).then(function(data) {
-    // console.log(data);
-    vm.mothersSideArray = data.data;
-  });
 
-  FamilyService.getFathersSide(id).then(function(data) {
-    // console.log(data);
-    vm.fathersSideArray = data.data;
-    FamilyTree.draw();
-  });
+
+
 
 
   // function updateRelationProfile(relation_id, data) {

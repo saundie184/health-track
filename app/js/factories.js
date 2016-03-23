@@ -1,7 +1,14 @@
 'use strict';
 
-app.factory('d3Service', [function() {
-  var d3;
-  // insert d3 code here
-  return d3;
+app.factory('createObjService', [function() {
+  var createObjService = {
+    create: function(y) {
+      console.log(y);
+      var object = {
+        "test": y
+      };
+      return y;
+    }
+  };
+  return createObjService;
 }]);
