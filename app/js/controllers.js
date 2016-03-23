@@ -3,7 +3,7 @@
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
-app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', 'createObjService', FamilyController]);
+app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
 
 // ---------- Account --------------
 
@@ -16,6 +16,8 @@ function AccountController(AuthService, $location, $rootScope, CheckSignedIn) {
   vm.user_id = $rootScope.signedInUserID;
   CheckSignedIn.check();
 
+vm.signedInUser = localStorage.signedInUser;
+  var id = localStorage.signedInUserID;
 
   vm.homePageLoad = function() {
     $location.path('/');
@@ -29,29 +31,29 @@ function AccountController(AuthService, $location, $rootScope, CheckSignedIn) {
   };
   vm.dashboardLoad = function() {
     // console.log(id);
-    $location.path('/dashboard/' + $rootScope.signedInUserID);
+    $location.path('/dashboard/' + id);
   };
 
   vm.profileLoad = function() {
-    $location.path('/profile/' + $rootScope.signedInUserID);
+    $location.path('/profile/' + id);
   };
   vm.newProfileLoad = function() {
-    $location.path('/profile/new/' + $rootScope.signedInUserID);
+    $location.path('/profile/new/' + id);
   };
   vm.familyTreeLoad = function() {
     // console.log(id);
-    $location.path('/family/' + $rootScope.signedInUserID);
+    $location.path('/family/' + id);
     // $location.path('/family/' + id);
   };
   vm.newFamilyMemberLoad = function() {
-    $location.path('/family/new/' + $rootScope.signedInUserID);
+    $location.path('/family/new/' + id);
   };
   vm.newRelationProfileLoad = function(relation_id) {
     // console.log('id is: ' +relation_id);
-    $location.path('/family/' + $rootScope.signedInUserID + '/profile/' + relation_id);
+    $location.path('/family/' + id + '/profile/' + relation_id);
   };
   vm.newRelationEventLoad = function(relation_id) {
-    $location.path('/family/' + $rootScope.signedInUserID + '/events/' + relation_id);
+    $location.path('/family/' + id + '/events/' + relation_id);
   };
 
 
@@ -70,12 +72,12 @@ function AccountController(AuthService, $location, $rootScope, CheckSignedIn) {
         vm.wrongPassword = 'Username and password do not match.';
       } else {
         //set signedInUserID
-        $rootScope.signedInUserID = res.data.id;
+        localStorage.signedInUserID = res.data.id;
         //set username for dashboard
-        $rootScope.signedInUser = res.data.email;
+        localStorage.signedInUser = res.data.email;
         //set token in localStorage
         localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
-        $location.path('/dashboard/' + $rootScope.signedInUserID);
+        $location.path('/dashboard/' + id);
         $rootScope.isSignedIn = true;
       }
     });
@@ -107,13 +109,16 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.addToRelationsCategories = addToRelationsCategories;
   vm.addToRelationsEvents = addToRelationsEvents;
 
-  var id = parseInt($routeParams.id);
-  // var id = $rootScope.signedInUserID;
+  // var id = parseInt($routeParams.id);
+  var id = localStorage.signedInUserID;
   var relation_id = parseInt($routeParams.relation_id);
   // var healthEventsArray = [];
   // var healthCategoriesArray = [];
   vm.addToEventsArray = addToEventsArray;
   vm.addToCategoriesArray = addToCategoriesArray;
+
+  console.log(localStorage.signedInUserID);
+
 
   CheckSignedIn.check();
   // // -----------Check if user is signed in------------
@@ -439,7 +444,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 // ---------- Family --------------
 
-function FamilyController($routeParams, $location, $rootScope, FamilyService, CheckSignedIn, FamilyTree, createObjService) {
+function FamilyController($routeParams, $location, $rootScope, FamilyService, CheckSignedIn, FamilyTree) {
   var vm = this;
   var id = parseInt($routeParams.id);
   // var id = $rootScope.signedInUserID;
@@ -500,40 +505,70 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
       vm.fDod = '';
     });
   }
+  //
+  // var testObj ={
+  //   "name": "Clifford Shanks",
+  //   "relationship": 1862,
+  //   "parents": [{
+  //     "name": "James Shanks",
+  //     "relationship": 1831,
+  //     "parents": [{
+  //       "name": "Robert Shanks",
+  //       "relationshipship": 1781
+  //     }, {
+  //       "name": "Elizabeth Shanks",
+  //       "relationship": 1795
+  //     }]
+  //   }, {
+  //     "name": "Ann Emily Brown",
+  //     "relationship": 1826,
+  //     "parents": [{
+  //       "name": "Henry Brown",
+  //       "relationship": 1792
+  //     }, {
+  //       "name": "Sarah Houchins",
+  //       "relationship": 1793
+  //     }]
+  //   },
+  // {
+  //   "name": "Saundie",
+  //   "relationship": 1999
+  //   }]
+  // };
 
 
   var fullFamilyArray = [];
 
   FamilyService.getImmediateFamily(id).then(function(data) {
-      // console.log(data.data);
-      vm.familyArray = data.data;
-      fullFamilyArray.push(data.data);
+    // console.log(data.data);
+    vm.familyArray = data.data;
+    fullFamilyArray.push(data.data);
 
-    }).then(function() {
-      FamilyService.getMothersSide(id).then(function(data) {
-        // console.log(data);
-        vm.mothersSideArray = data.data;
-        fullFamilyArray.push(data.data);
-      });
-    }).then(function() {
-      FamilyService.getFathersSide(id).then(function(data) {
+  }).then(function() {
+    FamilyService.getMothersSide(id).then(function(data) {
+      // console.log(data);
+      vm.mothersSideArray = data.data;
+      fullFamilyArray.push(data.data);
+    });
+  }).then(function() {
+    FamilyService.getFathersSide(id).then(function(data) {
         // console.log(data);
         vm.fathersSideArray = data.data;
         fullFamilyArray.push(data.data);
         // console.log(fullFamilyArray);
+      })
+      // })
+      .then(function() {
+        //TODO call service to get user_id name
+        var user = "You";
+        // console.log(fullFamilyArray);
+        var newObj = FamilyTree.createFamilyObj(user, fullFamilyArray);
+        // console.log(newObj);
+        FamilyTree.draw(newObj);
       });
-    })
-    .then(function() {
-      var user_id = 56;
-      // var newObj = createObjService.create(user_id);
-      var newObj = FamilyTree.createFamilyObj(user_id, fullFamilyArray);
-      console.log(newObj);
-      FamilyTree.draw(newObj);
-    });
-  // console.log(createObjService.create('hello'));
+  });
 
-
-
+  // FamilyTree.draw(testObj);
 
 
 

@@ -326,7 +326,6 @@ function Family($http, dbURL) {
 function FamilyTree() {
   return {
     createFamilyObj: function(id, arr) {
-
       // console.log(arr);
       var newObj = {
         'name': id,
@@ -335,8 +334,9 @@ function FamilyTree() {
         ]
       };
       var immediate = arr[0];
-      // var mothers = arr[1];
-      // var fathers = arr[2];
+      var mothers = arr[1];
+      // console.log(mothers);
+      var fathers = arr[2];
 
       // for arr[0], loop through and find 'mother, add to parents array'
       for (var i = 0; i < immediate.length; i++) {
@@ -350,7 +350,7 @@ function FamilyTree() {
           };
           newObj.parents.push(fatherObj);
         }
-        if( immediate[i].relationship === 'mother'){
+        if (immediate[i].relationship === 'mother') {
           var motherObj = {
             'name': immediate[i].name,
             'relationship': immediate[i].relationship,
@@ -360,7 +360,67 @@ function FamilyTree() {
           newObj.parents.push(motherObj);
         }
       }
-      console.log(newObj);
+      // Mother's side
+      var parentsM = newObj.parents;
+      var mothersMom = {};
+      var mothersDad = {};
+
+      for (var j = 0; j < mothers.length; j++) {
+        if (mothers[j].relationship === 'mothers mother') {
+          mothersMom = {
+            'name': mothers[j].name,
+            'relationship': mothers[j].relationship,
+            "id": mothers[j].id
+          };
+        }
+        if(mothers[j].relationship === 'mothers father'){
+          mothersDad = {
+            'name': mothers[j].name,
+            'relationship': mothers[j].relationship,
+            "id": mothers[j].id
+          };
+        }
+      }
+      // Father's side
+      var parentsF = newObj.parents;
+      var fathersMom = {};
+      var fathersDad = {};
+
+      for (var k = 0; k < fathers.length; k++) {
+        if (fathers[k].relationship === 'fathers mother') {
+          fathersMom = {
+            'name': fathers[k].name,
+            'relationship': fathers[k].relationship,
+            "id": fathers[k].id
+          };
+        }
+        if(fathers[k].relationship === 'fathers father'){
+          fathersDad = {
+            'name': fathers[k].name,
+            'relationship': fathers[k].relationship,
+            "id": fathers[k].id
+          };
+        }
+      }
+
+      for (var key in parentsM) {
+        if (parentsM[key].relationship === 'mother') {
+          // console.log('hello');
+          parentsM[key].parents.push(mothersMom);
+          parentsM[key].parents.push(mothersDad);
+          // console.log(parents);
+        }
+      }
+      for (var key in parentsF) {
+        if (parentsF[key].relationship === 'father') {
+          // console.log('hello');
+          parentsF[key].parents.push(fathersMom);
+          parentsF[key].parents.push(fathersDad);
+          // console.log(parents);
+        }
+      }
+
+      // console.log(newObj.parents[1]);
       return newObj;
     },
     draw: function(obj) {
@@ -405,7 +465,7 @@ function FamilyTree() {
         .attr("class", "node")
         .attr("transform", function(d) {
           return "translate(" + d.y + "," + d.x + ")";
-        })
+        });
 
       node.append("text")
         .attr("class", "name")
@@ -419,9 +479,9 @@ function FamilyTree() {
         .attr("x", 8)
         .attr("y", 8)
         .attr("dy", ".71em")
-        .attr("class", "about relation")
+        .attr("class", "about relationship")
         .text(function(d) {
-          return d.relation;
+          return d.relationship;
         });
 
       function elbow(d, i) {

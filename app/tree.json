@@ -1,34 +1,29 @@
 {
   "name": "Clifford Shanks",
-  "relation": 1862,
-  "parents": [
-    {
-      "name": "James Shanks",
-      "relation": 1831,
-      "parents": [
-        {
-          "name": "Robert Shanks",
-          "relation": 1781
-        },
-        {
-          "name": "Elizabeth Shanks",
-          "relation": 1795
-        }
-      ]
-    },
-    {
-      "name": "Ann Emily Brown",
-      "relation": 1826,
-      "parents": [
-        {
-          "name": "Henry Brown",
-          "relation": 1792
-        },
-        {
-          "name": "Sarah Houchins",
-          "relation": 1793
-        }
-      ]
-    }
-  ]
+  "relationship": 1862,
+  "parents": [{
+    "name": "James Shanks",
+    "relationship": 1831,
+    "parents": [{
+      "name": "Robert Shanks",
+      "relationshipship": 1781
+    }, {
+      "name": "Elizabeth Shanks",
+      "relationship": 1795
+    }]
+  }, {
+    "name": "Ann Emily Brown",
+    "relationship": 1826,
+    "parents": [{
+      "name": "Henry Brown",
+      "relationship": 1792
+    }, {
+      "name": "Sarah Houchins",
+      "relationship": 1793
+    }]
+  },
+{
+  "name": "Saundie",
+  "relationship": 1999
+  }]
 }

@@ -35,7 +35,7 @@
           <div ng-show='isSignedIn'>
             <md-button aria-label="Dashboard" ng-click='account.dashboardLoad()' ng-hide='account.isSignedIn'>Dashboard</md-button>
             <span class='md-body-2'>
-              {{signedInUser}}
+              {{account.signedInUser}}
             </span>
             <md-button aria-label="Sign out" ng-click='account.signout()' ng-hide='account.isSignedIn'>Sign out</md-button>
           </div>
@@ -46,9 +46,6 @@
 
     </div>
     <div ng-view></div>
-    <!-- <div id="chart"></div> -->
-    <!-- <sw-family-tree></sw-family-tree> -->
-
     <!-- <footer>
   <div class="md-toolbar-tools" layout-align='center center'>
     <h2 class="md-flex">Icon attribution goes here. Need to make this sticky.</h2>

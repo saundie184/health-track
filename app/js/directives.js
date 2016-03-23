@@ -4,7 +4,7 @@
 app.directive('swRelationSelector', RelationSelector);
 app.directive('swHealthIcons', HealthIcons);
 
-// app.directive('swFamilyTree', 'd3Service', FamilyTree);
+// app.directive('swFamilyTree','FamilyTree', FamilyTreeFunc);
 
 function RelationSelector() {
   return {
@@ -18,17 +18,15 @@ function HealthIcons() {
 
   };
 }
-
-// function FamilyTree(d3Service) {
+//
+// function FamilyTreeFunc(FamilyTree) {
+//   var link = function ($scope, $el, $attrs){
+// console.log($el);
+//   };
 //   return {
-//     restrict: 'A',
-//     template: '<div id="chart"></div>'
-//     // scope: {},
-//     // link: function(scope, element, attrs) {
-//     //   d3Service.d3().then(function(d3) {
-//     //     // d3 is the raw d3 object
-//     //
-//     //   });
-//     // }
+//     restrict: 'E',
+//     replace: true,
+//     template: '<div id="chart"></div>',
+//     link: link
 //   };
 // }
