@@ -1,28 +1,21 @@
 'use strict';
 
 // app.controller('MainController', ['$mdDialog', mainController]);
-app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', AccountController]);
-app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', ProfileController]);
-app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', FamilyController]);
+app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', 'CheckSignedIn', AccountController]);
+app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
+app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn','FamilyTree', FamilyController]);
 
 // ---------- Account --------------
 
-function AccountController(AuthService, $location, $rootScope) {
+function AccountController(AuthService, $location, $rootScope, CheckSignedIn) {
   var vm = this;
   vm.signup = signup;
   vm.signin = signin;
   vm.signout = signout;
 
-  // var id;
+  vm.user_id = $rootScope.signedInUserID;
+  CheckSignedIn.check();
 
-  // -----------Check if user is signed in------------
-  //check localStorage for token
-  var token = localStorage.getItem('Authorization');
-  // console.log(localStorage);
-  if (token) {
-    //TODO add useremail to dashboard
-    $rootScope.isSignedIn = true;
-  }
 
   vm.homePageLoad = function() {
     $location.path('/');
@@ -36,7 +29,7 @@ function AccountController(AuthService, $location, $rootScope) {
   };
   vm.dashboardLoad = function() {
     // console.log(id);
-    $location.path('/dashboard/' +  $rootScope.signedInUserID);
+    $location.path('/dashboard/' + $rootScope.signedInUserID);
   };
 
   vm.profileLoad = function() {
@@ -102,7 +95,7 @@ function AccountController(AuthService, $location, $rootScope) {
 
 // ---------- Profile --------------
 
-function ProfileController($routeParams, $location, $mdDialog, $route, $rootScope, ProfileService) {
+function ProfileController($routeParams, $location, $mdDialog, $route, $rootScope, ProfileService, CheckSignedIn) {
   var vm = this;
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
@@ -114,23 +107,23 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.addToRelationsCategories = addToRelationsCategories;
   vm.addToRelationsEvents = addToRelationsEvents;
 
-  // var id = parseInt($routeParams.id);
-  var id = $rootScope.signedInUserID;
+  var id = parseInt($routeParams.id);
+  // var id = $rootScope.signedInUserID;
   var relation_id = parseInt($routeParams.relation_id);
   // var healthEventsArray = [];
   // var healthCategoriesArray = [];
   vm.addToEventsArray = addToEventsArray;
   vm.addToCategoriesArray = addToCategoriesArray;
 
-
-  // -----------Check if user is signed in------------
-  //check localStorage for token
-  var token = localStorage.getItem('Authorization');
-  // console.log(localStorage);
-  if (token) {
-    //TODO add useremail to dashboard
-    $rootScope.isSignedIn = true;
-  }
+  CheckSignedIn.check();
+  // // -----------Check if user is signed in------------
+  // //check localStorage for token
+  // var token = localStorage.getItem('Authorization');
+  // // console.log(localStorage);
+  // if (token) {
+  //   //TODO add useremail to dashboard
+  //   $rootScope.isSignedIn = true;
+  // }
 
 
 
@@ -281,7 +274,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     return dates;
   }
 
-  //TODO put these in a custom directive instead
+
   vm.dob = new Date();
   vm.gender = ('F M').split(' ').map(function(gen) {
     return {
@@ -306,49 +299,55 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   // ---Relations Profile--
   function submitRelationProfile() {
-    var user = {
-      relation_id: 54,
-      name: 'chickenpox',
-      type: 'illness',
-      description: 'Chickenpox',
-      date: '2000-04-01'
-    };
+
     ProfileService.submitRelationProfile(id, user).then(function(res) {
       // console.log(res);
     });
   }
 
-
-  ProfileService.getRelationProfile(id, relation_id).then(function(data, err) {
-    vm.relationProfileData = data.data;
+  vm.relationHealthEventsArray = [];
+  ProfileService.getRelationProfile(id, relation_id).then(function(data) {
+    // vm.relationProfileData = data.data;
     // console.log(data);
-    ProfileService.getRelationship(id, relation_id).then(function(data) {
-      // console.log(data.data[0]);
-      vm.relationship = data.data[0];
-      ProfileService.getRelationHeightWeight(id, relation_id).then(function(data) {
-        // console.log(data.data);
-        var objArray = data.data;
-        // var hw = data.data;
-        // for (var i = 0; i < hw.length; i++) {
-        //   //TODO determine if I want hw in timeline
-        //   // vm.healthDataArray.push(hw[i]);
-        // }
-        var dates = makeDatesArray(objArray);
-        var maxDate = new Date(Math.max.apply(null, dates));
+    var events = data.data;
+    for (var i = 0; i < events.length; i++) {
+      vm.relationHealthEventsArray.push(events[i]);
+    }
+    ProfileService.getRelationCategories(id, relation_id).then(function(data) {
+      // console.log(data);
+      var categories = data.data;
+      for (var i = 0; i < categories.length; i++) {
+        vm.relationHealthEventsArray.push(categories[i]);
+      }
+      ProfileService.getRelationship(id, relation_id).then(function(data) {
+        // console.log(data.data[0]);
+        vm.relationship = data.data[0];
+        ProfileService.getRelationHeightWeight(id, relation_id).then(function(data) {
+          // console.log(data.data);
+          var objArray = data.data;
+          // var hw = data.data;
+          // for (var i = 0; i < hw.length; i++) {
+          //   //TODO determine if I want hw in timeline
+          //   // vm.healthDataArray.push(hw[i]);
+          // }
+          var dates = makeDatesArray(objArray);
+          var maxDate = new Date(Math.max.apply(null, dates));
 
-        //loop through array of objects to get most recent entry
-        for (var j = 0; j < objArray.length; j++) {
-          var date = Date.parse(new Date(objArray[j].date));
-          var parsedMaxDate = Date.parse(maxDate);
-          //find object where the value of key date is maxDate
-          if (date === parsedMaxDate) {
-            var recentRecord = objArray[j];
-            vm.relationHWData = recentRecord;
+          //loop through array of objects to get most recent entry
+          for (var j = 0; j < objArray.length; j++) {
+            var date = Date.parse(new Date(objArray[j].date));
+            var parsedMaxDate = Date.parse(maxDate);
+            //find object where the value of key date is maxDate
+            if (date === parsedMaxDate) {
+              var recentRecord = objArray[j];
+              vm.relationHWData = recentRecord;
+            }
           }
-        }
+        });
       });
     });
   });
+
 
 
   function updateRelationProfile(relation_id, data) {
@@ -440,7 +439,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 // ---------- Family --------------
 
-function FamilyController($routeParams, $location, $rootScope, FamilyService) {
+function FamilyController($routeParams, $location, $rootScope, FamilyService, CheckSignedIn, FamilyTree) {
   var vm = this;
   var id = parseInt($routeParams.id);
   // var id = $rootScope.signedInUserID;
@@ -451,14 +450,7 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService) {
   vm.submitYourFamily = submitYourFamily;
   // vm.updateRelationProfile = updateRelationProfile;
 
-  // -----------Check if user is signed in------------
-  //check localStorage for token
-  var token = localStorage.getItem('Authorization');
-  // console.log(localStorage);
-  if (token) {
-    //TODO add useremail to dashboard
-    $rootScope.isSignedIn = true;
-  }
+  CheckSignedIn.check();
 
   function submitYourFamily(data) {
     console.log(data);
@@ -510,7 +502,7 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService) {
   }
 
   FamilyService.getImmediateFamily(id).then(function(data) {
-
+    // FamilyTree.draw();
     // console.log(data.data);
     vm.familyArray = data.data;
   });
@@ -540,5 +532,5 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService) {
     };
   });
 
-  
+
 }

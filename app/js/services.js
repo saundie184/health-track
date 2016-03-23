@@ -5,10 +5,28 @@ app.service('AuthService', ['$http', 'dbURL', Auth]);
 app.service('ProfileService', ['$http', 'dbURL', Profile]);
 app.service('FamilyService', ['$http', 'dbURL', Family]);
 app.service('AuthInterceptor', ['$window', '$location', '$q', AuthInterceptor]);
+app.service('CheckSignedIn', ['$rootScope', CheckSignedIn]);
+app.service('FamilyTree', [FamilyTree]);
 
 function dbURL() {
   return {
     url: 'http://localhost:3000'
+  };
+}
+
+// -----------Check if user is signed in------------
+function CheckSignedIn($rootScope) {
+  return {
+    check: function() {
+      //check localStorage for token
+      var token = localStorage.getItem('Authorization');
+      // console.log(localStorage);
+      if (token) {
+        //TODO add useremail to dashboard
+        $rootScope.isSignedIn = true;
+        return true;
+      }
+    }
   };
 }
 
@@ -124,7 +142,17 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    getRelationship: function(id, relation_id){
+    getRelationCategories: function(id, relation_id) {
+      return $http.get(dbURL.url + '/family/' + id + '/categories/' + relation_id).then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        // console.log('User is not authorized.');
+        return err;
+      });
+    },
+    getRelationship: function(id, relation_id) {
       return $http.get(dbURL.url + '/family/' + id + '/relation/' + relation_id).then(function(data) {
         // console.log(data);
         return data;
@@ -134,7 +162,7 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    getRelationHeightWeight: function(id, relation_id){
+    getRelationHeightWeight: function(id, relation_id) {
       return $http.get(dbURL.url + '/family/' + id + '/hw/' + relation_id).then(function(data) {
         // console.log(data);
         return data;
@@ -144,7 +172,7 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    updateRelationProfile: function(id,relation_id, data){
+    updateRelationProfile: function(id, relation_id, data) {
       return $http.post(dbURL.url + '/family/' + id + '/edit/' + relation_id, data).then(function(res) {
         // console.log(data);
         return res;
@@ -289,6 +317,89 @@ function Family($http, dbURL) {
         // console.log(err);
         return err;
       });
+    }
+  };
+}
+
+// ----------Family Tree------------
+
+function FamilyTree() {
+  return {
+    draw: function() {
+      var margin = {
+          top: 0,
+          right: 320,
+          bottom: 0,
+          left: 0
+        },
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+      var tree = d3.layout.tree()
+        .separation(function(a, b) {
+          return a.parent === b.parent ? 1 : .5;
+        })
+        .children(function(d) {
+          return d.parents;
+        })
+        .size([height, width]);
+//TODO select element other than body to append to
+      var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.json("tree.json", function(error, json) {
+        if (error) throw error;
+
+        var nodes = tree.nodes(json);
+
+        var link = svg.selectAll(".link")
+          .data(tree.links(nodes))
+          .enter().append("path")
+          .attr("class", "link")
+          .attr("d", elbow);
+
+        var node = svg.selectAll(".node")
+          .data(nodes)
+          .enter().append("g")
+          .attr("class", "node")
+          .attr("transform", function(d) {
+            return "translate(" + d.y + "," + d.x + ")";
+          })
+
+        node.append("text")
+          .attr("class", "name")
+          .attr("x", 8)
+          .attr("y", -6)
+          .text(function(d) {
+            return d.name;
+          });
+
+        node.append("text")
+          .attr("x", 8)
+          .attr("y", 8)
+          .attr("dy", ".71em")
+          .attr("class", "about lifespan")
+          .text(function(d) {
+            return d.born + "–" + d.died;
+          });
+
+        node.append("text")
+          .attr("x", 8)
+          .attr("y", 8)
+          .attr("dy", "1.86em")
+          .attr("class", "about location")
+          .text(function(d) {
+            return d.location;
+          });
+      });
+
+      function elbow(d, i) {
+        return "M" + d.source.y + "," + d.source.x + "H" + d.target.y + "V" + d.target.x + (d.target.children ? "" : "h" + margin.right);
+      }
+
     }
   };
 }

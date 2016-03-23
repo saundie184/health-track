@@ -3,6 +3,7 @@
 // app.directive('swFamilyForm', FamilyForm);
 app.directive('swRelationSelector', RelationSelector);
 app.directive('swHealthIcons', HealthIcons);
+
 // app.directive('swFamilyTree', 'd3Service', FamilyTree);
 
 function RelationSelector() {

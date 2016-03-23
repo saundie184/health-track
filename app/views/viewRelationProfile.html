@@ -81,7 +81,7 @@
             </md-icon>
             <div class="md-list-item-text" layout="column">
               <h3 ng-hide='profile.showEditInput'>{{profile.relationship.sex}}</h3>
-              <input ng-show='profile.showEditInput' ng-model='profile.editSex' value=''aria-label='Edit Sex'/>
+              <input ng-show='profile.showEditInput' ng-model='profile.editSex' value='' aria-label='Edit Sex'/>
               <h4>Gender</h4>
             </div>
           </md-list-item>
@@ -120,9 +120,9 @@
 </div>
 <!-- Edit vitals button -->
 <div flex layout='row' layout-align='center start'>
-  <md-button class='md-raised md-default' aria-label='Cancel'ng-show='profile.submitBtn' ng-click='profile.submitBtn = false; profile.showEditInput = false'>Cancel</md-button>
+  <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitBtn' ng-click='profile.submitBtn = false; profile.showEditInput = false'>Cancel</md-button>
   <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='profile.showEditInput = true; profile.editName = profile.relationship.name; profile.editSex = profile.relationship.sex; profile.editBloodType = profile.relationship.blood_type; profile.submitBtn = true' ng-hide='profile.submitBtn'>Edit</md-button>
-  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitBtn' ng-click='profile.updateRelationProfile(profile.relationship.id, {name: profile.editName, dob: profile.editDob, sex: profile.editSex, blood_type: profile.editBloodType}); profile.submitBtn = false; profile.showEditInput = false' >Submit</md-button>
+  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitBtn' ng-click='profile.updateRelationProfile(profile.relationship.id, {name: profile.editName, dob: profile.editDob, sex: profile.editSex, blood_type: profile.editBloodType}); profile.submitBtn = false; profile.showEditInput = false'>Submit</md-button>
 </div>
 
 <md-divider ></md-divider>
@@ -141,7 +141,7 @@
             </md-icon>
             <div class="md-list-item-text" layout="column">
               <h3 ng-hide='profile.showHWEditInput'>{{profile.relationHWData.height}}</h3>
-              <div ng-show='profile.showHWEditInput' >
+              <div ng-show='profile.showHWEditInput'>
                 <md-input-container class="md-block" flex-gt-sm>
                   <label>Height, Feet</label>
                   <md-select ng-model="profile.feet" name='feet'>
@@ -183,9 +183,7 @@
             </md-icon>
             <div class="md-list-item-text" layout="column">
               <h3 ng-hide='profile.showHWEditInput'>{{profile.relationHWData.weight}}</h3>
-              <input ng-show='profile.showHWEditInput' ng-model='profile.editWeight' class="md-block" flex-gt-sm>
-
-              </input>
+              <input ng-show='profile.showHWEditInput' ng-model='profile.editWeight' class="md-block" flex-gt-sm></input>
               <h4>Weight</h4>
               <p>
                 Updated on:
@@ -201,21 +199,53 @@
 </div>
 <!-- Edit height and weight button -->
 <div flex layout='row' layout-align='center start'>
-  <md-button class='md-raised md-default' aria-label='Cancel'ng-show='profile.submitHWBtn' ng-click='profile.submitHWBtn = false; profile.showHWEditInput = false'>Cancel</md-button>
+  <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitHWBtn' ng-click='profile.submitHWBtn = false; profile.showHWEditInput = false'>Cancel</md-button>
   <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='profile.showHWEditInput = true; profile.editHeight = profile.relationHWData.height; profile.submitHWBtn = true' ng-hide='profile.submitHWBtn'>Edit</md-button>
-  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitHWBtn' ng-click='profile.submitRelationHWProfile(profile.relationship.id, {inches: profile.inches, feet: profile.feet, weight: profile.editWeight}); profile.submitHWBtn = false; profile.showHWEditInput = false' >Submit</md-button>
+  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitHWBtn' ng-click='profile.submitRelationHWProfile(profile.relationship.id, {inches: profile.inches, feet: profile.feet, weight: profile.editWeight}); profile.submitHWBtn = false; profile.showHWEditInput = false'>Submit</md-button>
 </div>
-
 
 <md-divider ></md-divider>
 <div flex layout='row' layout-align='center start'>
   <div layout='row'>
     <h3>Health Events</h3>
     <div layout='row'>
-      <pre>
+      <!-- <pre>
         {{profile.relationProfileData}}
-      </pre>
+      </pre> -->
     </div>
 
   </div>
+</div>
+<div flex layout='row' layout-align='center start'>
+  <h3>Health Events Timeline</h3>
+
+</div>
+<div layout='row' flex>
+  <div flex='20'></div>
+  <div flex>
+    <timeline>
+      <timeline-event ng-repeat="event in profile.relationHealthEventsArray |orderBy: '-date'">
+        <timeline-badge>
+          <md-button class="md-icon-button" aria-label="event icon" ng-click='profile.showDetailsToggle(event)'>
+            <sw-health-icons></sw-health-icons>
+          </md-button>
+        </timeline-badge>
+
+        <timeline-panel >
+          <timeline-heading >
+            <h4>{{event.date | date:"MM/dd/yyyy"}}</h4>
+          </timeline-heading>
+          <div id='{{event.id}}' class='detailsCards'>
+            <h3>{{event.name}}</h3>
+            <p>{{event.description}}</p>
+          </div>
+        </timeline-panel>
+      </timeline-event>
+      <!-- <div>
+        {{profile.detailsObj}}
+      </div> -->
+    </timeline>
+  </div>
+  <div flex='20'></div>
+
 </div>
