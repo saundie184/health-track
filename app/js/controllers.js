@@ -502,7 +502,7 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
   }
 
   FamilyService.getImmediateFamily(id).then(function(data) {
-    // FamilyTree.draw();
+
     // console.log(data.data);
     vm.familyArray = data.data;
   });
@@ -515,6 +515,7 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
   FamilyService.getFathersSide(id).then(function(data) {
     // console.log(data);
     vm.fathersSideArray = data.data;
+    FamilyTree.draw();
   });
 
 

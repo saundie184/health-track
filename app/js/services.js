@@ -330,21 +330,21 @@ function FamilyTree() {
           top: 0,
           right: 320,
           bottom: 0,
-          left: 0
+          left: 100
         },
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
       var tree = d3.layout.tree()
         .separation(function(a, b) {
-          return a.parent === b.parent ? 1 : .5;
+          return a.parent === b.parent ? 1 : 0.5;
         })
         .children(function(d) {
           return d.parents;
         })
         .size([height, width]);
-//TODO select element other than body to append to
-      var svg = d3.select("body").append("svg")
+
+      var svg = d3.select("#tree").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
