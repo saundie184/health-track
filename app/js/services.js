@@ -112,8 +112,16 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    getHealthEvents: function(id) {
-      return $http.get(dbURL.url + '/profile/' + id + '/events/').then(function(data) {
+    getHealthEvents: function(id, arr) {
+      var start = arr[0];
+      var end = arr[1];
+      var query = '';
+      // console.log(arr);
+      if (start && end) {
+        query = '?start=' + start + '&end=' + end;
+      }
+
+      return $http.get(dbURL.url + '/profile/' + id + '/events/' + query).then(function(data) {
         // console.log(data);
         return data;
       }, function(err) {
@@ -122,8 +130,14 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    getHealthCategories: function(id) {
-      return $http.get(dbURL.url + '/profile/' + id + '/categories/').then(function(data) {
+    getHealthCategories: function(id, arr) {
+      var start = arr[0];
+      var end = arr[1];
+      var query = '';
+      if (start && end) {
+        query = '?start=' + start + '&end=' + end;
+      }
+      return $http.get(dbURL.url + '/profile/' + id + '/categories/' + query).then(function(data) {
         // console.log(data);
         return data;
       }, function(err) {
@@ -373,7 +387,7 @@ function FamilyTree() {
             "id": mothers[j].id
           };
         }
-        if(mothers[j].relationship === 'mothers father'){
+        if (mothers[j].relationship === 'mothers father') {
           mothersDad = {
             'name': mothers[j].name,
             'relationship': mothers[j].relationship,
@@ -394,7 +408,7 @@ function FamilyTree() {
             "id": fathers[k].id
           };
         }
-        if(fathers[k].relationship === 'fathers father'){
+        if (fathers[k].relationship === 'fathers father') {
           fathersDad = {
             'name': fathers[k].name,
             'relationship': fathers[k].relationship,

@@ -95,17 +95,17 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   vm.status = '  ';
   vm.showTabDialog = function(ev) {
     $mdDialog.show({
-      controller: DialogController,
-      templateUrl: 'views/emailForm.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose:true
-    })
-        .then(function(answer) {
-          vm.status = 'You said the information was "' + answer + '".';
-        }, function() {
-          vm.status = 'You cancelled the dialog.';
-        });
+        controller: DialogController,
+        templateUrl: 'views/emailForm.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true
+      })
+      .then(function(answer) {
+        vm.status = 'You said the information was "' + answer + '".';
+      }, function() {
+        vm.status = 'You cancelled the dialog.';
+      });
   };
 
 }
@@ -126,22 +126,23 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   var vm = this;
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
+  // var id = parseInt($routeParams.id);
+  var id = localStorage.signedInUserID;
+  var relation_id = parseInt($routeParams.relation_id);
+  //User profile
   vm.submitProfile = submitProfile;
+  vm.addToEventsArray = addToEventsArray;
+  vm.addToCategoriesArray = addToCategoriesArray;
+  vm.showTimeline = showTimeline;
+  vm.filterTimeline = filterTimeline;
+  //Relations profile
   vm.submitRelationProfile = submitRelationProfile;
   vm.updateRelationProfile = updateRelationProfile;
   vm.submitRelationHWProfile = submitRelationHWProfile;
   vm.submitRelationEvents = submitRelationEvents;
   vm.addToRelationsCategories = addToRelationsCategories;
   vm.addToRelationsEvents = addToRelationsEvents;
-
-  // var id = parseInt($routeParams.id);
-  var id = localStorage.signedInUserID;
-  var relation_id = parseInt($routeParams.relation_id);
-  // var healthEventsArray = [];
-  // var healthCategoriesArray = [];
-  vm.addToEventsArray = addToEventsArray;
-  vm.addToCategoriesArray = addToCategoriesArray;
-
+  //Verify that user is signed in
   CheckSignedIn.check();
 
   function addToEventsArray(obj) {
@@ -260,21 +261,84 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   });
 
   vm.healthDataArray = [];
-  // console.log(vm.healthDataArray);
-  ProfileService.getHealthEvents(id).then(function(data) {
-    var events = data.data;
-    for (var i = 0; i < events.length; i++) {
-      vm.healthDataArray.push(events[i]);
-    }
-  });
 
-  ProfileService.getHealthCategories(id).then(function(data) {
-    vm.healthCategoriesArray = data.data;
-    var categories = data.data;
-    for (var i = 0; i < categories.length; i++) {
-      vm.healthDataArray.push(categories[i]);
+  function showTimeline() {
+    ProfileService.getHealthEvents(id, arr).then(function(data) {
+      var events = data.data;
+      // console.log(events);
+      for (var i = 0; i < events.length; i++) {
+        vm.healthDataArray.push(events[i]);
+      }
+    });
+
+    ProfileService.getHealthCategories(id, arr).then(function(data) {
+      vm.healthCategoriesArray = data.data;
+      var categories = data.data;
+      for (var i = 0; i < categories.length; i++) {
+        vm.healthDataArray.push(categories[i]);
+      }
+    });
+  }
+
+  var arr = [];
+
+  function filterTimeline(min, max) {
+    vm.healthDataArray = [];
+    // console.log(min);
+    //get profile of user
+    ProfileService.getProfile(id).then(function(data) {
+      //get birth year from user's profile
+      var year = parseDate(data.data[0].dob);
+      // set input years for filter
+      var start = parseInt(year) + parseInt(min);
+      var end = parseInt(year) + parseInt(max);
+      arr.push(start, end);
+      // console.log(arr);
+      ProfileService.getHealthEvents(id, arr).then(function(data) {
+        var events = data.data;
+        // console.log(events);
+        for (var i = 0; i < events.length; i++) {
+          vm.healthDataArray.push(events[i]);
+        }
+        ProfileService.getHealthCategories(id, arr).then(function(data) {
+          vm.healthCategoriesArray = data.data;
+          var categories = data.data;
+          for (var i = 0; i < categories.length; i++) {
+            vm.healthDataArray.push(categories[i]);
+          }
+          arr = [];
+        });
+      });
+    });
+
+  }
+
+  function parseDate(str) {
+    for (var i = 0; i < str.length; i++) {
+      if (str[i] === '-') {
+        var yr = str.substr(0, 4);
+        return yr;
+      }
     }
-  });
+  }
+
+  // ProfileService.getHealthEvents(id, arr).then(function(data) {
+  //   var events = data.data;
+  //   // console.log(events);
+  //   for (var i = 0; i < events.length; i++) {
+  //     vm.healthDataArray.push(events[i]);
+  //   }
+  // });
+  //
+  // ProfileService.getHealthCategories(id, arr).then(function(data) {
+  //   vm.healthCategoriesArray = data.data;
+  //   var categories = data.data;
+  //   for (var i = 0; i < categories.length; i++) {
+  //     vm.healthDataArray.push(categories[i]);
+  //   }
+  // });
+
+
   // ---Timeline buttons----
   vm.showDetailsToggle = function(details) {
     // console.log(details);

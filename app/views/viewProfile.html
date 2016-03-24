@@ -158,6 +158,25 @@
 
 </div>
 
+<div flex layout='row' layout-align='center start'>
+  <md-button class='md-primary md-raised' aria-label='Reset' ng-click='profile.showTimeline()'>Show Health Timeline</md-button>
+    <div>
+      <md-input-container>
+        <label>From age:</label>
+        <input ng-model="profile.startAge">
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <label>To age:</label>
+        <input ng-model="profile.endAge">
+      </md-input-container>
+    </div>
+</div>
+<div flex layout='row' layout-align='center start'>
+  <md-button class='md-primary md-raised' aria-label='Filter' ng-click='profile.filterTimeline(profile.startAge, profile.endAge)'>Filter</md-button>
+  <md-button class='md-default md-raised' aria-label='Reset' ng-click='profile.showTimeline()'>Reset</md-button>
+</div>
 <div layout='row' flex>
   <div flex='20'></div>
   <div flex>
@@ -168,7 +187,7 @@
             <!-- <div > -->
             <!-- <md-icon ng-if='event.type === "procedure"' md-svg-icon="styles/assets/tool.svg"></md-icon>
             <md-icon ng-if='event.type === "illness"' md-svg-icon="styles/assets/pill.svg"></md-icon> -->
-  <sw-health-icons></sw-health-icons>
+            <sw-health-icons></sw-health-icons>
             <!-- <md-icon md-svg-icon=''></md-icon> -->
           </md-button>
         </timeline-badge>
