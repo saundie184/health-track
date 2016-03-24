@@ -1,15 +1,23 @@
 <div flex layout='row' layout-align='center start'>
   <h2>{{family.title}}</h2>
-
 </div>
-
+<!--
 <div flex layout='row' layout-align='center start'>
   <div>
     <h2>Family Tree</h2>
   </div>
-
+</div> -->
+<!-- <div id="tree"></div> -->
+<div flex layout='row' layout-align='center start'>
+  <div layout="column" ng-cloak>
+  <md-content class="md-padding">
+    <p>
+      Search for a health condition in your family.
+    </p>
+    <md-button ng-click="account.openDialog($event)" class="md-raised">Search</md-button>
+  </md-content>
 </div>
-<div id="tree"></div>
+</div>
 <div flex layout='row' layout-align='center start' ng-controller='AccountCtrl as account'>
   <div id='table'>
     <h2>Your immediate family</h2>

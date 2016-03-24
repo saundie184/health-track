@@ -7,6 +7,7 @@ app.service('FamilyService', ['$http', 'dbURL', Family]);
 app.service('AuthInterceptor', ['$window', '$location', '$q', AuthInterceptor]);
 app.service('CheckSignedIn', ['$rootScope', CheckSignedIn]);
 app.service('FamilyTree', [FamilyTree]);
+app.service('RelationEventsCategories', ['$http', 'dbURL', RelationEventsCategories]);
 
 function dbURL() {
   return {
@@ -502,6 +503,24 @@ function FamilyTree() {
         return "M" + d.source.y + "," + d.source.x + "H" + d.target.y + "V" + d.target.x + (d.target.children ? "" : "h" + margin.right);
       }
 
+    }
+  };
+}
+
+// ---Relation Health Events and Categores ---
+function RelationEventsCategories($http, dbURL) {
+  return {
+    getAllNames: function(id) {
+      var dataArr = [];
+      $http.post(dbURL.url + '/family/' + id + '/events/').then(function(data) {
+        dataArr.push(data);
+      }).then(function() {
+        $http.post(dbURL.url + '/family/' + id + '/categories/').then(function(data) {
+          dataArr.push(data);
+        });
+      });
+      //TODO need to test these routes on backend first
+      return dataArr;
     }
   };
 }

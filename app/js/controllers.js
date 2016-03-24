@@ -4,7 +4,7 @@
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
-app.controller('DialogCtrl', ['$mdDialog', DialogController]);
+
 // ---------- Account --------------
 
 function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckSignedIn) {
@@ -84,41 +84,26 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
     });
   }
 
-
-
   function signout() {
     localStorage.removeItem('Authorization', null);
     $location.path('/');
     $rootScope.isSignedIn = false;
   }
 
-  vm.status = '  ';
-  vm.showTabDialog = function(ev) {
+  // --- Search Dialog ---
+  // var self = this;
+  vm.openDialog = function($event) {
     $mdDialog.show({
-        controller: DialogController,
-        templateUrl: 'views/emailForm.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: true
-      })
-      .then(function(answer) {
-        vm.status = 'You said the information was "' + answer + '".';
-      }, function() {
-        vm.status = 'You cancelled the dialog.';
-      });
-  };
-
-}
-
-function DialogController($mdDialog) {
-  var vm = this;
-  vm.hide = function() {
-    $mdDialog.hide();
-  };
-  vm.cancel = function() {
-    $mdDialog.cancel();
+      controller: SearchCtrl,
+      controllerAs: 'search',
+      templateUrl: 'views/search.html',
+      parent: angular.element(document.body),
+      targetEvent: $event,
+      clickOutsideToClose: true
+    });
   };
 }
+
 
 // ---------- Profile --------------
 
@@ -647,7 +632,8 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
         // console.log(fullFamilyArray);
         var newObj = FamilyTree.createFamilyObj(user, fullFamilyArray);
         // console.log(newObj);
-        FamilyTree.draw(newObj);
+        //TODO remove this if removing family tree
+        // FamilyTree.draw(newObj);
       });
   });
 
@@ -668,4 +654,64 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
   });
 
 
+}
+
+// ---Search bar on family view page---
+function SearchCtrl($mdDialog, $timeout, $q, ProfileService) {
+  var vm = this;
+  var id = localStorage.getItem('signedInUserID');
+  // list of `state` value/display objects
+  vm.states = loadAll();
+  vm.querySearch = querySearch;
+  // ******************************
+  // Template methods
+  // ******************************
+  vm.cancel = function($event) {
+    $mdDialog.cancel();
+  };
+  vm.finish = function($event) {
+    $mdDialog.hide();
+  };
+  // ******************************
+  // Internal methods
+  // ******************************
+  /**
+   * Search for states... use $timeout to simulate
+   * remote dataservice call.
+   */
+  function querySearch(query) {
+    return query ? vm.states.filter(createFilterFor(query)) : vm.states;
+  }
+
+  /**
+   * Build `states` list of key/value pairs
+   */
+  function loadAll() {
+  //TODO set up service to get names of health events and health categories  
+    // ProfileService.getHealthEvents(id, arr).then(function(data){
+    //   console.log(data);
+    // });
+    var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
+              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
+              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
+              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
+              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
+              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
+              Wisconsin, Wyoming';
+    return allStates.split(/, +/g).map(function(state) {
+      return {
+        value: state.toLowerCase(),
+        display: state
+      };
+    });
+  }
+  /**
+   * Create filter function for a query string
+   */
+  function createFilterFor(query) {
+    var lowercaseQuery = angular.lowercase(query);
+    return function filterFn(state) {
+      return (state.value.indexOf(lowercaseQuery) === 0);
+    };
+  }
 }
