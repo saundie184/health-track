@@ -1,13 +1,13 @@
 'use strict';
 
 // app.controller('MainController', ['$mdDialog', mainController]);
-app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', 'CheckSignedIn', AccountController]);
+app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
 
 // ---------- Account --------------
 
-function AccountController(AuthService, $location, $rootScope, CheckSignedIn) {
+function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckSignedIn) {
   var vm = this;
   vm.signup = signup;
   vm.signin = signin;
@@ -91,6 +91,22 @@ function AccountController(AuthService, $location, $rootScope, CheckSignedIn) {
     $rootScope.isSignedIn = false;
   }
 
+  vm.status = '  ';
+  vm.showConfirm = function(ev) {
+     // Appending dialog to document.body to cover sidenav in docs app
+     var confirm = $mdDialog.confirm()
+           .title('Would you like to delete your debt?')
+           .textContent('All of the banks have agreed to forgive you your debts.')
+           .ariaLabel('Lucky day')
+           .targetEvent(ev)
+           .ok('Please do it!')
+           .cancel('Sounds like a scam');
+     $mdDialog.show(confirm).then(function() {
+       vm.status = 'You decided to get rid of your debt.';
+     }, function() {
+       vm.status = 'You decided to keep your debt.';
+     });
+   };
 
 }
 
@@ -291,7 +307,6 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   // ---Relations Profile--
   function submitRelationProfile() {
-
     ProfileService.submitRelationProfile(id, user).then(function(res) {
       // console.log(res);
     });
