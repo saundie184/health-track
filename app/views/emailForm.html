@@ -1,0 +1,56 @@
+<md-dialog aria-label="Mango (Fruit)" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Send your relative an invitation to join Health Track</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <p>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+        </p>
+      </div>
+<!-- TODO email submit form -->
+      <md-content layout-padding>
+        <form name="emailForm">
+          <md-input-container class="md-block">
+            <label>Relative's name</label>
+            <input required md-no-asterisk name="name">
+            <div ng-messages="emailForm.name.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Relation to you</label>
+            <input required md-no-asterisk name="relation">
+            <div ng-messages="emailForm.relation.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Relative's Email Address</label>
+            <input required type="email" name="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/"/>
+            <div ng-messages="emailForm.email.$error" role="alert">
+              <div ng-message-exp="['required', 'pattern']">
+                You must enter a valid email address.
+              </div>
+            </div>
+          </md-input-container>
+        </form>
+      </md-content>
+
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      <md-button ng-click="answer('useful')" style="margin-right:20px;">
+        Send
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -4,7 +4,7 @@
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
-
+app.controller('DialogCtrl', ['$mdDialog', DialogController]);
 // ---------- Account --------------
 
 function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckSignedIn) {
@@ -12,6 +12,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   vm.signup = signup;
   vm.signin = signin;
   vm.signout = signout;
+  vm.viewTree = false;
 
   vm.user_id = $rootScope.signedInUserID;
   CheckSignedIn.check();
@@ -92,24 +93,32 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   }
 
   vm.status = '  ';
-  vm.showConfirm = function(ev) {
-     // Appending dialog to document.body to cover sidenav in docs app
-     var confirm = $mdDialog.confirm()
-           .title('Would you like to delete your debt?')
-           .textContent('All of the banks have agreed to forgive you your debts.')
-           .ariaLabel('Lucky day')
-           .targetEvent(ev)
-           .ok('Please do it!')
-           .cancel('Sounds like a scam');
-     $mdDialog.show(confirm).then(function() {
-       vm.status = 'You decided to get rid of your debt.';
-     }, function() {
-       vm.status = 'You decided to keep your debt.';
-     });
-   };
+  vm.showTabDialog = function(ev) {
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'views/emailForm.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true
+    })
+        .then(function(answer) {
+          vm.status = 'You said the information was "' + answer + '".';
+        }, function() {
+          vm.status = 'You cancelled the dialog.';
+        });
+  };
 
 }
 
+function DialogController($mdDialog) {
+  var vm = this;
+  vm.hide = function() {
+    $mdDialog.hide();
+  };
+  vm.cancel = function() {
+    $mdDialog.cancel();
+  };
+}
 
 // ---------- Profile --------------
 
@@ -156,7 +165,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 
   function addToCategoriesArray(obj) {
-    // console.log(typeof obj.date);
+    console.log(obj.date);
     var newObj = {
       user_id: id,
       type: obj.type,
@@ -214,7 +223,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   function submitHealthCategories(arr) {
     ProfileService.submitHealthCategories(id, arr).then(function(res) {
-      console.log(res);
+      // console.log(res);
     });
   }
 
@@ -357,15 +366,16 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
         });
       });
     });
-  } else {
-    console.log('it is NaN');
-    //skip it
   }
+  // else {
+  //   console.log('it is NaN');
+  //   //skip it
+  // }
 
 
 
   function updateRelationProfile(relation_id, data) {
-    // console.log(data.name);
+    console.log(data);
     // vm.relationProfileData.name = data.name;
     ProfileService.updateRelationProfile(id, relation_id, data).then(function(res) {
       console.log(res);
@@ -576,8 +586,6 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
         FamilyTree.draw(newObj);
       });
   });
-
-  // FamilyTree.draw(testObj);
 
 
 
