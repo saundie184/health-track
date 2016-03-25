@@ -4,6 +4,8 @@
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
+app.controller('SearchCtrl', ['$mdDialog', '$timeout', '$q', 'RelationEventsCategories', 'FamilyService', SearchCtrl])
+
 
 // ---------- Account --------------
 
@@ -52,6 +54,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   vm.newRelationProfileLoad = function(relation_id) {
     // console.log('id is: ' +relation_id);
     $location.path('/family/' + id + '/profile/' + relation_id);
+    $mdDialog.hide();
   };
   vm.newRelationEventLoad = function(relation_id) {
     $location.path('/family/' + id + '/events/' + relation_id);
@@ -416,18 +419,13 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       });
     });
   }
-  // else {
-  //   console.log('it is NaN');
-  //   //skip it
-  // }
-
 
 
   function updateRelationProfile(relation_id, data) {
-    console.log(data);
+    // console.log(data);
     // vm.relationProfileData.name = data.name;
     ProfileService.updateRelationProfile(id, relation_id, data).then(function(res) {
-      console.log(res);
+      // console.log(res);
       //TODO is there a better solution to reload page so the db updates???
       $route.reload();
     });
@@ -442,7 +440,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       date: d
     };
     ProfileService.submitRelationHWProfile(id, relation_id, user).then(function(res) {
-      console.log(res);
+      // console.log(res);
       //TODO is there a better solution to reload page so the db updates???
       $route.reload();
     });
@@ -657,28 +655,42 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
 }
 
 // ---Search bar on family view page---
-function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories) {
+function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories, FamilyService) {
   var vm = this;
   var id = localStorage.getItem('signedInUserID');
 
-
   var allNames = [];
+  var allRelationsObj = [];
   RelationEventsCategories.getAllEventNames(id).then(function(data) {
-    console.log(data.data);
-    for (var i = 0; i < data.data.length; i++) {
-      allNames.push(data.data[i].name);
-    }
-  }).then(function(data) {
+    // console.log(data.data);
+    //only add unique items to the array
+    pushUniqueNames(data.data);
+  }).then(function() {
     RelationEventsCategories.getAllCategoryNames(id).then(function(data) {
-      // console.log(data);
-      for (var i = 0; i < data.data.length; i++) {
-        allNames.push(data.data[i].name);
-      }
+      //only add unique items to the array
+      pushUniqueNames(data.data);
+      console.log(allNames);
       //make array of strings into a string that is comma-separated
       var stringNames = stringify(allNames);
       vm.names = loadAll(stringNames);
     });
   });
+
+  function pushUniqueNames(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      var items = arr;
+      // console.log(arr);
+      //TODO add error handling if user inserts a null value
+      // if (items[i].name === 'undefined') {
+      //   console.log(items[i]);
+      // }
+      if (allNames.indexOf(items[i].name) === -1) {
+        allNames.push(items[i].name);
+        allRelationsObj.push(items[i]);
+      }
+    }
+  }
+
   // list of `name` value/display objects
   vm.querySearch = querySearch;
   // ******************************
@@ -687,9 +699,22 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories) {
   vm.cancel = function($event) {
     $mdDialog.cancel();
   };
-  vm.finish = function($event) {
-    $mdDialog.hide();
+  vm.find = function($event, term) {
+//TODO need to be able to take in more than one relation_id
+    var relation_id;
+    for (var i = 0; i < allRelationsObj.length; i++) {
+      if (allRelationsObj[i].name === term) {
+        relation_id = allRelationsObj[i].relation_id;
+      }
+    }
+
+    //call service to find matching relation id
+    FamilyService.getFamilyMember(id, relation_id).then(function(data) {
+      // console.log(data);
+      vm.filteredArray = data.data;
+    });
   };
+
   // ******************************
   // Internal methods
   // ******************************
@@ -698,7 +723,6 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories) {
    * remote dataservice call.
    */
   function querySearch(query) {
-    console.log(vm.names);
     return query ? vm.names.filter(createFilterFor(query)) : vm.names;
   }
 
@@ -720,7 +744,8 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories) {
     for (var i = 0; i < array.length; i++) {
       string += (array[i] + ', ');
     }
-    return string;
+    //remove last comma and space from the end
+    return string.slice(0, -2);
   }
 
   /**
@@ -729,7 +754,6 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories) {
   function createFilterFor(query) {
     var lowercaseQuery = angular.lowercase(query);
     return function filterFn(name) {
-      console.log(name);
       return (name.value.indexOf(lowercaseQuery) === 0);
     };
   }

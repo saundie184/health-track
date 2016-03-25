@@ -59,7 +59,7 @@
             <div class="md-list-item-text" layout="column">
               <h3 ng-hide='profile.showEditInput'>{{profile.relationship.dob | date:"MM/dd/yyyy"}}</h3>
               <div ng-show='profile.showEditInput'>
-                <md-input-continer>
+                <md-input-continer aria-label='Edit date'>
                   <md-datepicker ng-model="profile.editDob" name='dob' md-placeholder="{{profile.relationship.dob | date:'MM/dd/yyyy'}}" aria-label='Edit date'></md-datepicker>
                 </md-input-continer>
               </div>
@@ -82,7 +82,7 @@
             <div class="md-list-item-text" layout="column">
               <h3 ng-hide='profile.showEditInput'>{{profile.relationship.dod | date:"MM/dd/yyyy"}}</h3>
               <div ng-show='profile.showEditInput'>
-                <md-input-continer>
+                <md-input-continer aria-label='Edit date'>
                   <md-datepicker ng-model="profile.editDod" name='dod' md-placeholder="{{profile.relationship.dod | date:'MM/dd/yyyy'}}" aria-label='Edit date'></md-datepicker>
                 </md-input-continer>
               </div>
@@ -143,9 +143,9 @@
 </div>
 <!-- Edit vitals button -->
 <div flex layout='row' layout-align='center start'>
-  <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitBtn' ng-click='profile.submitBtn = false; profile.showEditInput = false'>Cancel</md-button>
-  <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='profile.showEditInput = true; profile.editName = profile.relationship.name; profile.editSex = profile.relationship.sex; profile.editBloodType = profile.relationship.blood_type; profile.submitBtn = true' ng-hide='profile.submitBtn'>Edit</md-button>
-  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitBtn' ng-click='profile.updateRelationProfile(profile.relationship.id, {name: profile.editName, dob: profile.editDob, dod: profile.editDod, sex: profile.editSex, blood_type: profile.editBloodType}); profile.submitBtn = false; profile.showEditInput = false'>Submit</md-button>
+  <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitBtn' ng-click='profile.submitBtn = false; profile.showEditInput = false' aria-label='Cancel'>Cancel</md-button>
+  <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='profile.showEditInput = true; profile.editName = profile.relationship.name; profile.editSex = profile.relationship.sex; profile.editBloodType = profile.relationship.blood_type; profile.submitBtn = true' ng-hide='profile.submitBtn' aria-label='Edit'>Edit</md-button>
+  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitBtn' ng-click='profile.updateRelationProfile(profile.relationship.id, {name: profile.editName, dob: profile.editDob, dod: profile.editDod, sex: profile.editSex, blood_type: profile.editBloodType}); profile.submitBtn = false; profile.showEditInput = false' aria-label='Submit'>Submit</md-button>
 </div>
 
 <md-divider ></md-divider>

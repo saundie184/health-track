@@ -284,6 +284,16 @@ function Profile($http, dbURL) {
 // --------------- Family Profiles -------------------
 function Family($http, dbURL) {
   return {
+    getFamilyMember: function(id, relation_id) {
+      return $http.get(dbURL.url + '/family/' + id + '/relations/' +relation_id).then(function(data) {
+        // console.log(data);
+        return data;
+      }, function(err) {
+        //TODO failed authentication goes here
+        // console.log(err);
+        return err;
+      });
+    },
     getImmediateFamily: function(id) {
       return $http.get(dbURL.url + '/family/' + id).then(function(data) {
         // console.log(data);
@@ -511,6 +521,7 @@ function FamilyTree() {
 function RelationEventsCategories($http, dbURL) {
   return {
     getAllEventNames: function(id) {
+      // console.log(id);
       return $http.get(dbURL.url + '/family/' + id + '/events/').then(function(data) {
         // console.log(data);
         // dataArr.push(data);

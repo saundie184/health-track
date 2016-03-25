@@ -1,4 +1,4 @@
-<md-dialog aria-label="search dialog" ng-cloak>
+<md-dialog aria-label="search dialog" ng-controller='AccountCtrl as account' ng-cloak>
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2>Search health conditions in your family</h2>
@@ -27,8 +27,46 @@
         </md-autocomplete>
       </form>
     </div>
+    <!-- {{search.filteredArray}} -->
+    <div flex layout='row' layout-align='center start'>
+      <div id='table'>
+        <div>
+
+          <table id="table" class="table table-hover table-mc-light-blue">
+            <!-- <thead>
+              <tr>
+                <th>Name</th>
+                <th>Relative</th>
+                <th>DOB</th>
+                <th>DOD</th>
+                <td></td>
+              </tr>
+            </thead> -->
+            <tbody ng-repeat='relation in search.filteredArray'>
+              <tr>
+                <td >{{relation.name}}</td>
+                <td >{{relation.relationship}}</td>
+                <td>{{relation.dob | date:"MM/dd/yyyy"}}</td>
+                <td>{{relation.dod | date:"MM/dd/yyyy"}}</td>
+                <td>
+                  <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(relation.id)'>
+                    View profile
+                  </md-button>
+                </td>
+                <td>
+                  <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='account.newRelationEventLoad(relation.id)'>
+                    Add health event
+                  </md-button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </md-dialog-content>
   <md-dialog-actions>
-    <md-button aria-label="Finished" ng-click="search.finish($event)">Finished</md-button>
+      <md-button aria-label="Cancel" ng-click="search.cancel($event)">Close</md-button>
+    <md-button aria-label="Find" ng-click="search.find($event, search.searchText)">Find</md-button>
   </md-dialog-actions>
 </md-dialog>
