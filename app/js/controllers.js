@@ -669,7 +669,7 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories, FamilySer
     RelationEventsCategories.getAllCategoryNames(id).then(function(data) {
       //only add unique items to the array
       pushUniqueNames(data.data);
-      console.log(allNames);
+      // console.log(allNames);
       //make array of strings into a string that is comma-separated
       var stringNames = stringify(allNames);
       vm.names = loadAll(stringNames);
@@ -700,21 +700,27 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories, FamilySer
     $mdDialog.cancel();
   };
   vm.find = function($event, term) {
-//TODO need to be able to take in more than one relation_id
-    var relation_id;
-    for (var i = 0; i < allRelationsObj.length; i++) {
-      if (allRelationsObj[i].name === term) {
-        relation_id = allRelationsObj[i].relation_id;
-      }
-    }
-
-    //call service to find matching relation id
-    FamilyService.getFamilyMember(id, relation_id).then(function(data) {
-      // console.log(data);
-      vm.filteredArray = data.data;
+    var filteredArray = [];
+    vm.filteredArray = [];
+    RelationEventsCategories.getRelationsByEvent(id, term).then(function(data) {
+      filteredArray = data.data;
+      //find family member with that issue
+      findFamilyMember(filteredArray);
+      RelationEventsCategories.getRelationsByCategory(id, term).then(function(data){
+        filteredArray = data.data;
+        //find family member with that issue
+        findFamilyMember(filteredArray);
+      });
     });
   };
 
+function findFamilyMember(arr){
+  for (var j = 0; j < arr.length; j++) {
+    FamilyService.getFamilyMember(id, arr[j].relation_id).then(function(data) {
+      vm.filteredArray.push(data.data[0]);
+    });
+  }
+}
   // ******************************
   // Internal methods
   // ******************************

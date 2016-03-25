@@ -149,7 +149,7 @@ function Profile($http, dbURL) {
     },
     getRelationProfile: function(id, relation_id) {
       return $http.get(dbURL.url + '/family/' + id + '/profile/' + relation_id).then(function(data) {
-        // console.log(data);
+        // console.log(data);/
         return data;
       }, function(err) {
         //TODO failed authentication goes here
@@ -532,6 +532,26 @@ function RelationEventsCategories($http, dbURL) {
     },
     getAllCategoryNames: function(id){
       return $http.get(dbURL.url + '/family/' + id + '/categories/').then(function(data) {
+        // console.log(data);
+        // dataArr.push(data);
+        return data;
+      }, function(err){
+        return err;
+      });
+    },
+    getRelationsByEvent: function(id, ev){
+      // console.log(ev);
+      return $http.get(dbURL.url + '/family/' + id + '/healthevents/' + ev).then(function(data) {
+        // console.log(data);
+        // dataArr.push(data);
+        return data;
+      }, function(err){
+        return err;
+      });
+    },
+    getRelationsByCategory: function(id,cat){
+      // console.log(ev);
+      return $http.get(dbURL.url + '/family/' + id + '/healthcategories/' + cat).then(function(data) {
         // console.log(data);
         // dataArr.push(data);
         return data;
