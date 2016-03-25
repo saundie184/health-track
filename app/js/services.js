@@ -510,17 +510,23 @@ function FamilyTree() {
 // ---Relation Health Events and Categores ---
 function RelationEventsCategories($http, dbURL) {
   return {
-    getAllNames: function(id) {
-      var dataArr = [];
-      $http.post(dbURL.url + '/family/' + id + '/events/').then(function(data) {
-        dataArr.push(data);
-      }).then(function() {
-        $http.post(dbURL.url + '/family/' + id + '/categories/').then(function(data) {
-          dataArr.push(data);
-        });
+    getAllEventNames: function(id) {
+      return $http.get(dbURL.url + '/family/' + id + '/events/').then(function(data) {
+        // console.log(data);
+        // dataArr.push(data);
+        return data;
+      }, function(err){
+        return err;
       });
-      //TODO need to test these routes on backend first
-      return dataArr;
+    },
+    getAllCategoryNames: function(id){
+      return $http.get(dbURL.url + '/family/' + id + '/categories/').then(function(data) {
+        // console.log(data);
+        // dataArr.push(data);
+        return data;
+      }, function(err){
+        return err;
+      });
     }
   };
 }

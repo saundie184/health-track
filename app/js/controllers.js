@@ -657,11 +657,29 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
 }
 
 // ---Search bar on family view page---
-function SearchCtrl($mdDialog, $timeout, $q, ProfileService) {
+function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories) {
   var vm = this;
   var id = localStorage.getItem('signedInUserID');
-  // list of `state` value/display objects
-  vm.states = loadAll();
+
+
+  var allNames = [];
+  RelationEventsCategories.getAllEventNames(id).then(function(data) {
+    console.log(data.data);
+    for (var i = 0; i < data.data.length; i++) {
+      allNames.push(data.data[i].name);
+    }
+  }).then(function(data) {
+    RelationEventsCategories.getAllCategoryNames(id).then(function(data) {
+      // console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        allNames.push(data.data[i].name);
+      }
+      //make array of strings into a string that is comma-separated
+      var stringNames = stringify(allNames);
+      vm.names = loadAll(stringNames);
+    });
+  });
+  // list of `name` value/display objects
   vm.querySearch = querySearch;
   // ******************************
   // Template methods
@@ -676,42 +694,43 @@ function SearchCtrl($mdDialog, $timeout, $q, ProfileService) {
   // Internal methods
   // ******************************
   /**
-   * Search for states... use $timeout to simulate
+   * Search for names... use $timeout to simulate
    * remote dataservice call.
    */
   function querySearch(query) {
-    return query ? vm.states.filter(createFilterFor(query)) : vm.states;
+    console.log(vm.names);
+    return query ? vm.names.filter(createFilterFor(query)) : vm.names;
   }
 
   /**
-   * Build `states` list of key/value pairs
+   * Build `names` list of key/value pairs
    */
-  function loadAll() {
-  //TODO set up service to get names of health events and health categories  
-    // ProfileService.getHealthEvents(id, arr).then(function(data){
-    //   console.log(data);
-    // });
-    var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming';
-    return allStates.split(/, +/g).map(function(state) {
+  function loadAll(str) {
+    return str.split(/, +/g).map(function(name) {
+      // console.log(name);
       return {
-        value: state.toLowerCase(),
-        display: state
+        value: name.toLowerCase(),
+        display: name
       };
     });
   }
+  //change array to one big string
+  function stringify(array) {
+    var string = '';
+    for (var i = 0; i < array.length; i++) {
+      string += (array[i] + ', ');
+    }
+    return string;
+  }
+
   /**
    * Create filter function for a query string
    */
   function createFilterFor(query) {
     var lowercaseQuery = angular.lowercase(query);
-    return function filterFn(state) {
-      return (state.value.indexOf(lowercaseQuery) === 0);
+    return function filterFn(name) {
+      console.log(name);
+      return (name.value.indexOf(lowercaseQuery) === 0);
     };
   }
 }
