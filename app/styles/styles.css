@@ -165,3 +165,14 @@ text {
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+.header {
+  height: 300px;
+  width: 500px;
+}
+.margin-top {
+  margin-top: 200px;
+}
+.margin-100 {
+  margin-top: 100px;
+}

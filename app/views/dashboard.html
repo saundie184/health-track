@@ -1,33 +1,65 @@
 <div flex layout='row' layout-align='center start'>
   <h2>Welcome to your Health Track Dashboard!</h2>
+  <!-- <div class="md-actions" layout="column" layout-align="end center">
+    <md-button class='md-primary md-raised' ng-click='account.newProfileLoad()'>Edit health profile</md-button>
+    <md-button class='md-primary md-raised' ng-click='account.profileLoad()'>View health profile</md-button>
+    <md-button class='md-primary md-raised' ng-click='account.newFamilyMemberLoad()'>Add family members</md-button>
+    <md-button class='md-primary md-raised' ng-click='account.familyTreeLoad()'>View family tree</md-button>
+  </div> -->
 </div>
+<div flex layout='row' layout-align='center center'>
+  <div>
+    <md-content layout="column" layout-gt-xs="row">
+      <md-card class='header'>
+        <md-card-content>
+          <h2 class="md-title">Your Health Profile</h2>
+          <md-list flex>
+            <md-list-item class="md-3-line">
+              <div class="md-list-item-text" layout="column">
+                <h3>Your names goes here</h3>
+                <p>Date of Birth</p>
+                <p>Date of Birth</p>
+                <p>Date of Birth</p>
+              </div>
+            </md-list-item>
+          </md-list>
 
-<md-content layout="column" layout-gt-xs="row">
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">View your health profile</h2>
-      <p>
-        Managing your family's health starts with you. Be sure to log your health events as they happen to keep an accurate view of your overall health. You can add or edit your health profile at any time.
-      </p>
-    </md-card-content>
-    <div class="md-actions" layout="column" layout-align="end center">
-      <md-button class='md-primary md-raised' ng-click='account.newProfileLoad()'>Edit health profile</md-button>
-      <md-button class='md-primary md-raised' ng-click='account.profileLoad()'>View health profile</md-button>
-    </div>
-  </md-card>
-  <br>
+        </md-card-content>
+        <md-card-actions class='margin-100' layout="column" layout-align='end end'>
+          <md-button>Update</md-button>
+        </md-card-actions>
+      </md-card>
+      <md-card class='header'>
+        <md-card-content></md-card-content>
+        <md-card-actions class='margin-top' layout="column" layout-align="end end">
 
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Explore your family tree</h2>
-      <p>
-        Get a full prespective on your family's health. You can view a full family tree with all your relatives and see their health profiles.
-      </p>
-    </md-card-content>
-    <div class="md-actions" layout="column" layout-align="end center">
-      <md-button class='md-primary md-raised' ng-click='account.newFamilyMemberLoad()' >Add family members</md-button>
-      <md-button class='md-primary md-raised' ng-click='account.familyTreeLoad()'>View family tree</md-button>
-    </div>
-
-  </md-card>
-</md-content>
+          <md-button>View Health Timeline</md-button>
+          <md-button>Add Health Event</md-button>
+        </md-card-actions>
+      </md-card>
+    </md-content>
+  </div>
+</div>
+<div flex layout='row' layout-align='center center'>
+  <div>
+    <md-content layout="column" layout-gt-xs="row">
+      <md-card class='header'>
+        <md-card-content>
+          <h2 class="md-title">Your Family Health Profile</h2>
+        </md-card-content>
+        <md-card-actions class='margin-top' layout="column" layout-align="end end">
+          <md-button>Search family health conditions</md-button>
+          <md-button>View family members</md-button>
+        </md-card-actions>
+      </md-card>
+      <md-card class='header'>
+        <md-card-content>
+          <md-card-actions class='margin-top' layout="column" layout-align="end end">
+            <md-button>Add a Family Member</md-button>
+            <md-button>Add Health Event for Family Member</md-button>
+          </md-card-actions>
+        </md-card-content>
+      </md-card>
+    </md-content>
+  </div>
+</div>
