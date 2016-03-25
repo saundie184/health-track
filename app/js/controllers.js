@@ -251,6 +251,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.healthDataArray = [];
 
   function showTimeline() {
+
     ProfileService.getHealthEvents(id, arr).then(function(data) {
       var events = data.data;
       // console.log(events);
@@ -260,7 +261,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     });
 
     ProfileService.getHealthCategories(id, arr).then(function(data) {
-      vm.healthCategoriesArray = data.data;
+      // vm.healthCategoriesArray = data.data;
       var categories = data.data;
       for (var i = 0; i < categories.length; i++) {
         vm.healthDataArray.push(categories[i]);

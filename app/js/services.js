@@ -120,6 +120,8 @@ function Profile($http, dbURL) {
       // console.log(arr);
       if (start && end) {
         query = '?start=' + start + '&end=' + end;
+      } else {
+        query = '';
       }
 
       return $http.get(dbURL.url + '/profile/' + id + '/events/' + query).then(function(data) {
