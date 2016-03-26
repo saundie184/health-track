@@ -3,9 +3,6 @@
   <md-grid-tile md-rowspan="2" md-colspan="2" md-colspan-sm="1">
 
     <div ng-controller="AccountCtrl as account" layout="column" ng-cloak class="md-inline-form top-padding" flex>
-      <md-grid-tile-header class='form-header'>
-        Welcome to Health Track
-      </md-grid-tile-header>
 
       <md-content layout-padding>
         <div>
@@ -31,7 +28,7 @@
               <md-input-container class="md-block" flex-gt-sm>
 
                 <md-button class='md-default md-raised' ng-click='account.homePageLoad()'>Cancel</md-button>
-                <md-button class='md-warn md-raised' type='submit'>Sign in</md-button>
+                <md-button class='md-accent md-raised' type='submit'>Sign in</md-button>
               </md-input-container>
             </div>
           </form>
@@ -42,12 +39,12 @@
 
 </md-grid-list>
 <!-- <footer>
-  <md-toolbar class="md-warn">
+  <md-toolbar class="md-accent">
     <div class="md-toolbar-tools" layout-align='center center'>
       <h2 class="md-flex">This is a demo application. Give it a try!</h2>
     </div>
   </md-toolbar>
-  <md-toolbar class="md-warn">
+  <md-toolbar class="md-accent">
     <div class="md-toolbar-tools" layout-align='center center'>
       <p>
         <strong>Email:
@@ -55,7 +52,7 @@
         demo@demo.com</p>
     </div>
   </md-toolbar>
-  <md-toolbar class="md-warn">
+  <md-toolbar class="md-accent">
     <div class="md-toolbar-tools" layout-align='center center'>
       <p>
         <strong>Password:

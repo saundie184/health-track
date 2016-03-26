@@ -1,182 +1,28 @@
 <div flex layout='row' layout-align='center start' id="popupContainer">
-  <h2>{{profile.title}}</h2>
+  <h3>Your Health Events Timeline</h3>
 </div>
-<!-- 
-<div flex layout='row' layout-align='center start'>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">face</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>{{profile.profileData.firstname}}
-                {{profile.profileData.lastname}}</h3>
-              <h4>Name</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">people</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>Self</h3>
-              <h4>Relation to you</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-</div>
-
-<div flex layout='row' layout-align='center start'>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">date_range</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>{{profile.profileData.dob | date:"MM/dd/yyyy"}}</h3>
-              <h4>Date of Birth</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">child_friendly</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>{{profile.profileData.sex}}</h3>
-              <h4>Gender</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">opacity</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>{{profile.profileData.blood_type}}</h3>
-              <h4>Blood Type</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-</div>
-
-<md-divider ></md-divider>
-<div flex layout='row' layout-align='center start'>
-  <h3>Height and Weight</h3>
-</div>
-
-<div flex layout='row' layout-align='center start'>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">swap_vert</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>{{profile.hwData.height}}</h3>
-              <h4>Height</h4>
-              <p>
-                Updated on:
-                {{profile.hwData.date | date:"MM/dd/yyyy"}}
-              </p>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">settings_input_svideo</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>{{profile.hwData.weight}}</h3>
-              <h4>Weight</h4>
-              <p>
-                Updated on:
-                {{profile.hwData.date | date:"MM/dd/yyyy"}}
-              </p>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-</div> -->
-<md-divider ></md-divider>
-<div flex layout='row' layout-align='center start'>
-  <h3>Health Events Timeline</h3>
-
-</div>
-
-<div flex layout='row' layout-align='center start'>
+<div layout='row' layout-align='center start'>
   <md-button class='md-primary md-raised' aria-label='Reset' ng-click='profile.showTimeline()'>Show Health Timeline</md-button>
-    <div>
-      <md-input-container>
-        <label>From age:</label>
-        <input ng-model="profile.startAge">
-      </md-input-container>
-    </div>
-    <div>
-      <md-input-container>
-        <label>To age:</label>
-        <input ng-model="profile.endAge">
-      </md-input-container>
-    </div>
+</div>
+<div flex layout='row' layout-align='center start'>
+  <div>
+    <md-input-container>
+      <label>From age:</label>
+      <input ng-model="profile.startAge">
+    </md-input-container>
+  </div>
+  <div>
+    <md-input-container>
+      <label>To age:</label>
+      <input ng-model="profile.endAge">
+    </md-input-container>
+  </div>
 </div>
 <div flex layout='row' layout-align='center start'>
   <md-button class='md-primary md-raised' aria-label='Filter' ng-click='profile.filterTimeline(profile.startAge, profile.endAge)'>Filter</md-button>
   <md-button class='md-default md-raised' aria-label='Reset' ng-click='profile.showTimeline()'>Reset</md-button>
 </div>
+<!-- {{profile.healthDataArray}} -->
 <div layout='row' flex>
   <div flex='20'></div>
   <div flex>

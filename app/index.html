@@ -30,7 +30,7 @@
           <span flex></span>
           <div ng-show='!isSignedIn'>
             <md-button aria-label="Sign in" ng-click='account.signInLoad()'>Sign in</md-button>
-            <md-button class='md-warn md-raised' aria-label="Sign up" ng-click='account.signUpLoad()'>Sign up</md-button>
+            <md-button class='md-accent md-raised' aria-label="Sign up" ng-click='account.signUpLoad()'>Sign up</md-button>
           </div>
           <div ng-show='isSignedIn'>
             <md-button aria-label="Dashboard" ng-click='account.dashboardLoad()' ng-hide='account.isSignedIn'>Dashboard</md-button>

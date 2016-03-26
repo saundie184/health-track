@@ -149,6 +149,46 @@ function Profile($http, dbURL) {
         return err;
       });
     },
+    // getRelationHealthEvents: function(id, relation_id, arr) {
+    //   var start = arr[0];
+    //   var end = arr[1];
+    //   var query = '';
+    //   // console.log(arr);
+    //   if (start && end) {
+    //     query = '?start=' + start + '&end=' + end;
+    //   } else {
+    //     query = '';
+    //   }
+    //
+    //   return $http.get(dbURL.url + '/family/' + id + '/profile/' + relation_id + query).then(function(data) {
+    //     // console.log(data);
+    //     return data;
+    //   }, function(err) {
+    //     //TODO failed authentication goes here
+    //     // console.log(err);
+    //     return err;
+    //   });
+    // },
+    // getRelationHealthCategories: function(id, relation_id, arr) {
+    //   var start = arr[0];
+    //   var end = arr[1];
+    //   var query = '';
+    //   // console.log(arr);
+    //   if (start && end) {
+    //     query = '?start=' + start + '&end=' + end;
+    //   } else {
+    //     query = '';
+    //   }
+    //
+    //   return $http.get(dbURL.url + '/family/' + id + '/categories/' + relation_id + query).then(function(data) {
+    //     // console.log(data);
+    //     return data;
+    //   }, function(err) {
+    //     //TODO failed authentication goes here
+    //     // console.log(err);
+    //     return err;
+    //   });
+    // },
     getRelationProfile: function(id, relation_id) {
       return $http.get(dbURL.url + '/family/' + id + '/profile/' + relation_id).then(function(data) {
         // console.log(data);/
@@ -210,7 +250,7 @@ function Profile($http, dbURL) {
       });
     },
     submitHeightWeight: function(id, user) {
-      console.log(user);
+      // console.log(user);
       return $http.post(dbURL.url + '/profile/' + id + '/hw/', user).then(function(res) {
         // console.log(res);
         return res;

@@ -1,49 +1,66 @@
 <div flex layout='row' layout-align='center start'>
-  <h2>Welcome to your Health Track Dashboard!</h2>
+  <h2>Welcome to your Health Track Dashboard</h2>
 </div>
-<div flex layout='row' layout-align='center center'>
-  <md-button ng-click="account.openDialog($event)" class="md-warn">Search family health conditions</md-button>
-  <md-button class='md-primary' ng-click='account.openAddEventDialog()'>Add Health Event</md-button>
+<div flex layout='column' layout-align='center center'>
+  <md-button ng-click="account.openDialog($event)" class="md-primary">Search family health conditions</md-button>
+  <md-button class='md-primary' ng-click='account.openAddEventDialog()'>Add a Health Event</md-button>
 </div>
 <div flex layout='row' layout-align='center center'>
   <div>
     <md-content layout="column" layout-gt-xs="row">
       <md-card class='header'>
-        <md-card-content>
-          <h2 class="md-title">Your Health Profile</h2>
-          <md-list flex>
-            <md-list-item class="md-3-line">
-              <div class="md-list-item-text" layout="column">
-                <h3>Your names goes here</h3>
-                <p>Date of Birth</p>
-                <p>Date of Birth</p>
-                <p>Date of Birth</p>
-              </div>
-            </md-list-item>
-          </md-list>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{profile.profileData.firstname}}
+              {{profile.profileData.lastname}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content></br>
+        <p>
+          <strong>Date of Birth:</strong>
+          {{profile.profileData.dob | date:"MM/dd/yyyy"}}</p>
+        <p>
+          <strong>Blood Type:</strong>
+          {{profile.profileData.blood_type}}</p>
+        <p>
+          <strong>Gender:</strong>
+          {{profile.profileData.sex}}</p>
+        <span>
+          <p>
+            <strong>Height:</strong>
+            {{profile.hwData.height}}
+            <strong>
+              Weight:</strong>
+            {{profile.hwData.weight}}
+          </p>
+          <span class="md-caption">Updated
+            {{profile.hwData.date | date:"MM/dd/yyyy"}}</span>
+        </span>
 
-        </md-card-content>
-        <md-card-actions class='margin-100' layout="column" layout-align='end end'>
-          <md-button>Update Profile</md-button>
-          <md-button class='md-primary' ng-click='account.profileLoad()'>View Health Timeline</md-button>
-          <!-- <md-button class='md-primary' ng-click='account.newProfileLoad()'>Add Health Event</md-button> -->
-
-        </md-card-actions>
-      </md-card>
-      <md-card class='header'>
-        <md-card-content>
-          <h2 class="md-title">Your Family Health Profile</h2>
-        </md-card-content>
-        <md-card-actions class='margin-top' layout="column" layout-align="end end">
-          <md-button class='md-primary' ng-click='account.familyTreeLoad()'>View family members</md-button>
-          <md-button class='md-primary' ng-click='account.newFamilyMemberLoad()'>Add a Family Member</md-button>
-          <!-- TODO this function needs to change -->
-          <!-- <md-button class='md-primary' ng-click='account.newRelationProfileLoad()'>Add Health Event for Family Member</md-button> -->
-
-        </md-card-actions>
-      </md-card>
-    </md-content>
-  </div>
+      </md-card-content>
+      <md-card-actions layout="column" layout-align='end end'>
+        <md-button class='md-primary' ng-click='account.editHealthProfile()'>Edit Profile</md-button>
+        <md-button class='md-primary' ng-click='account.profileLoad()'>View Health Timeline</md-button>
+      </md-card-actions>
+    </md-card>
+    <md-card class='header'>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Your Family Health Profile</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content></br>
+      <p>
+        Knowing your family's medical history is important. Get started by adding family members and updating their health profiles.
+      </p>
+    </md-card-content>
+    <md-card-actions layout="column" layout-align="end end">
+      <md-button class='md-primary' ng-click='account.newFamilyMemberLoad()'>Add a Family Member</md-button>
+      <md-button class='md-primary' ng-click='account.familyTreeLoad()'>View family members</md-button>
+    </md-card-actions>
+  </md-card>
+</md-content>
+</div>
 </div>
 <!-- <div flex layout='row' layout-align='center center'>
   <div>

@@ -2,7 +2,7 @@
 
 // app.controller('MainController', ['$mdDialog', mainController]);
 app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog', 'CheckSignedIn', AccountController]);
-app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', ProfileController]);
+app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', 'FamilyService', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
 app.controller('SearchCtrl', ['$mdDialog', '$timeout', '$q', 'RelationEventsCategories', 'FamilyService', SearchCtrl])
 
@@ -105,7 +105,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
       clickOutsideToClose: true
     });
   };
-
+  // --- Add Health Event Dialog ---
   vm.openAddEventDialog = function($event) {
     $mdDialog.show({
       controller: FamilyController,
@@ -119,7 +119,17 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   vm.cancel = function($event) {
     $mdDialog.cancel();
   };
-
+  // --- Edit Health Vitals Profile---
+  vm.editHealthProfile = function($event) {
+    $mdDialog.show({
+      controller: ProfileController,
+      controllerAs: 'profile',
+      templateUrl: 'views/editProfile.html',
+      parent: angular.element(document.body),
+      targetEvent: $event,
+      clickOutsideToClose: true
+    });
+  };
 
 
 
@@ -128,7 +138,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
 
 // ---------- Profile --------------
 
-function ProfileController($routeParams, $location, $mdDialog, $route, $rootScope, ProfileService, CheckSignedIn) {
+function ProfileController($routeParams, $location, $mdDialog, $route, $rootScope, ProfileService, CheckSignedIn, FamilyService) {
   var vm = this;
   vm.title = 'Your health profile';
   vm.id = parseInt($routeParams.id);
@@ -137,10 +147,12 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   var relation_id = parseInt($routeParams.relation_id);
   //User profile
   vm.submitProfile = submitProfile;
+  vm.submitHeightWeight = submitHeightWeight;
   vm.addToEventsArray = addToEventsArray;
   vm.addToCategoriesArray = addToCategoriesArray;
   vm.showTimeline = showTimeline;
   vm.filterTimeline = filterTimeline;
+  vm.filterRelationsTimeline = filterRelationsTimeline;
   //Relations profile
   vm.submitRelationProfile = submitRelationProfile;
   vm.updateRelationProfile = updateRelationProfile;
@@ -191,16 +203,18 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 
   function submitProfile(user) {
+    console.log(user);
     ProfileService.submitProfile(id, user).then(function(res) {
       //TODO handle errors here
       // console.log(vm.dob);
-      submitHeightWeight();
+      // submitHeightWeight();
     });
   }
 
-  function submitHeightWeight() {
-    var height = convertToInches(vm.feet, vm.inches);
-    var weight = vm.weight;
+  function submitHeightWeight(ft, n, w) {
+    console.log(ft, n, w);
+    var height = convertToInches(ft, n);
+    var weight = w;
 
     Date.prototype.yyyymmdd = function() {
       var yyyy = this.getFullYear().toString();
@@ -219,7 +233,9 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       date: d.yyyymmdd()
     };
     ProfileService.submitHeightWeight(id, data).then(function(res, err) {
-      //TODO add pop to let user know about filling in below info
+      $mdDialog.hide()
+        //TODO is there a better solution to reload page so the db updates???
+      $route.reload();
     });
   }
 
@@ -241,7 +257,6 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   }
 
   ProfileService.getProfile(id).then(function(data) {
-    // console.log(data.data[0]);
     vm.profileData = data.data[0];
   });
 
@@ -523,6 +538,39 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     });
   }
 
+  // ---Filter Relations Timeline ---
+var array = [];
+  function filterRelationsTimeline(min, max) {
+    vm.relationHealthEventsArray = [];
+    // console.log(min);
+    //get profile of user
+    FamilyService.getFamilyMember(id, relation_id).then(function(data) {
+      // console.log(data);
+      //get birth year from user's profile
+      var year = parseDate(data.data[0].dob);
+      // set input years for filter
+      var start = parseInt(year) + parseInt(min);
+      var end = parseInt(year) + parseInt(max);
+      array.push(start, end);
+      // console.log(year);
+      console.log(array);
+      ProfileService.getRelationCategories(id, relation_id, array).then(function(data) {
+        var events = data.data;
+        console.log(events);
+        for (var i = 0; i < events.length; i++) {
+          vm.relationHealthEventsArray.push(events[i]);
+        }
+        ProfileService.getRelationProfile(id, relation_id, array).then(function(data) {
+          vm.healthCategoriesArray = data.data;
+          var categories = data.data;
+          for (var i = 0; i < categories.length; i++) {
+            vm.relationHealthEventsArray.push(categories[i]);
+          }
+          array = [];
+        });
+      });
+    });
+  }
 }
 
 
@@ -742,13 +790,7 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories, FamilySer
       });
     }
   }
-  // ******************************
-  // Internal methods
-  // ******************************
-  /**
-   * Search for names... use $timeout to simulate
-   * remote dataservice call.
-   */
+
   function querySearch(query) {
     return query ? vm.names.filter(createFilterFor(query)) : vm.names;
   }
@@ -762,6 +804,9 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories, FamilySer
       return (name.value.indexOf(lowercaseQuery) === 0);
     };
   }
+
+
+
 }
 
 /**

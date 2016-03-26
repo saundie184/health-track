@@ -1,0 +1,72 @@
+<md-dialog aria-label="edit profile" ng-controller='AccountCtrl as account' ng-cloak>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Edit your profile</h2>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <form name='editProfile'>
+        <div class='row'>
+          <md-input-container>
+            <label>First name</label>
+            <input ng-model='profile.editFirstName' md-placeholder="{{profile.profileData.firstname}}" value='{{profile.profileData.firstname}}<'/>
+          </md-input-container>
+          <md-input-container>
+            <label>Last name</label>
+            <input ng-model='profile.editLastName' md-placeholder="{{profile.profileData.lastname}}" value='{{profile.profileData.lastname}}<'/>
+          </md-input-container>
+        </div>
+        <div class='row'>
+          <label aria-label='Edit date'>Date of Birth</label>
+          <md-datepicker ng-model="profile.editDob" name='dob' md-placeholder="{{profile.profileData.dob  | date:'MM/dd/yyyy'}}" aria-label='Edit date' value='{{profile.profileData.dob}}'></md-datepicker>
+        </div>
+        <div class='row'>
+          <md-input-container>
+            <label>Blood Type</label>
+            <md-select ng-model='profile.editBloodType' name='bloodType'>
+              <md-option ng-repeat="type in profile.blood" value="{{type.abbrev}}">
+                {{type.abbrev}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <div class='row'>
+          <md-input-container>
+            <label>Gender</label>
+            <input ng-model='profile.editGender' placeholder='{{profile.profileData.sex}}' value='{{profile.profileData.sex}}'/>
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Height, Feet</label>
+            <md-select ng-model="profile.feet" name='feet'>
+              <md-option ng-repeat="ft in profile.foot" value="{{ft.abbrev}}">
+                {{ft.abbrev}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Height, Inches</label>
+            <md-select ng-model='profile.inches' name='inches'>
+              <md-option ng-repeat="in in profile.inch" value="{{in.abbrev}}">
+                {{in.abbrev}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Weight in pounds</label>
+            <input ng-model='profile.weight' name='weight'/>
+          </md-input-container>
+        </div>
+      </form>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button aria-label="Cancel" ng-click="account.cancel($event)">Cancel</md-button>
+    <md-button aria-label="Submit" class='md-raised md-primary' ng-click='profile.submitProfile({firstname: profile.editFirstName, lastname: profile.editLastName, dob: profile.editDob, sex: profile.editGender, blood_type: profile.editBloodType}); profile.submitHeightWeight(profile.feet, profile.inches, profile.weight)'>Submit</md-button>
+  </md-dialog-actions>
+</md-dialog>

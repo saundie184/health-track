@@ -1,8 +1,8 @@
 <div flex layout='row' layout-align='center start' id="popupContainer">
-  <h2>Health Profile for:
+  <h2>Health Profile for: {{profile.relationship.name}}
   </h2>
 </div>
-<!-- <md-button class='md-warn md-raised' ng-click='profile.getRelationProfile()'>get profile</md-button> -->
+<!-- <md-button class='md-accent md-raised' ng-click='profile.getRelationProfile()'>get profile</md-button> -->
 
 <div flex layout='row' layout-align='center start'>
   <div layout="row" ng-cloak class="md-inline-form">
@@ -59,9 +59,7 @@
             <div class="md-list-item-text" layout="column">
               <h3 ng-hide='profile.showEditInput'>{{profile.relationship.dob | date:"MM/dd/yyyy"}}</h3>
               <div ng-show='profile.showEditInput'>
-                <md-input-continer aria-label='Edit date'>
                   <md-datepicker ng-model="profile.editDob" name='dob' md-placeholder="{{profile.relationship.dob | date:'MM/dd/yyyy'}}" aria-label='Edit date'></md-datepicker>
-                </md-input-continer>
               </div>
               <h4>Date of Birth</h4>
             </div>
@@ -144,7 +142,7 @@
 <!-- Edit vitals button -->
 <div flex layout='row' layout-align='center start'>
   <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitBtn' ng-click='profile.submitBtn = false; profile.showEditInput = false' aria-label='Cancel'>Cancel</md-button>
-  <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='profile.showEditInput = true; profile.editName = profile.relationship.name; profile.editSex = profile.relationship.sex; profile.editBloodType = profile.relationship.blood_type; profile.submitBtn = true' ng-hide='profile.submitBtn' aria-label='Edit'>Edit</md-button>
+  <md-button class="md-raised md-accent" aria-label="Edit profile" ng-click='profile.showEditInput = true; profile.editName = profile.relationship.name; profile.editSex = profile.relationship.sex; profile.editBloodType = profile.relationship.blood_type; profile.submitBtn = true' ng-hide='profile.submitBtn' aria-label='Edit'>Edit</md-button>
   <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitBtn' ng-click='profile.updateRelationProfile(profile.relationship.id, {name: profile.editName, dob: profile.editDob, dod: profile.editDod, sex: profile.editSex, blood_type: profile.editBloodType}); profile.submitBtn = false; profile.showEditInput = false' aria-label='Submit'>Submit</md-button>
 </div>
 
@@ -224,26 +222,34 @@
 <!-- Edit height and weight button -->
 <div flex layout='row' layout-align='center start'>
   <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitHWBtn' ng-click='profile.submitHWBtn = false; profile.showHWEditInput = false'>Cancel</md-button>
-  <md-button class="md-raised md-warn" aria-label="Edit profile" ng-click='profile.showHWEditInput = true; profile.editHeight = profile.relationHWData.height; profile.submitHWBtn = true' ng-hide='profile.submitHWBtn'>Edit</md-button>
+  <md-button class="md-raised md-accent" aria-label="Edit profile" ng-click='profile.showHWEditInput = true; profile.editHeight = profile.relationHWData.height; profile.submitHWBtn = true' ng-hide='profile.submitHWBtn'>Edit</md-button>
   <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitHWBtn' ng-click='profile.submitRelationHWProfile(profile.relationship.id, {inches: profile.inches, feet: profile.feet, weight: profile.editWeight}); profile.submitHWBtn = false; profile.showHWEditInput = false'>Submit</md-button>
 </div>
 
 <md-divider ></md-divider>
 <div flex layout='row' layout-align='center start'>
-  <div layout='row'>
-    <h3>Health Events</h3>
-    <div layout='row'>
-      <!-- <pre>
-        {{profile.relationProfileData}}
-      </pre> -->
-    </div>
-
-  </div>
-</div>
-<div flex layout='row' layout-align='center start'>
   <h3>Health Events Timeline</h3>
 
 </div>
+<!-- TODO need to fix timeline. Check Services -->
+<!-- <div flex layout='row' layout-align='center start'>
+  <div>
+    <md-input-container>
+      <label>From age:</label>
+      <input ng-model="profile.startAge">
+    </md-input-container>
+  </div>
+  <div>
+    <md-input-container>
+      <label>To age:</label>
+      <input ng-model="profile.endAge">
+    </md-input-container>
+  </div>
+</div>
+<div flex layout='row' layout-align='center start'>
+  <md-button class='md-primary md-raised' aria-label='Filter' ng-click='profile.filterRelationsTimeline(profile.startAge, profile.endAge)'>Filter</md-button>
+  <md-button class='md-default md-raised' aria-label='Reset' ng-click='profile.showTimeline()'>Reset</md-button>
+</div> -->
 <div layout='row' flex>
   <div flex='20'></div>
   <div flex>
