@@ -1,0 +1,29 @@
+<md-dialog aria-label="search dialog" ng-controller='AccountCtrl as account' ng-cloak>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Add Health Event</h2>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <md-button aria-label='For you' class='md-raised md-primary' ng-click='account.newProfileLoad()'>For me</md-button>
+      <md-button aria-label='For family member' class='md-raised md-primary' ng-click='family.chooseFamilyMember = true'>For a family member</md-button>
+    </div>
+    <div class='md-dialog-content' ng-show='family.chooseFamilyMember'>
+      <md-input-container>
+        <label>Family Member</label>
+        <md-select ng-model="family.relation">
+          <md-option ng-repeat="name in family.names" value='{{name.id}}'>
+            {{name.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-button aria-label="Go" class='md-raised md-primary' ng-click='account.newRelationEventLoad(family.relation)'>Go</md-button>
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+    <md-button aria-label="Cancel" ng-click="account.cancel($event)">Cancel</md-button>
+  </md-dialog-actions>
+</md-dialog>

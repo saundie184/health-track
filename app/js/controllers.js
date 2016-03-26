@@ -42,6 +42,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   };
   vm.newProfileLoad = function() {
     $location.path('/profile/new/' + id);
+    $mdDialog.hide();
   };
   vm.familyTreeLoad = function() {
     // console.log(id);
@@ -52,12 +53,12 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
     $location.path('/family/new/' + id);
   };
   vm.newRelationProfileLoad = function(relation_id) {
-    // console.log('id is: ' +relation_id);
     $location.path('/family/' + id + '/profile/' + relation_id);
     $mdDialog.hide();
   };
   vm.newRelationEventLoad = function(relation_id) {
     $location.path('/family/' + id + '/events/' + relation_id);
+    $mdDialog.hide();
   };
 
 
@@ -94,7 +95,6 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   }
 
   // --- Search Dialog ---
-  // var self = this;
   vm.openDialog = function($event) {
     $mdDialog.show({
       controller: SearchCtrl,
@@ -105,6 +105,24 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
       clickOutsideToClose: true
     });
   };
+
+  vm.openAddEventDialog = function($event) {
+    $mdDialog.show({
+      controller: FamilyController,
+      controllerAs: 'family',
+      templateUrl: 'views/addEvent.html',
+      parent: angular.element(document.body),
+      targetEvent: $event,
+      clickOutsideToClose: true
+    });
+  };
+  vm.cancel = function($event) {
+    $mdDialog.cancel();
+  };
+
+
+
+
 }
 
 
@@ -130,6 +148,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.submitRelationEvents = submitRelationEvents;
   vm.addToRelationsCategories = addToRelationsCategories;
   vm.addToRelationsEvents = addToRelationsEvents;
+
   //Verify that user is signed in
   CheckSignedIn.check();
 
@@ -154,7 +173,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 
   function addToCategoriesArray(obj) {
-    console.log(obj.date);
+    // console.log(obj.date);
     var newObj = {
       user_id: id,
       type: obj.type,
@@ -206,7 +225,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   function submitHealthEvents(arr) {
     ProfileService.submitHealthEvents(id, arr).then(function(res) {
-      console.log(res);
+      // console.log(res);
     });
   }
 
@@ -376,11 +395,11 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   //Only get relation profiles if relation_id exists and is NaN
   if (!isNaN(relation_id)) {
+    console.log(relation_id);
     //run profile code
     vm.relationHealthEventsArray = [];
-    // console.log(id);
-    // console.log(relation_id);
     ProfileService.getRelationProfile(id, relation_id).then(function(data) {
+      // console.log(data.data);
       var events = data.data;
       for (var i = 0; i < events.length; i++) {
         vm.relationHealthEventsArray.push(events[i]);
@@ -393,9 +412,11 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
         }
         ProfileService.getRelationship(id, relation_id).then(function(data) {
           // console.log(data.data[0]);
+          vm.relationName = data.data[0].name;
           vm.relationship = data.data[0];
+
           ProfileService.getRelationHeightWeight(id, relation_id).then(function(data) {
-            // console.log(data.data);
+
             var objArray = data.data;
             // var hw = data.data;
             // for (var i = 0; i < hw.length; i++) {
@@ -412,6 +433,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
               //find object where the value of key date is maxDate
               if (date === parsedMaxDate) {
                 var recentRecord = objArray[j];
+                // console.log(recentRecord);
                 vm.relationHWData = recentRecord;
               }
             }
@@ -436,6 +458,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     var height = convertToInches(data.feet, data.inches);
     var d = new Date();
     var user = {
+      id: id,
+      relation_id: relation_id,
       height: height,
       weight: data.weight,
       date: d
@@ -572,70 +596,65 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
       vm.fDod = '';
     });
   }
-  //
-  // var testObj ={
-  //   "name": "Clifford Shanks",
-  //   "relationship": 1862,
-  //   "parents": [{
-  //     "name": "James Shanks",
-  //     "relationship": 1831,
-  //     "parents": [{
-  //       "name": "Robert Shanks",
-  //       "relationshipship": 1781
-  //     }, {
-  //       "name": "Elizabeth Shanks",
-  //       "relationship": 1795
-  //     }]
-  //   }, {
-  //     "name": "Ann Emily Brown",
-  //     "relationship": 1826,
-  //     "parents": [{
-  //       "name": "Henry Brown",
-  //       "relationship": 1792
-  //     }, {
-  //       "name": "Sarah Houchins",
-  //       "relationship": 1793
-  //     }]
-  //   },
-  // {
-  //   "name": "Saundie",
-  //   "relationship": 1999
-  //   }]
-  // };
-
 
   var fullFamilyArray = [];
+  //for addEventDialog
+  vm.chooseFamilyMember = false;
+  var names = [];
+  var relationsObj = [];
 
   FamilyService.getImmediateFamily(id).then(function(data) {
     // console.log(data.data);
     vm.familyArray = data.data;
+    // console.log(data.data);
     fullFamilyArray.push(data.data);
+    pushNames(data.data);
 
   }).then(function() {
     FamilyService.getMothersSide(id).then(function(data) {
       // console.log(data);
       vm.mothersSideArray = data.data;
       fullFamilyArray.push(data.data);
+      pushNames(data.data);
     });
   }).then(function() {
     FamilyService.getFathersSide(id).then(function(data) {
-        // console.log(data);
-        vm.fathersSideArray = data.data;
-        fullFamilyArray.push(data.data);
-        // console.log(fullFamilyArray);
-      })
-      // })
-      .then(function() {
-        //TODO call service to get user_id name
-        var user = "You";
-        // console.log(fullFamilyArray);
-        var newObj = FamilyTree.createFamilyObj(user, fullFamilyArray);
-        // console.log(newObj);
-        //TODO remove this if removing family tree
-        // FamilyTree.draw(newObj);
-      });
+      // console.log(data);
+      vm.fathersSideArray = data.data;
+      fullFamilyArray.push(data.data);
+      pushNames(data.data);
+      //make array of strings into a string that is comma-separated
+      var stringNames = stringify(names);
+      vm.names = loadNames(stringNames);
+    });
+
   });
 
+  function pushNames(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      var items = arr;
+      if (names.indexOf(items[i].name) === -1) {
+        // console.log(items[i].name);
+        names.push(items[i].name);
+        relationsObj.push(items[i]);
+      }
+    }
+  }
+
+  function loadNames(str) {
+    return str.split(/, +/g).map(function(name) {
+      var id;
+      for (var i = 0; i < relationsObj.length; i++) {
+        if (relationsObj[i].name === name) {
+          id = relationsObj[i].id;
+        }
+      }
+      return {
+        name: name,
+        id: id
+      };
+    });
+  }
 
 
   // function updateRelationProfile(relation_id, data) {
@@ -707,7 +726,7 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories, FamilySer
       filteredArray = data.data;
       //find family member with that issue
       findFamilyMember(filteredArray);
-      RelationEventsCategories.getRelationsByCategory(id, term).then(function(data){
+      RelationEventsCategories.getRelationsByCategory(id, term).then(function(data) {
         filteredArray = data.data;
         //find family member with that issue
         findFamilyMember(filteredArray);
@@ -715,13 +734,14 @@ function SearchCtrl($mdDialog, $timeout, $q, RelationEventsCategories, FamilySer
     });
   };
 
-function findFamilyMember(arr){
-  for (var j = 0; j < arr.length; j++) {
-    FamilyService.getFamilyMember(id, arr[j].relation_id).then(function(data) {
-      vm.filteredArray.push(data.data[0]);
-    });
+  function findFamilyMember(arr) {
+    for (var j = 0; j < arr.length; j++) {
+      FamilyService.getFamilyMember(id, arr[j].relation_id).then(function(data) {
+        // console.log(data);
+        vm.filteredArray.push(data.data[0]);
+      });
+    }
   }
-}
   // ******************************
   // Internal methods
   // ******************************
@@ -734,28 +754,6 @@ function findFamilyMember(arr){
   }
 
   /**
-   * Build `names` list of key/value pairs
-   */
-  function loadAll(str) {
-    return str.split(/, +/g).map(function(name) {
-      // console.log(name);
-      return {
-        value: name.toLowerCase(),
-        display: name
-      };
-    });
-  }
-  //change array to one big string
-  function stringify(array) {
-    var string = '';
-    for (var i = 0; i < array.length; i++) {
-      string += (array[i] + ', ');
-    }
-    //remove last comma and space from the end
-    return string.slice(0, -2);
-  }
-
-  /**
    * Create filter function for a query string
    */
   function createFilterFor(query) {
@@ -764,4 +762,26 @@ function findFamilyMember(arr){
       return (name.value.indexOf(lowercaseQuery) === 0);
     };
   }
+}
+
+/**
+ * Build `names` list of key/value pairs
+ */
+function loadAll(str) {
+  return str.split(/, +/g).map(function(name) {
+    // console.log(name);
+    return {
+      value: name.toLowerCase(),
+      display: name
+    };
+  });
+}
+//change array to one big string
+function stringify(array) {
+  var string = '';
+  for (var i = 0; i < array.length; i++) {
+    string += (array[i] + ', ');
+  }
+  //remove last comma and space from the end
+  return string.slice(0, -2);
 }

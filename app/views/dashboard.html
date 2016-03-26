@@ -1,11 +1,9 @@
 <div flex layout='row' layout-align='center start'>
   <h2>Welcome to your Health Track Dashboard!</h2>
-  <!-- <div class="md-actions" layout="column" layout-align="end center">
-    <md-button class='md-primary md-raised' ng-click='account.newProfileLoad()'>Edit health profile</md-button>
-    <md-button class='md-primary md-raised' ng-click='account.profileLoad()'>View health profile</md-button>
-    <md-button class='md-primary md-raised' ng-click='account.newFamilyMemberLoad()'>Add family members</md-button>
-    <md-button class='md-primary md-raised' ng-click='account.familyTreeLoad()'>View family tree</md-button>
-  </div> -->
+</div>
+<div flex layout='row' layout-align='center center'>
+  <md-button ng-click="account.openDialog($event)" class="md-warn">Search family health conditions</md-button>
+  <md-button class='md-primary' ng-click='account.openAddEventDialog()'>Add Health Event</md-button>
 </div>
 <div flex layout='row' layout-align='center center'>
   <div>
@@ -26,21 +24,28 @@
 
         </md-card-content>
         <md-card-actions class='margin-100' layout="column" layout-align='end end'>
-          <md-button>Update</md-button>
+          <md-button>Update Profile</md-button>
+          <md-button class='md-primary' ng-click='account.profileLoad()'>View Health Timeline</md-button>
+          <!-- <md-button class='md-primary' ng-click='account.newProfileLoad()'>Add Health Event</md-button> -->
+
         </md-card-actions>
       </md-card>
       <md-card class='header'>
-        <md-card-content></md-card-content>
+        <md-card-content>
+          <h2 class="md-title">Your Family Health Profile</h2>
+        </md-card-content>
         <md-card-actions class='margin-top' layout="column" layout-align="end end">
+          <md-button class='md-primary' ng-click='account.familyTreeLoad()'>View family members</md-button>
+          <md-button class='md-primary' ng-click='account.newFamilyMemberLoad()'>Add a Family Member</md-button>
+          <!-- TODO this function needs to change -->
+          <!-- <md-button class='md-primary' ng-click='account.newRelationProfileLoad()'>Add Health Event for Family Member</md-button> -->
 
-          <md-button>View Health Timeline</md-button>
-          <md-button>Add Health Event</md-button>
         </md-card-actions>
       </md-card>
     </md-content>
   </div>
 </div>
-<div flex layout='row' layout-align='center center'>
+<!-- <div flex layout='row' layout-align='center center'>
   <div>
     <md-content layout="column" layout-gt-xs="row">
       <md-card class='header'>
@@ -49,17 +54,18 @@
         </md-card-content>
         <md-card-actions class='margin-top' layout="column" layout-align="end end">
           <md-button>Search family health conditions</md-button>
-          <md-button>View family members</md-button>
+          <md-button class='md-primary' ng-click='account.familyTreeLoad()'>View family members</md-button>
         </md-card-actions>
       </md-card>
       <md-card class='header'>
         <md-card-content>
           <md-card-actions class='margin-top' layout="column" layout-align="end end">
-            <md-button>Add a Family Member</md-button>
-            <md-button>Add Health Event for Family Member</md-button>
+            <md-button class='md-primary' ng-click='account.newFamilyMemberLoad()'>Add a Family Member</md-button>
+            TODO this function needs to change
+            <md-button class='md-primary' ng-click='account.newRelationProfileLoad()'>Add Health Event for Family Member</md-button>
           </md-card-actions>
         </md-card-content>
       </md-card>
     </md-content>
   </div>
-</div>
+</div> -->

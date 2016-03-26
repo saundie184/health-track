@@ -1,186 +1,128 @@
 <div flex layout='row' layout-align='center start'>
-  <h1>Add health events for your relative: </h1>
+  <h2>Add health events for: {{profile.relationName}}
+  </h2>
 </div>
-<!-- Health Events -->
 <div flex layout='row' layout-align='center start'>
-  <h2>Health events</h2>
+  <div flex='20'></div>
+  <div flex ng-cloak>
+    <md-content>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Surgery">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Surgery</h1>
+            <div layout-gt-xs="row">
+              <md-datepicker ng-model="profile.temp.surgeryDate" name='surgeryDate' md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Name</label>
+              <input ng-model='profile.temp.surgeryName' name='surgeryName'/>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Description</label>
+              <textarea ng-model="profile.temp.surgeryDesc" name='surgeryDesc' md-maxlength="150" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+            <div class="md-actions" layout="column" layout-align="end center">
+              <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.surgeryName, type: "surgery", description: profile.temp.surgeryDesc, date: profile.temp.surgeryDate})' class='md-primary md-raised'>Add</md-button>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="procedure">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Procedure</h1>
+            <div layout-gt-xs="row">
+              <md-datepicker ng-model="profile.temp.procedureDate" name='procedureDate' md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Name</label>
+              <input ng-model='profile.temp.procedureName' name='procedureName'/>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Description</label>
+              <textarea ng-model="profile.temp.procedureDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+            <div class="md-actions" layout="column" layout-align="end center">
+              <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.procedureName, type: "procedure", description: profile.temp.procedureDesc, date: profile.temp.procedureDate})' class='md-primary md-raised'>Add</md-button>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Illness">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Illness</h1>
+            <div layout-gt-xs="row">
+              <md-datepicker ng-model="profile.temp.illnessDate" name='illnessDate' md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Name</label>
+              <input ng-model='profile.temp.illnessName' name='illnessName'/>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Description</label>
+              <textarea ng-model="profile.temp.illnessDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+            <div class="md-actions" layout="column" layout-align="end center">
+              <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.illnessName, type: "illness", description: profile.temp.illnessDesc, date: profile.temp.illnessDate})' class='md-primary md-raised'>Add</md-button>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Injuries">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Injury</h1>
+            <div layout-gt-xs="row">
+              <md-datepicker ng-model="profile.temp.injuryDate" name='injuryDate' md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Name</label>
+              <input ng-model='profile.temp.injuryName' name='injuryName'/>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Description</label>
+              <textarea ng-model="profile.temp.injuryDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+            <div class="md-actions" layout="column" layout-align="end center">
+              <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.injuryName, type: "injury", description: profile.temp.injuryDesc, date: profile.temp.injuryDate})' class='md-primary md-raised'>Add</md-button>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Drug Allergy">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Drug Allergy</h1>
+            <div layout-gt-xs="row">
+              <md-datepicker ng-model="profile.temp.drugAllergyDate" name='drugAllergyDate' md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Name</label>
+              <input ng-model='profile.temp.drugAllergyName' name='drugAllergyName'/>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Description</label>
+              <textarea ng-model="profile.temp.drugAllergyDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+            <div class="md-actions" layout="column" layout-align="end center">
+              <md-button ng-click='profile.addToRelationsCategories({name: profile.temp.drugAllergyName, type: "drugAllergy", description: profile.temp.drugAllergyDesc, date: profile.temp.drugAllergyDate})' class='md-primary md-raised'>Add</md-button>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Food Allergy">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Food Allergy</h1>
+            <div layout-gt-xs="row">
+              <md-datepicker ng-model="profile.temp.foodAllergyDate" name='foodAllergyDate' md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Name</label>
+              <input ng-model='profile.temp.foodAllergyName' name='foodAllergyName'/>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Description</label>
+              <textarea ng-model="profile.temp.foodAllergyDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+            <div class="md-actions" layout="column" layout-align="end center">
+              <md-button ng-click='profile.addToRelationsCategories({name: profile.temp.foodAllergyName, type: "foodAllergy", description: profile.temp.foodAllergyDesc, date: profile.temp.foodAllergyDate})' class='md-primary md-raised'>Add</md-button>
+            </div>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-content>
+  </div>
+  <div flex='20'></div>
 </div>
-<md-content layout="column" layout-gt-xs="row">
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <form name='surgeryForm' ng-model='profile.surgeryForm'>
-        <h2 class="md-title">Surgery</h2>
-        <!-- TODO add icon -->
-        <div layout-gt-xs="row">
-          <md-datepicker ng-model="profile.temp.surgeryDate" name='surgeryDate' md-placeholder="Enter date"></md-datepicker>
-        </div>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Name</label>
-          <input ng-model='profile.temp.surgeryName' name='surgeryName'/>
-        </md-input-container>
-        <md-input-container class="md-block">
-          <label>Description</label>
-          <textarea ng-model="profile.temp.surgeryDesc" name='surgeryDesc' md-maxlength="150" rows="5" md-select-on-focus></textarea>
-        </md-input-container>
-        <div class="md-actions" layout="column" layout-align="end center">
-          <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.surgeryName, type: "surgery", description: profile.temp.surgeryDesc, date: profile.temp.surgeryDate})' class='md-primary md-raised'>Add</md-button>
-        </div>
-      </form>
-    </md-card>
-  </md-card-content>
-  <br>
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Procedure</h2>
-      <!-- TODO add icon -->
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="profile.temp.procedureDate" name='procedureDate' md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        <input ng-model='profile.temp.procedureName' name='procedureName'/>
-      </md-input-container>
-      <md-input-container class="md-block">
-        <label>Description</label>
-        <textarea ng-model="profile.temp.procedureDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-      </md-input-container>
-      <div class="md-actions" layout="column" layout-align="end center">
-        <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.procedureName, type: "procedure", description: profile.temp.procedureDesc, date: profile.temp.procedureDate})' class='md-primary md-raised'>Add</md-button>
-      </div>
-    </md-card>
-  </md-card-content>
-  <br>
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Illness</h2>
-      <!-- TODO add icon -->
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="profile.temp.illnessDate" name='illnessDate' md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        <input ng-model='profile.temp.illnessName' name='illnessName'/>
-      </md-input-container>
-      <md-input-container class="md-block">
-        <label>Description</label>
-        <textarea ng-model="profile.temp.illnessDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-      </md-input-container>
-      <div class="md-actions" layout="column" layout-align="end center">
-        <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.illnessName, type: "illness", description: profile.temp.illnessDesc, date: profile.temp.illnessDate})' class='md-primary md-raised'>Add</md-button>
-      </div>
-    </md-card-content>
-  </md-card>
-</md-content>
-<!-- More health events  -->
-<md-content layout="column" layout-gt-xs="row">
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Injury</h2>
-      <!-- TODO add icon -->
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="profile.temp.injuryDate" name='injuryDate' md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        <input ng-model='profile.temp.injuryName' name='injuryName'/>
-      </md-input-container>
-      <md-input-container class="md-block">
-        <label>Description</label>
-        <textarea ng-model="profile.temp.injuryDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-      </md-input-container>
-      <div class="md-actions" layout="column" layout-align="end center">
-        <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.injuryName, type: "injury", description: profile.temp.injuryDesc, date: profile.temp.injuryDate})' class='md-primary md-raised'>Add</md-button>
-      </div>
-    </md-card>
-  </md-card-content>
-  <br>
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Other</h2>
-      <!-- TODO add icon -->
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="profile.temp.otherEventDate" name='otherEventDate' md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        <input ng-model='profile.temp.otherEventName' name='otherEventName'/>
-      </md-input-container>
-      <md-input-container class="md-block">
-        <label>Description</label>
-        <textarea ng-model="profile.temp.otherEventDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-      </md-input-container>
-      <div class="md-actions" layout="column" layout-align="end center">
-        <md-button ng-click='profile.addToRelationsEvents({name: profile.temp.otherEventName, type: "otherEvent", description: profile.temp.otherEventDesc, date: profile.temp.otherEventDate})' class='md-primary md-raised'>Add</md-button>
-      </div>
-    </md-card>
-  </md-card-content>
-  <br>
-</md-content>
-<!-- Health Categories -->
-<div flex layout='row' layout-align='center start'>
-  <h2>Health categories</h2>
-</div>
-<md-content layout="column" layout-gt-xs="row">
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Food Allergies</h2>
-      <!-- TODO add icon -->
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="profile.temp.foodAllergyDate" name='foodAllergyDate' md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        <input ng-model='profile.temp.foodAllergyName' name='foodAllergyName'/>
-      </md-input-container>
-      <md-input-container class="md-block">
-        <label>Description</label>
-        <textarea ng-model="profile.temp.foodAllergyDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-      </md-input-container>
-      <div class="md-actions" layout="column" layout-align="end center">
-        <md-button ng-click='profile.addToRelationsCategories({name: profile.temp.foodAllergyName, type: "foodAllergy", description: profile.temp.foodAllergyDesc, date: profile.temp.foodAllergyDate})' class='md-primary md-raised'>Add</md-button>
-      </div>
-    </md-card>
-  </md-card-content>
-  <br>
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Drug Allergies</h2>
-      <!-- TODO add icon -->
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="profile.temp.drugAllergyDate" name='drugAllergyDate' md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        <input ng-model='profile.temp.drugAllergyName' name='drugAllergyName'/>
-      </md-input-container>
-      <md-input-container class="md-block">
-        <label>Description</label>
-        <textarea ng-model="profile.temp.drugAllergyDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-      </md-input-container>
-      <div class="md-actions" layout="column" layout-align="end center">
-        <md-button ng-click='profile.addToRelationsCategories({name: profile.temp.drugAllergyName, type: "drugAllergy", description: profile.temp.drugAllergyDesc, date: profile.temp.drugAllergyDate})' class='md-primary md-raised'>Add</md-button>
-      </div>
-    </md-card>
-  </md-card-content>
-  <br>
-  <md-card flex flex-gt-md="30">
-    <md-card-content>
-      <h2 class="md-title">Other</h2>
-      <!-- TODO add icon -->
-      <div layout-gt-xs="row">
-        <md-datepicker ng-model="profile.temp.otherCatDate" name='otherCatDate' md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        <input ng-model='profile.temp.otherCatName' name='otherCatName'/>
-      </md-input-container>
-      <md-input-container class="md-block">
-        <label>Description</label>
-        <textarea ng-model="profile.temp.otherCatDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-      </md-input-container>
-      <div class="md-actions" layout="column" layout-align="end center">
-        <md-button ng-click='profile.addToRelationsCategories({name: profile.temp.otherCatName, type: "otherCat", description: profile.temp.otherCatDesc, date: profile.otherCatDate})' class='md-primary md-raised'>Add</md-button>
-      </div>
-    </md-card-content>
-  </md-card>
-</md-content>

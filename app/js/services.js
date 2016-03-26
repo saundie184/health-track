@@ -250,7 +250,7 @@ function Profile($http, dbURL) {
       });
     },
     submitRelationHWProfile: function(id, relation_id, data) {
-      // console.log(data);
+
       return $http.post(dbURL.url + '/family/' + id + '/hw/' + relation_id, data).then(function(res) {
         // console.log(res);
         return res;
