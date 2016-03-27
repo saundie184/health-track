@@ -36,7 +36,6 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
     // console.log(id);
     $location.path('/dashboard/' + id);
   };
-
   vm.profileLoad = function() {
     $location.path('/profile/' + id);
   };
@@ -162,7 +161,6 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.submitHeightWeight = submitHeightWeight;
   vm.addToEventsArray = addToEventsArray;
   vm.addToCategoriesArray = addToCategoriesArray;
-  vm.showTimeline = showTimeline;
   vm.filterTimeline = filterTimeline;
   vm.filterRelationsTimeline = filterRelationsTimeline;
   //Relations profile
@@ -175,6 +173,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   //Verify that user is signed in
   CheckSignedIn.check();
+
+
 
   function addToEventsArray(obj) {
     // console.log(obj);
@@ -294,18 +294,15 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     }
   });
 
-  vm.healthDataArray = [];
-
-  function showTimeline() {
-
+  var arr = [];
+  if (!isNaN(id)) {
+    vm.healthDataArray = [];
     ProfileService.getHealthEvents(id, arr).then(function(data) {
       var events = data.data;
-      // console.log(events);
       for (var i = 0; i < events.length; i++) {
         vm.healthDataArray.push(events[i]);
       }
     });
-
     ProfileService.getHealthCategories(id, arr).then(function(data) {
       // vm.healthCategoriesArray = data.data;
       var categories = data.data;
@@ -315,11 +312,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     });
   }
 
-  var arr = [];
-
   function filterTimeline(min, max) {
     vm.healthDataArray = [];
-    // console.log(min);
     //get profile of user
     ProfileService.getProfile(id).then(function(data) {
       //get birth year from user's profile
@@ -357,21 +351,6 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     }
   }
 
-  // ProfileService.getHealthEvents(id, arr).then(function(data) {
-  //   var events = data.data;
-  //   // console.log(events);
-  //   for (var i = 0; i < events.length; i++) {
-  //     vm.healthDataArray.push(events[i]);
-  //   }
-  // });
-  //
-  // ProfileService.getHealthCategories(id, arr).then(function(data) {
-  //   vm.healthCategoriesArray = data.data;
-  //   var categories = data.data;
-  //   for (var i = 0; i < categories.length; i++) {
-  //     vm.healthDataArray.push(categories[i]);
-  //   }
-  // });
 
 
   // ---Timeline buttons----
@@ -422,16 +401,17 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   //Only get relation profiles if relation_id exists and is NaN
   if (!isNaN(relation_id)) {
+    var arr = [];
     // console.log(relation_id);
     //run profile code
     vm.relationHealthEventsArray = [];
-    ProfileService.getRelationProfile(id, relation_id).then(function(data) {
+    ProfileService.getRelationProfile(id, relation_id, arr).then(function(data) {
       // console.log(data.data);
       var events = data.data;
       for (var i = 0; i < events.length; i++) {
         vm.relationHealthEventsArray.push(events[i]);
       }
-      ProfileService.getRelationCategories(id, relation_id).then(function(data) {
+      ProfileService.getRelationCategories(id, relation_id, arr).then(function(data) {
         // console.log(data);
         var categories = data.data;
         for (var i = 0; i < categories.length; i++) {
@@ -554,7 +534,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   }
 
   // ---Filter Relations Timeline ---
-var array = [];
+  var array = [];
+
   function filterRelationsTimeline(min, max) {
     vm.relationHealthEventsArray = [];
     // console.log(min);

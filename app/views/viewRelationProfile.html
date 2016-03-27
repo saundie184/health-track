@@ -1,6 +1,12 @@
+<div flex layout='row' layout-align='center start'>
+  <h2>Your family</h2>
+</div>
+<div flex layout='row' layout-align='center start'>
+  <md-button class='md-accent' ng-click='account.familyTreeLoad()'> View family members</md-button>
+</div>
 <div flex layout='row' layout-align='center start' id="popupContainer">
-  <h2>Health Profile for your {{profile.relationship.relationship}}
-  </h2>
+  <h3>Health Profile for your {{profile.relationship.relationship}}
+  </h3>
 </div>
 
 <div flex layout='row' layout-align='center center'>
@@ -43,11 +49,11 @@
 </div>
 </div>
 <div flex layout='row' layout-align='center start'>
-  <h3>Health Events Timeline</h3>
+  <h3>{{profile.relationship.name}}'s Health Events Timeline</h3>
 
 </div>
 <!-- TODO need to fix timeline. Check Services -->
-<!-- <div flex layout='row' layout-align='center start'>
+<div flex layout='row' layout-align='center start'>
   <div>
     <md-input-container>
       <label>From age:</label>
@@ -62,9 +68,9 @@
   </div>
 </div>
 <div flex layout='row' layout-align='center start'>
+  <md-button class='md-default md-raised' aria-label='Reset' ng-click='profile.filterRelationsTimeline(0, 100)'>Reset</md-button>
   <md-button class='md-primary md-raised' aria-label='Filter' ng-click='profile.filterRelationsTimeline(profile.startAge, profile.endAge)'>Filter</md-button>
-  <md-button class='md-default md-raised' aria-label='Reset' ng-click='profile.showTimeline()'>Reset</md-button>
-</div> -->
+</div>
 <div layout='row' flex>
   <div flex='20'></div>
   <div flex>
