@@ -131,6 +131,18 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
     });
   };
 
+  // --- Edit Relations Profile---
+  vm.editHealthProfile = function($event) {
+    $mdDialog.show({
+      controller: ProfileController,
+      controllerAs: 'profile',
+      templateUrl: 'views/editRelationProfile.html',
+      parent: angular.element(document.body),
+      targetEvent: $event,
+      clickOutsideToClose: true
+    });
+  };
+
 
 
 }
@@ -410,7 +422,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   //Only get relation profiles if relation_id exists and is NaN
   if (!isNaN(relation_id)) {
-    console.log(relation_id);
+    // console.log(relation_id);
     //run profile code
     vm.relationHealthEventsArray = [];
     ProfileService.getRelationProfile(id, relation_id).then(function(data) {
@@ -459,17 +471,19 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   }
 
 
-  function updateRelationProfile(relation_id, data) {
+  function updateRelationProfile(data) {
     // console.log(data);
     // vm.relationProfileData.name = data.name;
     ProfileService.updateRelationProfile(id, relation_id, data).then(function(res) {
       // console.log(res);
+
       //TODO is there a better solution to reload page so the db updates???
       $route.reload();
     });
   }
 
-  function submitRelationHWProfile(relation_id, data) {
+  function submitRelationHWProfile(data) {
+    // console.log(data);
     var height = convertToInches(data.feet, data.inches);
     var d = new Date();
     var user = {
@@ -481,6 +495,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     };
     ProfileService.submitRelationHWProfile(id, relation_id, user).then(function(res) {
       // console.log(res);
+      $mdDialog.hide();
       //TODO is there a better solution to reload page so the db updates???
       $route.reload();
     });

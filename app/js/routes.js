@@ -4,7 +4,7 @@ app.config(function($routeProvider, $httpProvider){
   $routeProvider
   .when('/', {
     templateUrl: 'views/main.html',
-    controller: 'AccountCtrl as account'
+    controller: 'ProfileCrtl as profile'
   })
   .when('/signup', {
     templateUrl: 'views/signup.html',

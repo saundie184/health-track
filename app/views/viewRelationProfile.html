@@ -1,232 +1,47 @@
 <div flex layout='row' layout-align='center start' id="popupContainer">
-  <h2>Health Profile for: {{profile.relationship.name}}
+  <h2>Health Profile for your {{profile.relationship.relationship}}
   </h2>
 </div>
-<!-- <md-button class='md-accent md-raised' ng-click='profile.getRelationProfile()'>get profile</md-button> -->
 
-<div flex layout='row' layout-align='center start'>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">face</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3 ng-hide='profile.showEditInput'>{{profile.relationship.name}}</h3>
-              <div ng-show='profile.showEditInput'>
-                <input ng-model='profile.editName' value=''/>
-              </div>
-              <h4>Name</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
+<div flex layout='row' layout-align='center center'>
+  <div>
+    <md-content layout="column" layout-gt-xs="row">
+      <md-card class='header'>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{profile.relationship.name}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content></br>
+        <p>
+          <strong>Date of Birth:</strong>
+          {{profile.relationship.dob | date:"MM/dd/yyyy"}}</p>
+        <p>
+          <strong>Blood Type:</strong>
+          {{profile.relationship.blood_type}}</p>
+        <p>
+          <strong>Gender:</strong>
+          {{profile.relationship.sex}}</p>
+        <span>
+          <p>
+            <strong>Height:</strong>
+            {{profile.relationHWData.height}}
+            <strong>
+              Weight:</strong>
+            {{profile.relationHWData.weight}}
+          </p>
+          <span class="md-caption">Updated
+            {{profile.relationHWData.date | date:"MM/dd/yyyy"}}</span>
+        </span>
 
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">people</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3>{{profile.relationship.relationship}}</h3>
-              <h4>Relation to you</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
+      </md-card-content>
+      <md-card-actions layout="column" layout-align='end end'>
+        <md-button class='md-primary' ng-click='account.editHealthProfile()'>Edit Profile</md-button>
+      </md-card-actions>
+    </md-card>
+</md-content>
 </div>
-
-<div flex layout='row' layout-align='center start'>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">date_range</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3 ng-hide='profile.showEditInput'>{{profile.relationship.dob | date:"MM/dd/yyyy"}}</h3>
-              <div ng-show='profile.showEditInput'>
-                  <md-datepicker ng-model="profile.editDob" name='dob' md-placeholder="{{profile.relationship.dob | date:'MM/dd/yyyy'}}" aria-label='Edit date'></md-datepicker>
-              </div>
-              <h4>Date of Birth</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">date_range</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3 ng-hide='profile.showEditInput'>{{profile.relationship.dod | date:"MM/dd/yyyy"}}</h3>
-              <div ng-show='profile.showEditInput'>
-                <md-input-continer aria-label='Edit date'>
-                  <md-datepicker ng-model="profile.editDod" name='dod' md-placeholder="{{profile.relationship.dod | date:'MM/dd/yyyy'}}" aria-label='Edit date'></md-datepicker>
-                </md-input-continer>
-              </div>
-              <h4>Date of Death</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">child_friendly</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3 ng-hide='profile.showEditInput'>{{profile.relationship.sex}}</h3>
-              <input ng-show='profile.showEditInput' ng-model='profile.editSex' value='' aria-label='Edit Sex'/>
-              <h4>Gender</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">opacity</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3 ng-hide='profile.showEditInput'>{{profile.relationship.blood_type}}</h3>
-              <md-input-container ng-show='profile.showEditInput' class="md-block" flex-gt-sm>
-                <md-select ng-model="profile.editBloodType" name='bloodType' aria-label='Edit blood type'>
-                  <md-option ng-repeat="type in profile.blood" value="{{type.abbrev}}">
-                    {{type.abbrev}}
-                  </md-option>
-                </md-select>
-              </md-input-container>
-              <h4>Blood Type</h4>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-
-  </div>
-
 </div>
-<!-- Edit vitals button -->
-<div flex layout='row' layout-align='center start'>
-  <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitBtn' ng-click='profile.submitBtn = false; profile.showEditInput = false' aria-label='Cancel'>Cancel</md-button>
-  <md-button class="md-raised md-accent" aria-label="Edit profile" ng-click='profile.showEditInput = true; profile.editName = profile.relationship.name; profile.editSex = profile.relationship.sex; profile.editBloodType = profile.relationship.blood_type; profile.submitBtn = true' ng-hide='profile.submitBtn' aria-label='Edit'>Edit</md-button>
-  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitBtn' ng-click='profile.updateRelationProfile(profile.relationship.id, {name: profile.editName, dob: profile.editDob, dod: profile.editDod, sex: profile.editSex, blood_type: profile.editBloodType}); profile.submitBtn = false; profile.showEditInput = false' aria-label='Submit'>Submit</md-button>
-</div>
-
-<md-divider ></md-divider>
-<div flex layout='row' layout-align='center start'>
-  <h3>Height and Weight</h3>
-</div>
-
-<div flex layout='row' layout-align='center start'>
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">swap_vert</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3 ng-hide='profile.showHWEditInput'>{{profile.relationHWData.height}}</h3>
-              <div ng-show='profile.showHWEditInput'>
-                <md-input-container class="md-block" flex-gt-sm>
-                  <label>Height, Feet</label>
-                  <md-select ng-model="profile.feet" name='feet'>
-                    <md-option ng-repeat="ft in profile.foot" value="{{ft.abbrev}}">
-                      {{ft.abbrev}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm>
-                  <label>Height, Inches</label>
-                  <md-select ng-model='profile.inches' name='inches'>
-                    <md-option ng-repeat="in in profile.inch" value="{{in.abbrev}}">
-                      {{in.abbrev}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-              </div>
-
-              <h4>Height</h4>
-              <p>
-                Updated on:
-                {{profile.relationHWData.date | date:"MM/dd/yyyy"}}
-              </p>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-
-  <div layout="row" ng-cloak class="md-inline-form">
-    <md-content layout-padding>
-      <div layout-gt-sm="row">
-        <md-list flex>
-          <md-list-item class="md-3-line">
-            <md-icon>
-              <i class="material-icons md-40 lightblue300">settings_input_svideo</i>
-            </md-icon>
-            <div class="md-list-item-text" layout="column">
-              <h3 ng-hide='profile.showHWEditInput'>{{profile.relationHWData.weight}}</h3>
-              <input ng-show='profile.showHWEditInput' ng-model='profile.editWeight' class="md-block" flex-gt-sm></input>
-              <h4>Weight</h4>
-              <p>
-                Updated on:
-                {{profile.relationHWData.date | date:"MM/dd/yyyy"}}
-              </p>
-            </div>
-          </md-list-item>
-        </md-list>
-        <md-divider ></md-divider>
-      </div>
-    </md-content>
-  </div>
-</div>
-
-<!-- Edit height and weight button -->
-<div flex layout='row' layout-align='center start'>
-  <md-button class='md-raised md-default' aria-label='Cancel' ng-show='profile.submitHWBtn' ng-click='profile.submitHWBtn = false; profile.showHWEditInput = false'>Cancel</md-button>
-  <md-button class="md-raised md-accent" aria-label="Edit profile" ng-click='profile.showHWEditInput = true; profile.editHeight = profile.relationHWData.height; profile.submitHWBtn = true' ng-hide='profile.submitHWBtn'>Edit</md-button>
-  <md-button class="md-raised md-primary" aria-label="Submit profile" ng-show='profile.submitHWBtn' ng-click='profile.submitRelationHWProfile(profile.relationship.id, {inches: profile.inches, feet: profile.feet, weight: profile.editWeight}); profile.submitHWBtn = false; profile.showHWEditInput = false'>Submit</md-button>
-</div>
-
-<md-divider ></md-divider>
 <div flex layout='row' layout-align='center start'>
   <h3>Health Events Timeline</h3>
 

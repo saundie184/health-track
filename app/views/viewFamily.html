@@ -1,136 +1,91 @@
 <div flex layout='row' layout-align='center start'>
   <h2>{{family.title}}</h2>
 </div>
-<!--
+
 <div flex layout='row' layout-align='center start'>
-  <div>
-    <h2>Family Tree</h2>
-  </div>
-</div> -->
-<!-- <div id="tree"></div> -->
-<!-- <div flex layout='row' layout-align='center start'>
-  <div layout="column" ng-cloak>
-  <md-content class="md-padding">
-    <p>
-      Search for a health condition in your family.
-    </p>
-    <md-button ng-click="account.openDialog($event)" class="md-raised">Search</md-button>
+  <p>
+    Lorem ipsumm...
+  </p>
+  <md-button class='md-primary' ng-click='account.newFamilyMemberLoad()'>Add a Family Member</md-button>
+</div>
+<div flex layout='row' layout-align='center center'>
+  <md-content layout="column" layout-gt-xs="row">
+    <md-card class='list-cards'>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Your family</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-list>
+          <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
+          <!-- TODO fix rows so the hover is clickable -->
+          <md-list-item ng-repeat='fam in family.familyArray' ng-click="goToPerson(person.name, $event)" class="noright">
+            <md-button class="md-fab md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(fam.id)'>
+            <md-icon md-svg-src=""></md-icon>
+            </md-button>
+            <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
+            <p >{{fam.name}}</p>
+            <p >{{fam.relationship}}</p>
+            <!-- <td>{{fam.dob | date:"MM/dd/yyyy"}}</td> -->
+            <!-- <td>{{fam.dod | date:"MM/dd/yyyy"}}</td> -->
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
   </md-content>
 </div>
-</div> -->
 
-
-<div flex layout='row' layout-align='center start' >
-  <div id='table'>
-    <h2>Your immediate family</h2>
-    <div>
-      <!-- Table starts here -->
-      <table id="table" class="table table-hover table-mc-light-blue">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Relative</th>
-            <th>DOB</th>
-            <th>DOD</th>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody ng-repeat='fam in family.familyArray'>
-          <tr>
-            <td >{{fam.name}}</td>
-            <td >{{fam.relationship}}</td>
-            <td>{{fam.dob | date:"MM/dd/yyyy"}}</td>
-            <td>{{fam.dod | date:"MM/dd/yyyy"}}</td>
-            <td>
-              <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(fam.id)'>
-                View profile
-              </md-button>
-            </td>
-            <td>
-              <md-button class="md-raised md-accent" aria-label="Edit profile" ng-click='account.newRelationEventLoad(fam.id)'>
-                Add health event
-              </md-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div flex layout='row' layout-align='center center'>
+  <md-content layout="column" layout-gt-xs="row">
+    <md-card class='list-cards'>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Your Mother's Side</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-list>
+          <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
+          <md-list-item ng-repeat='mother in family.mothersSideArray' ng-click="goToPerson(person.name, $event)" class="noright">
+            <md-button class="md-fab md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(mother.id)'>
+            <md-icon md-svg-src=""></md-icon>
+            </md-button>
+            <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
+            <p >{{mother.name}}</p>
+            <p >{{mother.relationship}}</p>
+            <!-- <td>{{mother.dob | date:"MM/dd/yyyy"}}</td> -->
+            <!-- <td>{{mother.dod | date:"MM/dd/yyyy"}}</td> -->
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </md-content>
 </div>
 
-<div flex layout='row' layout-align='center start'>
-  <div id='table'>
-    <h2>Mother's side</h2>
-    <div>
-      <!-- Table starts here -->
-      <table id="table" class="table table-hover table-mc-light-blue">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Relative</th>
-            <th>DOB</th>
-            <th>DOD</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody ng-repeat='mother in family.mothersSideArray'>
-          <tr>
-            <td >{{mother.name}}
-            </td>
-            <td >{{mother.relationship}}</td>
-            <td>{{mother.dob | date:"MM/dd/yyyy"}}</td>
-            <td>{{mother.dod | date:"MM/dd/yyyy"}}</td>
-            <td>
-              <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(mother.id)'>
-                View profile
-              </md-button>
-            </td>
-            <td>
-              <md-button class="md-raised md-accent" aria-label="Edit profile" ng-click='account.newRelationEventLoad(mother.id)'>
-                Add health event
-              </md-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div flex layout='row' layout-align='center start'>
-  <div id='table'>
-    <h2>Father's side</h2>
-    <div>
-      <!-- Table starts here -->
-      <table id="table" class="table table-hover table-mc-light-blue">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Relative</th>
-            <th>DOB</th>
-            <th>DOD</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody ng-repeat='father in family.fathersSideArray'>
-          <tr>
-            <td >{{father.name}}</td>
-            <td >{{father.relationship}}</td>
-            <td>{{father.dob | date:"MM/dd/yyyy"}}</td>
-            <td>{{father.dod | date:"MM/dd/yyyy"}}</td>
-            <td>
-              <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(father.id)'>
-                View profile
-              </md-button>
-            </td>
-            <td>
-              <md-button class="md-raised md-accent" aria-label="Edit profile" ng-click='account.newRelationEventLoad(father.id)'>
-                Add health event
-              </md-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div flex layout='row' layout-align='center center'>
+  <md-content layout="column" layout-gt-xs="row">
+    <md-card class='list-cards'>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Your Father's Side</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-list>
+          <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
+          <md-list-item ng-repeat='father in family.fathersSideArray' ng-click="goToPerson(person.name, $event)" class="noright">
+            <md-button class="md-fab md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(father.id)'>
+            <md-icon md-svg-src=""></md-icon>
+            </md-button>
+            <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
+            <p >{{father.name}}</p>
+            <p >{{father.relationship}}</p>
+            <!-- <td>{{father.dob | date:"MM/dd/yyyy"}}</td> -->
+            <!-- <td>{{father.dod | date:"MM/dd/yyyy"}}</td> -->
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </md-content>
 </div>

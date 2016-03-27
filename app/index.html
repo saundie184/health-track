@@ -24,7 +24,7 @@
         <div class="md-toolbar-tools">
           <h2>
             <a href='http://localhost:8080/#/'>
-              <span>Health Track</span>
+              <span class='md-display-1'>Health Track</span>
             </a>
           </h2>
           <span flex></span>
@@ -33,6 +33,7 @@
             <md-button class='md-accent md-raised' aria-label="Sign up" ng-click='account.signUpLoad()'>Sign up</md-button>
           </div>
           <div ng-show='isSignedIn'>
+            <md-button class='md-accent md-raised' ng-click='account.openAddEventDialog()'>Add Health Event</md-button>
             <md-button aria-label="Dashboard" ng-click='account.dashboardLoad()' ng-hide='account.isSignedIn'>Dashboard</md-button>
             <span class='md-body-2'>
               {{account.signedInUser}}

@@ -177,6 +177,9 @@ text {
   height: 300px;
   width: 500px;
 }
+.list-cards{
+    width: 500px;
+}
 .margin-top {
   margin-top: 200px;
 }

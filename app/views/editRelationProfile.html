@@ -1,7 +1,7 @@
 <md-dialog aria-label="edit profile" ng-controller='AccountCtrl as account' ng-cloak>
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>Edit your profile</h2>
+      <h2>Edit {{profile.relationship.name}}'s profile</h2>
       <span flex></span>
     </div>
   </md-toolbar>
@@ -10,22 +10,18 @@
       <form name='editProfile'>
         <div class='row'>
           <md-input-container>
-            <label>First name</label>
-            <input ng-model='profile.editFirstName' placeholder="{{profile.profileData.firstname}}" value='{{profile.profileData.firstname}}<'/>
-          </md-input-container>
-          <md-input-container>
-            <label>Last name</label>
-            <input ng-model='profile.editLastName' placeholder="{{profile.profileData.lastname}}" value='{{profile.profileData.lastname}}<'/>
+            <label>Name</label>
+            <input ng-model='profile.editName' placeholder="{{profile.relationship.name}}" value='{{profile.relationship.name}}<'/>
           </md-input-container>
         </div>
         <div class='row'>
           <label aria-label='Edit date'>Date of Birth</label>
-          <md-datepicker ng-model="profile.editDob" name='dob' md-placeholder="{{profile.profileData.dob  | date:'MM/dd/yyyy'}}" aria-label='Edit date' value='{{profile.profileData.dob}}'></md-datepicker>
+          <md-datepicker ng-model="profile.editDob" name='dob' md-placeholder="{{profile.relationship.dob  | date:'MM/dd/yyyy'}}" aria-label='Edit date' value='{{profile.relationship.dob}}'></md-datepicker>
         </div>
         <div class='row'>
           <md-input-container>
             <label>Blood Type</label>
-            <md-select ng-model='profile.editBloodType' name='bloodType'>
+            <md-select ng-model='profile.editBloodType' name='bloodType' placeholder='{{profile.relationship.blood_type}}'>
               <md-option ng-repeat="type in profile.blood" value="{{type.abbrev}}">
                 {{type.abbrev}}
               </md-option>
@@ -35,7 +31,7 @@
         <div class='row'>
           <md-input-container>
             <label>Gender</label>
-            <input ng-model='profile.editGender' placeholder='{{profile.profileData.sex}}' value='{{profile.profileData.sex}}'/>
+            <input ng-model='profile.editGender' placeholder='{{profile.relationship.sex}}' value='{{profile.relationship.sex}}'/>
           </md-input-container>
         </div>
         <div layout-gt-sm="row">
@@ -67,6 +63,6 @@
   </md-dialog-content>
   <md-dialog-actions>
     <md-button aria-label="Cancel" ng-click="account.cancel($event)">Cancel</md-button>
-    <md-button aria-label="Submit" class='md-raised md-primary' ng-click='profile.submitProfile({firstname: profile.editFirstName, lastname: profile.editLastName, dob: profile.editDob, sex: profile.editGender, blood_type: profile.editBloodType}); profile.submitHeightWeight(profile.feet, profile.inches, profile.weight)'>Submit</md-button>
+    <md-button aria-label="Submit" class='md-raised md-accent' ng-click='profile.updateRelationProfile({name: profile.editName, dob: profile.editDob, sex: profile.editGender, blood_type: profile.editBloodType}); profile.submitRelationHWProfile({feet: profile.feet, inches: profile.inches, weight: profile.weight})'>Submit</md-button>
   </md-dialog-actions>
 </md-dialog>
