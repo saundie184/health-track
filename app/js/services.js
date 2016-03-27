@@ -228,7 +228,8 @@ function Profile($http, dbURL) {
       });
     },
     submitHeightWeight: function(id, user) {
-      // console.log(user);
+// console.log(id);
+      console.log(user);
       return $http.post(dbURL.url + '/profile/' + id + '/hw/', user).then(function(res) {
         // console.log(res);
         return res;

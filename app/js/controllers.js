@@ -1,15 +1,15 @@
 'use strict';
 
 // app.controller('MainController', ['$mdDialog', mainController]);
-app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog', 'CheckSignedIn', AccountController]);
+app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog','$mdBottomSheet', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', 'FamilyService', ProfileController]);
 app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
 app.controller('SearchCtrl', ['$mdDialog', '$timeout', '$q', 'RelationEventsCategories', 'FamilyService', SearchCtrl])
-
+app.controller('FooterCtrl', ['$timeout', '$mdBottomSheet','$location', FooterCtrl])
 
 // ---------- Account --------------
 
-function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckSignedIn) {
+function AccountController(AuthService, $location, $rootScope, $mdDialog,$mdBottomSheet, CheckSignedIn) {
   var vm = this;
   vm.signup = signup;
   vm.signin = signin;
@@ -131,7 +131,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
   };
 
   // --- Edit Relations Profile---
-  vm.editHealthProfile = function($event) {
+  vm.editRelationProfile = function($event) {
     $mdDialog.show({
       controller: ProfileController,
       controllerAs: 'profile',
@@ -142,11 +142,31 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog, CheckS
     });
   };
 
+  //--- Bottom Sheet with Login info ---
+  vm.showListBottomSheet = function() {
+    // var vm = this;
+    // vm.alert = '';
+    $mdBottomSheet.show({
+      templateUrl: 'views/footer.html',
+      controller: 'FooterCtrl',
+      controllerAs: 'footer'
+    });
+    // .then(function(clickedItem) {
+    //   vm.alert = clickedItem['name'] + ' clicked!';
+    // });
+  };
 
 
 }
 
-
+// Bottom Sheet Footer
+function FooterCtrl($timeout, $mdBottomSheet, $location){
+  var vm = this;
+  vm.signInLoad = function() {
+    $location.path('/signin');
+    $mdBottomSheet.hide();
+  };
+}
 // ---------- Profile --------------
 
 function ProfileController($routeParams, $location, $mdDialog, $route, $rootScope, ProfileService, CheckSignedIn, FamilyService) {
@@ -215,18 +235,16 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 
   function submitProfile(user) {
-    console.log(user);
+    // console.log(user);
     ProfileService.submitProfile(id, user).then(function(res) {
       //TODO handle errors here
-      // console.log(vm.dob);
       // submitHeightWeight();
     });
   }
 
   function submitHeightWeight(ft, n, w) {
-    console.log(ft, n, w);
     var height = convertToInches(ft, n);
-    var weight = w;
+    var weight = parseInt(w);
 
     Date.prototype.yyyymmdd = function() {
       var yyyy = this.getFullYear().toString();
@@ -240,8 +258,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
     var data = {
       user_id: id,
-      height: height,
-      weight: weight,
+      height: height + 0.00,
+      weight: weight + 0.00,
       date: d.yyyymmdd()
     };
     ProfileService.submitHeightWeight(id, data).then(function(res, err) {
@@ -268,6 +286,13 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
     return total + parseInt(n);
   }
 
+  function convertToFeet(n) {
+    var decimal = n / 12;
+    var feet = Math.floor(decimal);
+    var inches = Math.round((decimal - feet) * 12);
+    return [feet, inches];
+  }
+
   ProfileService.getProfile(id).then(function(data) {
     vm.profileData = data.data[0];
   });
@@ -290,6 +315,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       if (date === parsedMaxDate) {
         var recentRecord = objArray[j];
         vm.hwData = recentRecord;
+        vm.heightFeet = convertToFeet(vm.hwData.height)[0];
+        vm.heightInches = convertToFeet(vm.hwData.height)[1];
       }
     }
   });
@@ -442,6 +469,8 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
                 var recentRecord = objArray[j];
                 // console.log(recentRecord);
                 vm.relationHWData = recentRecord;
+                vm.relationFeet = convertToFeet(recentRecord.height)[0];
+                vm.relationInches = convertToFeet(recentRecord.height)[1];
               }
             }
           });

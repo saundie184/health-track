@@ -3,11 +3,9 @@
   display: none !important;
 }
 .background {
-  /*background-image: url(http://i.istockimg.com/image-zoom/72054343/3/380/253/stock-photo-72054343-three-generation-family-having-fun-at-picnic-.jpg);*/
-  /*background-color: lightgray;*/
-  /*background-position: 100px 5px;*/
   height: 400px;
   background: url(http://i.istockimg.com/image-zoom/72490607/3/380/253/stock-photo-72490607-photo-of-a-happy-family-going-for-picnic.jpg) no-repeat center center fixed;
+  /*background: url(http://www.hd-wallpapersdownload.com/upload/bulk-upload/family-stock-pictures-s.jpg) no-repeat center center fixed;*/
  -webkit-background-size: cover;
  -moz-background-size: cover;
  -o-background-size: cover;

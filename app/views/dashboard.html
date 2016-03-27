@@ -27,10 +27,13 @@
         <span>
           <p>
             <strong>Height:</strong>
-            {{profile.hwData.height}}
+            {{profile.heightFeet}} ft. {{profile.heightInches}} in.
+          </p>
+          <p>
+    
             <strong>
               Weight:</strong>
-            {{profile.hwData.weight}}
+            {{profile.hwData.weight | number:0}} lbs.
           </p>
           <span class="md-caption">Updated
             {{profile.hwData.date | date:"MM/dd/yyyy"}}</span>

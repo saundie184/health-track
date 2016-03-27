@@ -25,11 +25,12 @@
         <div class='row'>
           <md-input-container>
             <label>Blood Type</label>
-            <md-select ng-model='profile.editBloodType' name='bloodType'>
+            <input ng-model='profile.editBloodType' placeholder='{{profile.profileData.blood_type}}' value='{{profile.profileData.blood_type}}'/>
+            <!-- <md-select ng-model='profile.editBloodType' name='bloodType'>
               <md-option ng-repeat="type in profile.blood" value="{{type.abbrev}}">
                 {{type.abbrev}}
               </md-option>
-            </md-select>
+            </md-select> -->
           </md-input-container>
         </div>
         <div class='row'>
@@ -41,25 +42,26 @@
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Height, Feet</label>
-            <md-select ng-model="profile.feet" name='feet'>
-              <md-option ng-repeat="ft in profile.foot" value="{{ft.abbrev}}">
-                {{ft.abbrev}}
-              </md-option>
-            </md-select>
+            <input ng-model='profile.feet' placeholder='{{profile.heightFeet}}' value='{{profile.heightFeet}}' name='feet' required />
+            <div ng-messages="editProfile.feet.$error">
+         <div ng-message="required">Required</div>
+       </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Height, Inches</label>
-            <md-select ng-model='profile.inches' name='inches'>
-              <md-option ng-repeat="in in profile.inch" value="{{in.abbrev}}">
-                {{in.abbrev}}
-              </md-option>
-            </md-select>
+            <input ng-model='profile.inches' placeholder='{{profile.heightInches}}' value='{{profile.heightInches}}' name='inches' required />
+            <div ng-messages="editProfile.inches.$error">
+         <div ng-message="required">Required</div>
+       </div>
           </md-input-container>
         </div>
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Weight in pounds</label>
-            <input ng-model='profile.weight' name='weight'/>
+            <input ng-model='profile.weight' name='weight' placeholder='{{profile.hwData.weight | number:0}}' value='{{profile.hwData.weight}}' name='weight' required />
+            <div ng-messages="editProfile.weight.$error">
+         <div ng-message="required">Required</div>
+       </div>
           </md-input-container>
         </div>
       </form>
