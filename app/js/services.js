@@ -11,7 +11,7 @@ app.service('RelationEventsCategories', ['$http', 'dbURL', RelationEventsCategor
 
 function dbURL() {
   return {
-    url: 'http://localhost:3000'
+    url: 'https://health-track.herokuapp.com'
   };
 }
 
