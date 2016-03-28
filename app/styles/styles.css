@@ -1,15 +1,25 @@
 /*  Hide when Angular is not yet loaded and initialized */
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+.logo {
+  /*font-family: "Helvetica", Helvetica, sans-serif;*/
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 34px;
+  font-style: normal;
+  /*font-weight: bold;*/
+  line-height: 26.4px;
+}
 .background {
   height: 400px;
-  background: url(http://i.istockimg.com/image-zoom/72490607/3/380/253/stock-photo-72490607-photo-of-a-happy-family-going-for-picnic.jpg) no-repeat center center fixed;
+  background: url(https://i.istockimg.com/image-zoom/72490607/3/380/253/stock-photo-72490607-photo-of-a-happy-family-going-for-picnic.jpg) no-repeat center center fixed;
   /*background: url(http://www.hd-wallpapersdownload.com/upload/bulk-upload/family-stock-pictures-s.jpg) no-repeat center center fixed;*/
- -webkit-background-size: cover;
- -moz-background-size: cover;
- -o-background-size: cover;
- background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 .top-padding {
   padding-top: 150px;
@@ -18,12 +28,12 @@
   height: 100px;
   position: relative;
 }
-
 .material-icons.md-40 {
   font-size: 40px;
 }
-.material-icons.lightblue300 { color: #02A8F3; }
-
+.material-icons.lightblue300 {
+  color: #02A8F3;
+}
 #table h1 {
   font-size: 2.4rem;
   line-height: 3.2rem;
@@ -42,20 +52,16 @@
   color: #212121;
   text-align: center;
 }
-
 // Baseline styles
 .table {
   width: 100%;
   max-width: 100%;
   margin-bottom: 2rem;
   background-color: @table-bg;
-  > thead,
-  > tbody,
-  > tfoot {
+  > thead, > tbody, > tfoot {
     > tr {
       .transition(all .3s ease);
-      > th,
-      > td {
+      > th, > td {
         text-align: left;
         padding: @table-cell-padding;
         vertical-align: top;
@@ -68,27 +74,22 @@
     font-weight: @table-header-font-weight;
     color: @table-header-font-color;
     vertical-align: bottom;
-    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
   }
-  > caption + thead,
-  > colgroup + thead,
-  > thead:first-child {
+  > caption + thead, > colgroup + thead, > thead:first-child {
     > tr:first-child {
-      > th,
-      > td {
+      > th, > td {
         border-top: 0;
       }
     }
   }
   > tbody + tbody {
-    border-top: 1px solid rgba(0,0,0,.12);
+    border-top: 1px solid rgba(0, 0, 0, .12);
   }
-
   // Nesting
   .table {
     background-color: @table-bg;
   }
-
   // Remove border
   .no-border {
     border: 0;
@@ -96,87 +97,77 @@
 }
 
 /*---medical icons----*/
+
 .icon-surgery {
-  background-image:url('assets/ic_surgeon.png');
+  background-image: url('assets/ic_surgeon.png');
 }
 .icon-procedure {
-  background-image:url('assets/ic_sthetoscope.png');
+  background-image: url('assets/ic_sthetoscope.png');
 }
 .icon-illness {
-  background-image:url('assets/ic_pharmacy.png');
+  background-image: url('assets/ic_pharmacy.png');
 }
 .icon-injury {
-  background-image:url('assets/ic_crutch.png');
+  background-image: url('assets/ic_crutch.png');
 }
 .icon-other {
-  background-image:url('assets/ic_first_aid_kit.png');
+  background-image: url('assets/ic_first_aid_kit.png');
 }
 .icon-food-allergy {
-  background-image:url('assets/ic_antibiotic2.png');
+  background-image: url('assets/ic_antibiotic2.png');
 }
 .icon-drug-allergy {
-  background-image:url('assets/ic_antibiotic.png');
+  background-image: url('assets/ic_antibiotic.png');
 }
 .icon-hw {
-  background-image:url('assets/ic_patient_information.png');
+  background-image: url('assets/ic_patient_information.png');
 }
-
 .errorMsg {
   color: #E64A19;
 }
-footer {
-  background-color: lightgray;
-}
+
 /*---health timeline----*/
+
 .detailsCards {
   display: none;
 }
-
-/*---Family Tree---*/
-/*circle {
-  cursor: pointer;
-  fill: #fff;
-  stroke: steelblue;
-  stroke-width: 1.5px;
+md-icon {
+  fill: white;
+  display: inline;
 }
-
-text {
-	font-size:10px;
+.icon-svg {
+  position: relative;
+  ;
+  /*margin:auto;*/
+  width: 40px;
+  height: 40px;
 }
-
-path.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1.5px;
-}*/
-
-
-
+#timeline-overrides .badge {
+  background-color: #00BCD4;
+  box-shadow: none;
+  text-align: center;
+}
 text {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
-
 .name {
   font-weight: bold;
 }
-
 .about {
   fill: #777;
   font-size: smaller;
 }
-
 .link {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
-
 .header {
   height: 300px;
   width: 500px;
 }
-.list-cards{
-    width: 500px;
+.list-cards {
+  width: 500px;
 }
 .margin-top {
   margin-top: 200px;

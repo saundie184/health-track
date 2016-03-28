@@ -22,9 +22,9 @@
 <div layout='row' flex>
   <div flex='20'></div>
   <div flex>
-    <timeline>
+    <timeline id='timeline-overrides'>
       <timeline-event ng-repeat="event in profile.healthDataArray |orderBy: '-date'">
-        <timeline-badge>
+        <timeline-badge class='badge'>
           <md-button class="md-icon-button" aria-label="event icon" ng-click='profile.showDetailsToggle(event)'>
             <!-- <div > -->
             <!-- <md-icon ng-if='event.type === "procedure"' md-svg-icon="styles/assets/tool.svg"></md-icon>

@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Health Track</title>
-
     <!-- Angular Material -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <!-- Google Material Icons -->
@@ -14,17 +13,19 @@
     <!-- Angular Timeline -->
     <link rel="stylesheet" href="bower_components/angular-timeline/dist/angular-timeline.css"/>
     <!-- My styles -->
-    <link rel="stylesheet" href="/styles/styles.css"/>
+    <link rel="stylesheet" href="./styles/styles.css"/>
+    <!--  Roboto font -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
 
   </head>
 
-  <body ng-app='templateApp' ng-controller="AccountCtrl as account" ng-cloak class="l-offset-nav">
+  <body ng-app='healthApp' ng-controller="AccountCtrl as account" ng-cloak class="l-offset-nav">
     <div layout='row'>
       <md-toolbar>
         <div class="md-toolbar-tools">
           <h2>
-            <a href='https://localhost:8080/#/'>
-              <span class='md-display-1'>Health Track</span>
+            <a href='https://health-track-api.firebaseapp.com/#/'>
+              <span class='logo'>Health Track</span>
             </a>
           </h2>
           <span flex></span>

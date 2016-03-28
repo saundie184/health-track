@@ -1,12 +1,6 @@
 <div flex layout='row' layout-align='center start'>
   <h2>Your family</h2>
 </div>
-
-<!-- <div flex layout='row' layout-align='center start'>
-  <p>
-    Fill out your family tree by adding family members.
-  </p>
-</div> -->
 <div flex layout='row' layout-align='center start'>
   <md-button class='md-accent' ng-click='account.newFamilyMemberLoad()'>Add Family Member</md-button>
 </div>
@@ -23,9 +17,7 @@
           <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
           <!-- TODO fix rows so the hover is clickable -->
           <md-list-item ng-repeat='fam in family.familyArray' ng-click='account.newRelationProfileLoad(fam.id)' class="noright">
-            <md-button class="md-fab md-primary" aria-label="View profile">
-              <!-- <md-icon md-svg-src="styles/assets/people-2.svg"></md-icon> -->
-            </md-button>
+            <!-- <md-button class="md-fab md-primary" aria-label="View profile">        </md-button> -->
             <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
             <p >{{fam.name}}</p>
             <p >{{fam.relationship}}</p>
@@ -50,9 +42,9 @@
         <md-list>
           <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
           <md-list-item ng-repeat='mother in family.mothersSideArray'ng-click='account.newRelationProfileLoad(mother.id)' class="noright">
-            <md-button class="md-fab md-primary" aria-label="View profile" >
+            <!-- <md-button class="md-fab md-primary" aria-label="View profile" >
               <md-icon md-svg-src=""></md-icon>
-            </md-button>
+            </md-button> -->
             <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
             <p >{{mother.name}}</p>
             <p >{{mother.relationship}}</p>
@@ -77,9 +69,9 @@
         <md-list>
           <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
           <md-list-item ng-repeat='father in family.fathersSideArray'ng-click='account.newRelationProfileLoad(father.id)' class="noright">
-            <md-button class="md-fab md-primary" aria-label="View profile" >
+            <!-- <md-button class="md-fab md-primary" aria-label="View profile" >
               <md-icon md-svg-src=""></md-icon>
-            </md-button>
+            </md-button> -->
             <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
             <p >{{father.name}}</p>
             <p >{{father.relationship}}</p>

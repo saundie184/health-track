@@ -1,3 +1,3 @@
 'use strict';
 
-var app = angular.module('templateApp', ['ngMaterial', 'ngRoute', 'ngMessages','angular-timeline']);
+var app = angular.module('healthApp', ['ngMaterial', 'ngRoute', 'ngMessages','angular-timeline']);
