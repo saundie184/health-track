@@ -1,5 +1,19 @@
 <div flex layout='row' layout-align='center start'>
-  <h2>Add a health event</h2>
+  <h2>Add Health Events</h2>
+</div>
+<div flex layout='row' layout-align='center center'>
+  <md-content layout="column" layout-gt-xs="row"></md-content>
+  <md-card>
+    <md-card-content layout-align='center center'>
+      <p>
+      Choose the type of health event from the tabs below.
+      </p>
+      <p>
+      Enter these health events as accurately as possible. If you don't know the exact date, enter an estimated date.
+      </p>
+
+    </md-card-content>
+  </md-card>
 </div>
 <div flex layout='row' layout-align='center start'>
   <div flex='20'></div>
@@ -8,114 +22,114 @@
       <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Surgery">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Surgery</h1>
+            <h1 class="md-headline">Surgery</h1>
             <div layout-gt-xs="row">
               <md-datepicker ng-model="profile.temp.surgeryDate" name='surgeryDate' md-placeholder="Enter date"></md-datepicker>
             </div>
             <md-input-container class="md-block" flex-gt-sm>
-              <label>Name</label>
+              <label>What was the name of the surgery?</label>
               <input ng-model='profile.temp.surgeryName' name='surgeryName'/>
             </md-input-container>
             <md-input-container class="md-block">
               <label>Description</label>
               <textarea ng-model="profile.temp.surgeryDesc" name='surgeryDesc' md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
-            <div class="md-actions" layout="column" layout-align="end center">
-              <md-button ng-click='profile.addToEventsArray({name: profile.temp.surgeryName, type: "surgery", description: profile.temp.surgeryDesc, date: profile.temp.surgeryDate})' class='md-primary md-raised'>Add</md-button>
+            <div class="md-actions" layout="column" layout-align="end start">
+              <md-button ng-click='profile.addToEventsArray({name: profile.temp.surgeryName, type: "surgery", description: profile.temp.surgeryDesc, date: profile.temp.surgeryDate}); account.showEventAddToast("Your surgery")' class='md-primary md-raised'>Add</md-button>
             </div>
           </md-content>
         </md-tab>
         <md-tab label="procedure">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Procedure</h1>
+            <h1 class="md-headline">Procedure</h1>
             <div layout-gt-xs="row">
               <md-datepicker ng-model="profile.temp.procedureDate" name='procedureDate' md-placeholder="Enter date"></md-datepicker>
             </div>
             <md-input-container class="md-block" flex-gt-sm>
-              <label>Name</label>
+              <label>What kind of procedure did you have?</label>
               <input ng-model='profile.temp.procedureName' name='procedureName'/>
             </md-input-container>
             <md-input-container class="md-block">
               <label>Description</label>
               <textarea ng-model="profile.temp.procedureDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
-            <div class="md-actions" layout="column" layout-align="end center">
-              <md-button ng-click='profile.addToEventsArray({name: profile.temp.procedureName, type: "procedure", description: profile.temp.procedureDesc, date: profile.temp.procedureDate})' class='md-primary md-raised'>Add</md-button>
+            <div class="md-actions" layout="column" layout-align="end start">
+              <md-button ng-click='profile.addToEventsArray({name: profile.temp.procedureName, type: "procedure", description: profile.temp.procedureDesc, date: profile.temp.procedureDate}); account.showEventAddToast("Your procedure")' class='md-primary md-raised'>Add</md-button>
             </div>          </md-content>
         </md-tab>
         <md-tab label="Illness">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Illness</h1>
+            <h1 class="md-headline">Illness</h1>
             <div layout-gt-xs="row">
               <md-datepicker ng-model="profile.temp.illnessDate" name='illnessDate' md-placeholder="Enter date"></md-datepicker>
             </div>
             <md-input-container class="md-block" flex-gt-sm>
-              <label>Name</label>
+              <label>What was the name of the illness?</label>
               <input ng-model='profile.temp.illnessName' name='illnessName'/>
             </md-input-container>
             <md-input-container class="md-block">
               <label>Description</label>
               <textarea ng-model="profile.temp.illnessDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
-            <div class="md-actions" layout="column" layout-align="end center">
-              <md-button ng-click='profile.addToEventsArray({name: profile.temp.illnessName, type: "illness", description: profile.temp.illnessDesc, date: profile.temp.illnessDate})' class='md-primary md-raised'>Add</md-button>
+            <div class="md-actions" layout="column" layout-align="end start">
+              <md-button ng-click='profile.addToEventsArray({name: profile.temp.illnessName, type: "illness", description: profile.temp.illnessDesc, date: profile.temp.illnessDate}); account.showEventAddToast("Your illness")' class='md-primary md-raised'>Add</md-button>
             </div>
           </md-content>
         </md-tab>
         <md-tab label="Injuries">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Injury</h1>
+            <h1 class="md-headline">Injury</h1>
             <div layout-gt-xs="row">
               <md-datepicker ng-model="profile.temp.injuryDate" name='injuryDate' md-placeholder="Enter date"></md-datepicker>
             </div>
             <md-input-container class="md-block" flex-gt-sm>
-              <label>Name</label>
+              <label>What was the injury?</label>
               <input ng-model='profile.temp.injuryName' name='injuryName'/>
             </md-input-container>
             <md-input-container class="md-block">
               <label>Description</label>
               <textarea ng-model="profile.temp.injuryDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
-            <div class="md-actions" layout="column" layout-align="end center">
-              <md-button ng-click='profile.addToEventsArray({name: profile.temp.injuryName, type: "injury", description: profile.temp.injuryDesc, date: profile.temp.injuryDate})' class='md-primary md-raised'>Add</md-button>
+            <div class="md-actions" layout="column" layout-align="end start">
+              <md-button ng-click='profile.addToEventsArray({name: profile.temp.injuryName, type: "injury", description: profile.temp.injuryDesc, date: profile.temp.injuryDate}); account.showEventAddToast("Your injury")' class='md-primary md-raised'>Add</md-button>
             </div>
           </md-content>
         </md-tab>
         <md-tab label="Drug Allergy">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Drug Allergy</h1>
+            <h1 class="md-headline">Drug Allergy</h1>
             <div layout-gt-xs="row">
               <md-datepicker ng-model="profile.temp.drugAllergyDate" name='drugAllergyDate' md-placeholder="Enter date"></md-datepicker>
             </div>
             <md-input-container class="md-block" flex-gt-sm>
-              <label>Name</label>
+              <label>What drug are you allergic to?</label>
               <input ng-model='profile.temp.drugAllergyName' name='drugAllergyName'/>
             </md-input-container>
             <md-input-container class="md-block">
               <label>Description</label>
               <textarea ng-model="profile.temp.drugAllergyDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
-            <div class="md-actions" layout="column" layout-align="end center">
-              <md-button ng-click='profile.addToCategoriesArray({name: profile.temp.drugAllergyName, type: "drugAllergy", description: profile.temp.drugAllergyDesc, date: profile.temp.drugAllergyDate})' class='md-primary md-raised'>Add</md-button>
+            <div class="md-actions" layout="column" layout-align="end start">
+              <md-button ng-click='profile.addToCategoriesArray({name: "Allergy to "+ profile.temp.drugAllergyName, type: "drugAllergy", description: profile.temp.drugAllergyDesc, date: profile.temp.drugAllergyDate}); account.showEventAddToast("Your allergy")' class='md-primary md-raised'>Add</md-button>
             </div>
           </md-content>
         </md-tab>
         <md-tab label="Food Allergy">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Food Allergy</h1>
+            <h1 class="md-headline">Food Allergy</h1>
             <div layout-gt-xs="row">
               <md-datepicker ng-model="profile.temp.foodAllergyDate" name='foodAllergyDate' md-placeholder="Enter date"></md-datepicker>
             </div>
             <md-input-container class="md-block" flex-gt-sm>
-              <label>Name</label>
+              <label>What food are you allergic to?</label>
               <input ng-model='profile.temp.foodAllergyName' name='foodAllergyName'/>
             </md-input-container>
             <md-input-container class="md-block">
               <label>Description</label>
               <textarea ng-model="profile.temp.foodAllergyDesc" md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
-            <div class="md-actions" layout="column" layout-align="end center">
-              <md-button ng-click='profile.addToCategoriesArray({name: profile.temp.foodAllergyName, type: "foodAllergy", description: profile.temp.foodAllergyDesc, date: profile.temp.foodAllergyDate})' class='md-primary md-raised'>Add</md-button>
+            <div class="md-actions" layout="column" layout-align="end start">
+              <md-button ng-click='profile.addToCategoriesArray({name: "Allergy to "+ profile.temp.foodAllergyName, type: "foodAllergy", description: profile.temp.foodAllergyDesc, date: profile.temp.foodAllergyDate}); account.showEventAddToast("Your allergy")' class='md-primary md-raised'>Add</md-button>
             </div>
           </md-content>
         </md-tab>

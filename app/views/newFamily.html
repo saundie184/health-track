@@ -1,5 +1,5 @@
 <div flex layout='row' layout-align='center start'>
-  <h2>Add family members</h2>
+  <h2>Add Family Members</h2>
 </div>
 <div flex layout='row' layout-align='center start'>
   <md-button class='md-accent' ng-click='account.familyTreeLoad()'> View family members</md-button>
@@ -18,8 +18,6 @@
                     <label>Name</label>
                     <input ng-model='family.name' name='Name'>
                   </md-input-container>
-                </div>
-                <div layout-gt-sm="row">
                   <md-input-container>
                     <label>Relation to you</label>
                     <md-select ng-model="family.relations" name='relations'>
@@ -27,7 +25,6 @@
                     </md-select>
                   </md-input-container>
                 </div>
-
                 <div layout-gt-sm='row'>
                   <md-input-continer>
                     <label>Date of Birth</label>
@@ -38,10 +35,11 @@
                   <md-input-continer>
                     <label>Date of Death</label>
                     <md-datepicker ng-model="family.dod" name='dobd' md-placeholder="Enter date"></md-datepicker>
+                    <div class="hint">Leave blank if family member is still alive.</div>
                   </md-input-continer>
                 </div>
                 <div class="md-actions" layout="column" layout-align="center start">
-                  <md-button class='md-accent md-raised' ng-click='family.submitYourFamily({name: family.name, relationship: family.relations, dob: family.dob,dod: family.dod})'>Add</md-button>
+                  <md-button class='md-accent md-raised' ng-click='family.submitYourFamily({name: family.name, relationship: family.relations, dob: family.dob,dod: family.dod}); family.showMemberAddToast(family.name)'>Add</md-button>
                 </div>
               </form>
             </md-content>
@@ -54,8 +52,6 @@
                     <label>Name</label>
                     <input ng-model='family.mName' name='mName'>
                   </md-input-container>
-                </div>
-                <div layout-gt-sm="row">
                   <md-input-container>
                     <label>Relation to your mother</label>
                     <md-select ng-model="family.mRelations" name='mRelations'>
@@ -74,10 +70,11 @@
                   <md-input-continer>
                     <label>Date of Death</label>
                     <md-datepicker ng-model="family.Mdod" name='Mdod' md-placeholder="Enter date"></md-datepicker>
+                    <div class="hint">Leave blank if family member is still alive.</div>
                   </md-input-continer>
                 </div>
                 <div class="md-actions" layout="column" layout-align="center start">
-                  <md-button ng-click='family.submitMothersSide()' class='md-accent md-raised'>Add</md-button>
+                  <md-button ng-click='family.submitMothersSide(); family.showMemberAddToast(family.mName)' class='md-accent md-raised'>Add</md-button>
                 </div>
               </form>
             </md-content>
@@ -90,8 +87,6 @@
                     <label>Name</label>
                     <input ng-model='family.fName' name='fName'>
                   </md-input-container>
-                </div>
-                <div layout-gt-sm="row">
                   <md-input-container>
                     <label>Relation to your father</label>
                     <md-select ng-model="family.fRelations" name='fRelations'>
@@ -99,6 +94,7 @@
                     </md-select>
                   </md-input-container>
                 </div>
+                
                 <div layout-gt-sm='row'>
                   <md-input-continer>
                     <label>Date of Birth</label>
@@ -109,10 +105,12 @@
                   <md-input-continer>
                     <label>Date of Death</label>
                     <md-datepicker ng-model="family.fDod" name='fDod' md-placeholder="Enter date"></md-datepicker>
+                    <div class="hint">Leave blank if family member is still alive.</div>
                   </md-input-continer>
+
                 </div>
                 <div class="md-actions" layout="column" layout-align="center start">
-                  <md-button ng-click='family.submitFathersSide()' class='md-accent md-raised'>Add</md-button>
+                  <md-button ng-click='family.submitFathersSide(); family.showMemberAddToast(family.fName)' class='md-accent md-raised'>Add</md-button>
                 </div>
               </form>
             </md-content>

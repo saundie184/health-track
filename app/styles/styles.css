@@ -3,8 +3,12 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+html, body {
+	height: 100%;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
 .logo {
-  /*font-family: "Helvetica", Helvetica, sans-serif;*/
   color: white;
   font-family: 'Roboto', sans-serif;
   font-size: 34px;
@@ -12,17 +16,37 @@
   /*font-weight: bold;*/
   line-height: 26.4px;
 }
+
 .nav-white {
   color:white;
 }
+.icon-svg-logo{
+  vertical-align: baseline;
+  height: 40px;
+}
 .background {
   height: 400px;
-  background: url(https://i.istockimg.com/image-zoom/72490607/3/380/253/stock-photo-72490607-photo-of-a-happy-family-going-for-picnic.jpg) no-repeat center center fixed;
-  /*background: url(http://www.hd-wallpapersdownload.com/upload/bulk-upload/family-stock-pictures-s.jpg) no-repeat center center fixed;*/
+  /*background: url(https://i.istockimg.com/image-zoom/72490607/3/380/253/stock-photo-72490607-photo-of-a-happy-family-going-for-picnic.jpg) no-repeat center center fixed;*/
+  background: url('assets/family-picnic.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+.attr {
+  text-align: center
+}
+
+
+.wrapper{
+  min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -4em;
+}
+
+.footer, .push {
+	height: 4em;
 }
 .top-padding {
   padding-top: 150px;
@@ -129,24 +153,25 @@
   color: #E64A19;
 }
 
+
 /*---health timeline----*/
 
 .detailsCards {
   display: none;
 }
 md-icon {
-  fill: white;
+  /*fill: white;*/
   display: inline;
 }
 .icon-svg {
   position: relative;
-  ;
+  fill: white;
   /*margin:auto;*/
   width: 40px;
   height: 40px;
 }
 #timeline-overrides .badge {
-  background-color: #00BCD4;
+  background-color: #03A9F4;
   box-shadow: none;
   text-align: center;
 }
@@ -178,3 +203,16 @@ text {
 .margin-100 {
   margin-top: 100px;
 }
+
+.hint {
+    /* Position the hint */
+    left: 2px;
+    right: auto;
+    bottom: 7px;
+    margin-bottom: 10px;
+    /* Copy styles from ng-messages */
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    /* Set our own color */
+    color: grey; }

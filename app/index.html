@@ -15,17 +15,21 @@
     <!-- My styles -->
     <link rel="stylesheet" href="./styles/styles.css"/>
     <!--  Roboto font -->
-    <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
   </head>
 
   <body ng-app='healthApp' ng-controller="AccountCtrl as account" ng-cloak class="l-offset-nav">
+    <div class='wrapper'>
+
+
     <div layout='row'>
       <md-toolbar>
         <div class="md-toolbar-tools">
           <h2>
             <a href='https://health-track-api.firebaseapp.com/#/'>
-              <span class='logo'>Health Track</span>
+              <img src="styles/assets/hearthandswhite.svg" class='icon-svg-logo'/>
+              <span class='logo'>HealthTrack</span>
             </a>
           </h2>
           <span flex></span>
@@ -36,23 +40,31 @@
           <div ng-show='isSignedIn'>
             <md-button class='md-accent md-raised' ng-click='account.openAddEventDialog()'>Add Health Event</md-button>
             <md-button aria-label="Dashboard" ng-click='account.dashboardLoad()' ng-hide='account.isSignedIn'>Dashboard</md-button>
-            <span class='md-body-2'>
+            <!-- <span class='md-body-2'>
               {{account.signedInUser}}
-            </span>
+            </span> -->
             <md-button aria-label="Sign out" ng-click='account.signout()' ng-hide='account.isSignedIn'>Sign out</md-button>
           </div>
         </div>
       </md-toolbar>
     </div>
     <div ng-view></div>
-    <!-- <footer>
-  <div class="md-toolbar-tools" layout-align='center center'>
-    <h2 class="md-flex">Icon attribution goes here. Need to make this sticky.</h2>
-    <p>
-    Icons made by Popcic https://www.flaticon.com/authors/popcic  and Freepic https://www.flaticon.com/authors/freepik from www.flaticon.com
-    </p>
-  </div>
-</footer> -->
+    </div>
+    <div class="push"></div>
+    <footer class="md-toolbar-tools attr" layout-align='center center'>
+      <div >
+        <p class='hint'>
+          Site by
+          <a href='http://saundie.com/'>Saundie Weiss</a>
+        </p>
+        <p class='hint'>
+          Icons by
+          <a href='https://www.flaticon.com/authors/popcic'>Popcic</a>
+          and
+          <a href='https://www.flaticon.com/authors/freepik'>Freepic</a>
+        </p>
+      </div>
+    </footer>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-2.2.2.js" integrity="sha256-4/zUCqiq0kqxhZIyp4G0Gk+AOtCJsY1TA00k5ClsZYE=" crossorigin="anonymous"></script>

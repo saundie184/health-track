@@ -5,6 +5,11 @@
     <div ng-controller="AccountCtrl as account" layout="column" ng-cloak class="md-inline-form top-padding" flex>
 
       <md-content layout-padding>
+        <md-card>
+          <md-card-title>
+            <span class="md-headline">Sign up</span>
+
+          </md-card-title>
         <div>
           <form name="userForm" ng-submit='account.signup({firstname: firstname, lastname: lastname, email: email, password: password})'>
             <div layout-gt-sm="row">
@@ -61,6 +66,7 @@
             </div>
           </form>
         </div>
+        </md-card>
       </md-content>
     </div>
   </md-grid-tile>

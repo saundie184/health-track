@@ -1,7 +1,7 @@
 <md-dialog aria-label="edit profile" ng-controller='AccountCtrl as account' ng-cloak>
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>Edit your profile</h2>
+      <h2>Edit Your Profile</h2>
       <span flex></span>
     </div>
   </md-toolbar>
@@ -11,21 +11,21 @@
         <div class='row'>
           <md-input-container>
             <label>First name</label>
-            <input ng-model='profile.editFirstName' placeholder="{{profile.profileData.firstname}}" value='{{profile.profileData.firstname}}<'/>
+            <input ng-model='profile.profileData.firstname' placeholder="{{profile.profileData.firstname}}" value='{{profile.profileData.firstname}}<'/>
           </md-input-container>
           <md-input-container>
             <label>Last name</label>
-            <input ng-model='profile.editLastName' placeholder="{{profile.profileData.lastname}}" value='{{profile.profileData.lastname}}<'/>
+            <input ng-model='profile.profileData.lastname' placeholder="{{profile.profileData.lastname}}" value='{{profile.profileData.lastname}}<'/>
           </md-input-container>
         </div>
         <div class='row'>
           <label aria-label='Edit date'>Date of Birth</label>
-          <md-datepicker ng-model="profile.editDob" name='dob' md-placeholder="{{profile.profileData.dob  | date:'MM/dd/yyyy'}}" aria-label='Edit date' value='{{profile.profileData.dob}}'></md-datepicker>
+          <md-datepicker ng-model="profile.profileData.dob" name='dob' md-placeholder="{{profile.profileData.dob  | date:'MM/dd/yyyy'}}" aria-label='Edit date' value='{{profile.profileData.dob}}'></md-datepicker>
         </div>
         <div class='row'>
           <md-input-container>
             <label>Blood Type</label>
-            <input ng-model='profile.editBloodType' placeholder='{{profile.profileData.blood_type}}' value='{{profile.profileData.blood_type}}'/>
+            <input ng-model='profile.profileData.blood_type' placeholder='{{profile.profileData.blood_type}}' value='{{profile.profileData.blood_type}}'/>
             <!-- <md-select ng-model='profile.editBloodType' name='bloodType'>
               <md-option ng-repeat="type in profile.blood" value="{{type.abbrev}}">
                 {{type.abbrev}}
@@ -36,39 +36,40 @@
         <div class='row'>
           <md-input-container>
             <label>Gender</label>
-            <input ng-model='profile.editGender' placeholder='{{profile.profileData.sex}}' value='{{profile.profileData.sex}}'/>
+            <input ng-model='profile.profileData.sex' placeholder='{{profile.profileData.sex}}' value='{{profile.profileData.sex}}'/>
           </md-input-container>
         </div>
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Height, Feet</label>
-            <input ng-model='profile.feet' placeholder='{{profile.heightFeet}}' value='{{profile.heightFeet}}' name='feet' required />
+            <input ng-model='profile.heightFeet' placeholder='{{profile.heightFeet}}' value='{{profile.heightFeet}}' name='feet' required/>
             <div ng-messages="editProfile.feet.$error">
-         <div ng-message="required">Required</div>
-       </div>
+              <div ng-message="required">Required</div>
+            </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Height, Inches</label>
-            <input ng-model='profile.inches' placeholder='{{profile.heightInches}}' value='{{profile.heightInches}}' name='inches' required />
+            <input ng-model='profile.heightInches' placeholder='{{profile.heightInches}}' value='{{profile.heightInches}}' name='inches' required/>
             <div ng-messages="editProfile.inches.$error">
-         <div ng-message="required">Required</div>
-       </div>
+              <div ng-message="required">Required</div>
+            </div>
           </md-input-container>
         </div>
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Weight in pounds</label>
-            <input ng-model='profile.weight' name='weight' placeholder='{{profile.hwData.weight | number:0}}' value='{{profile.hwData.weight}}' name='weight' required />
+            <input ng-model='profile.hwData.weight | number:0' name='weight' placeholder='{{profile.hwData.weight | number:0}}' value='{{profile.hwData.weight}}' name='weight' required/>
             <div ng-messages="editProfile.weight.$error">
-         <div ng-message="required">Required</div>
-       </div>
+              <div ng-message="required">Required</div>
+            </div>
           </md-input-container>
         </div>
+
       </form>
     </div>
   </md-dialog-content>
   <md-dialog-actions>
     <md-button aria-label="Cancel" ng-click="account.cancel($event)">Cancel</md-button>
-    <md-button aria-label="Submit" class='md-raised md-primary' ng-click='profile.submitProfile({firstname: profile.editFirstName, lastname: profile.editLastName, dob: profile.editDob, sex: profile.editGender, blood_type: profile.editBloodType}); profile.submitHeightWeight(profile.feet, profile.inches, profile.weight)'>Submit</md-button>
+    <md-button aria-label="Submit" class='md-raised md-primary' ng-click='profile.submitProfile({firstname: profile.profileData.firstname, lastname: profile.profileData.lastname, dob: profile.profileData.dob, sex: profile.profileData.sex, blood_type: profile.profileData.blood_type}); profile.submitHeightWeight(profile.heightFeet, profile.heightInches, profile.hwData.weight)'>Submit</md-button>
   </md-dialog-actions>
 </md-dialog>
