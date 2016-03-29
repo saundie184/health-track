@@ -12,6 +12,9 @@
   /*font-weight: bold;*/
   line-height: 26.4px;
 }
+.nav-white {
+  color:white;
+}
 .background {
   height: 400px;
   background: url(https://i.istockimg.com/image-zoom/72490607/3/380/253/stock-photo-72490607-photo-of-a-happy-family-going-for-picnic.jpg) no-repeat center center fixed;
