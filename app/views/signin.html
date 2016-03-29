@@ -4,6 +4,12 @@
 
     <div ng-controller="AccountCtrl as account" layout="column" ng-cloak class="md-inline-form top-padding" flex>
       <md-content layout-padding>
+        <md-card>
+          <md-card-title>
+            <span class="md-headline">Sign in</span>
+
+          </md-card-title>
+
         <div>
           <form name="userForm" ng-submit='account.signin({email: email, password: password})'>
             <p class='errorMsg'>{{account.wrongPassword}}</p>
@@ -32,6 +38,7 @@
             </div>
           </form>
         </div>
+        </md-card>
       </md-content>
     </div>
   </md-grid-tile>

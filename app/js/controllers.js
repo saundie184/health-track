@@ -1,15 +1,15 @@
 'use strict';
 
 // app.controller('MainController', ['$mdDialog', mainController]);
-app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog','$mdBottomSheet', 'CheckSignedIn', AccountController]);
+app.controller('AccountCtrl', ['AuthService', '$location', '$rootScope', '$mdDialog', '$mdBottomSheet','$mdToast', 'CheckSignedIn', AccountController]);
 app.controller('ProfileCrtl', ['$routeParams', '$location', '$mdDialog', '$route', '$rootScope', 'ProfileService', 'CheckSignedIn', 'FamilyService', ProfileController]);
-app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
+app.controller('FamilyCrtl', ['$routeParams', '$location', '$rootScope', '$mdToast', 'FamilyService', 'CheckSignedIn', 'FamilyTree', FamilyController]);
 app.controller('SearchCtrl', ['$mdDialog', '$timeout', '$q', 'RelationEventsCategories', 'FamilyService', SearchCtrl])
-app.controller('FooterCtrl', ['$timeout', '$mdBottomSheet','$location', FooterCtrl])
+app.controller('FooterCtrl', ['$timeout', '$mdBottomSheet', '$location', FooterCtrl])
 
 // ---------- Account --------------
 
-function AccountController(AuthService, $location, $rootScope, $mdDialog,$mdBottomSheet, CheckSignedIn) {
+function AccountController(AuthService, $location, $rootScope, $mdDialog, $mdBottomSheet, $mdToast, CheckSignedIn) {
   var vm = this;
   vm.signup = signup;
   vm.signin = signin;
@@ -68,7 +68,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog,$mdBott
   }
   // var signedInUser;
   function signin(user) {
-
+    // console.log(user)
     AuthService.signIn(user).then(function(res) {
       // console.log(res);
       if (res.data === 'error') {
@@ -81,7 +81,7 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog,$mdBott
         localStorage.signedInUser = res.data.email;
         //set token in localStorage
         localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
-        $location.path('/dashboard/' + id);
+        $location.path('/dashboard/' + res.data.id);
         $rootScope.isSignedIn = true;
       }
     });
@@ -155,12 +155,46 @@ function AccountController(AuthService, $location, $rootScope, $mdDialog,$mdBott
     //   vm.alert = clickedItem['name'] + ' clicked!';
     // });
   };
+  // --Toast to let user know family member was added --
+    // var vm = this;
+    var last = {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+    vm.toastPosition = angular.extend({}, last);
+    vm.getToastPosition = function() {
+      sanitizePosition();
+      return Object.keys(vm.toastPosition)
+        .filter(function(pos) {
+          return vm.toastPosition[pos];
+        })
+        .join(' ');
+    };
 
+    function sanitizePosition() {
+      var current = vm.toastPosition;
+      if (current.bottom && last.top) current.top = false;
+      if (current.top && last.bottom) current.bottom = false;
+      if (current.right && last.left) current.left = false;
+      if (current.left && last.right) current.right = false;
+      last = angular.extend({}, current);
+    }
+    vm.showEventAddToast = function(name) {
+      var pinTo = vm.getToastPosition();
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent(name + ' has been added')
+        .position(pinTo)
+        .hideDelay(3000)
+      );
+    };
 
 }
 
 // Bottom Sheet Footer
-function FooterCtrl($timeout, $mdBottomSheet, $location){
+function FooterCtrl($timeout, $mdBottomSheet, $location) {
   var vm = this;
   vm.signInLoad = function() {
     $location.path('/signin');
@@ -421,6 +455,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
   // ---Relations Profile--
   function submitRelationProfile() {
+    console.log(id);
     ProfileService.submitRelationProfile(id, user).then(function(res) {
       // console.log(res);
     });
@@ -596,6 +631,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       });
     });
   }
+
 }
 
 
@@ -608,7 +644,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 // ---------- Family --------------
 
-function FamilyController($routeParams, $location, $rootScope, FamilyService, CheckSignedIn, FamilyTree) {
+function FamilyController($routeParams, $location, $rootScope, $mdToast, FamilyService, CheckSignedIn, FamilyTree) {
   var vm = this;
   // var id = parseInt($routeParams.id);
   var id = localStorage.signedInUserID;
@@ -677,7 +713,11 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
   var relationsObj = [];
 
   FamilyService.getImmediateFamily(id).then(function(data) {
-    // console.log(data.data);
+    // console.log(id);
+    console.log(data.data);
+    if (data.data !== 'null') {
+      console.log(data.data);
+    }
     vm.familyArray = data.data;
     // console.log(data.data);
     fullFamilyArray.push(data.data);
@@ -692,7 +732,7 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
     });
   }).then(function() {
     FamilyService.getFathersSide(id).then(function(data) {
-      // console.log(data);
+      console.log(data);
       vm.fathersSideArray = data.data;
       fullFamilyArray.push(data.data);
       pushNames(data.data);
@@ -729,20 +769,47 @@ function FamilyController($routeParams, $location, $rootScope, FamilyService, Ch
     });
   }
 
-
-  // function updateRelationProfile(relation_id, data) {
-  //   console.log(data);
-  //   vm.newName = data.name;
-  //   FamilyService.updateRelationProfile(id, relation_id, data).then(function(res) {
-  //     console.log(res);
-  //   });
-  // }
-
   vm.relationsOptions = ('mother father sister brother').split(' ').map(function(m) {
     return {
       abbrev: m
     };
   });
+
+  // --Toast to let user know family member was added --
+    var vm = this;
+    var last = {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+    vm.toastPosition = angular.extend({}, last);
+    vm.getToastPosition = function() {
+      sanitizePosition();
+      return Object.keys(vm.toastPosition)
+        .filter(function(pos) {
+          return vm.toastPosition[pos];
+        })
+        .join(' ');
+    };
+
+    function sanitizePosition() {
+      var current = vm.toastPosition;
+      if (current.bottom && last.top) current.top = false;
+      if (current.top && last.bottom) current.bottom = false;
+      if (current.right && last.left) current.left = false;
+      if (current.left && last.right) current.right = false;
+      last = angular.extend({}, current);
+    }
+    vm.showMemberAddToast = function(name) {
+      var pinTo = vm.getToastPosition();
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent(name + ' has been to your family!')
+        .position(pinTo)
+        .hideDelay(3000)
+      );
+    };
 
 
 }

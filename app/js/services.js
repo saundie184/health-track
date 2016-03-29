@@ -12,6 +12,7 @@ app.service('RelationEventsCategories', ['$http', 'dbURL', RelationEventsCategor
 function dbURL() {
   return {
     url: 'https://health-track.herokuapp.com'
+    // url: 'http://localhost:8080'
   };
 }
 
@@ -77,7 +78,7 @@ function Auth($http, dbURL) {
     signIn: function(user) {
       return $http.post(dbURL.url + '/signin', user).then(function(res) {
         //success logic goes here
-        // console.log(res);
+        console.log(res);
         return res;
       }, function(err) {
         //TODO failed authentication goes here
@@ -259,7 +260,8 @@ function Profile($http, dbURL) {
       });
     },
     submitRelationProfile: function(id, user) {
-      // console.log(user);
+      console.log(id);
+      console.log(user);
       return $http.post(dbURL.url + '/family/' + id + '/events', user).then(function(res) {
         // console.log(res);
         return res;
@@ -316,6 +318,7 @@ function Family($http, dbURL) {
       });
     },
     getImmediateFamily: function(id) {
+      // console.log(id);
       return $http.get(dbURL.url + '/family/' + id).then(function(data) {
         // console.log(data);
         return data;
