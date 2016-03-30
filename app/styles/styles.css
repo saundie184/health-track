@@ -34,6 +34,7 @@ html, body {
 }*/
 .background {
   height: 400px;
+  /*min-height: 450px;*/
   background: url('assets/family-picnic.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
