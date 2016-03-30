@@ -259,17 +259,17 @@ function Profile($http, dbURL) {
         return err;
       });
     },
-    submitRelationProfile: function(id, user) {
-      console.log(id);
-      console.log(user);
-      return $http.post(dbURL.url + '/family/' + id + '/events', user).then(function(res) {
-        // console.log(res);
-        return res;
-      }, function(err) {
-        // console.log(err);
-        return err;
-      });
-    },
+    // submitRelationProfile: function(id, user) {
+    //   console.log(id);
+    //   console.log(user);
+    //   return $http.post(dbURL.url + '/family/' + id + '/events', user).then(function(res) {
+    //     // console.log(res);
+    //     return res;
+    //   }, function(err) {
+    //     // console.log(err);
+    //     return err;
+    //   });
+    // },
     submitRelationHWProfile: function(id, relation_id, data) {
 
       return $http.post(dbURL.url + '/family/' + id + '/hw/' + relation_id, data).then(function(res) {
@@ -281,7 +281,8 @@ function Profile($http, dbURL) {
       });
     },
     submitRelationEvents: function(id, relation_id, data) {
-      // console.log(data);
+      console.log(id);
+      console.log(relation_id);
       return $http.post(dbURL.url + '/family/' + id + '/events/' + relation_id, data).then(function(res) {
         // console.log(res);
         return res;
@@ -291,7 +292,7 @@ function Profile($http, dbURL) {
       });
     },
     submitRelationsCategories: function(id, relation_id, data) {
-      // console.log(data);
+      console.log(data);
       return $http.post(dbURL.url + '/family/' + id + '/categories/' + relation_id, data).then(function(res) {
         // console.log(res);
         return res;

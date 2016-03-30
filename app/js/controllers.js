@@ -218,10 +218,10 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   vm.filterTimeline = filterTimeline;
   vm.filterRelationsTimeline = filterRelationsTimeline;
   //Relations profile
-  vm.submitRelationProfile = submitRelationProfile;
+  // vm.submitRelationProfile = submitRelationProfile;
   vm.updateRelationProfile = updateRelationProfile;
   vm.submitRelationHWProfile = submitRelationHWProfile;
-  vm.submitRelationEvents = submitRelationEvents;
+  // vm.submitRelationEvents = submitRelationEvents;
   vm.addToRelationsCategories = addToRelationsCategories;
   vm.addToRelationsEvents = addToRelationsEvents;
 
@@ -454,12 +454,12 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
   });
 
   // ---Relations Profile--
-  function submitRelationProfile() {
-    console.log(id);
-    ProfileService.submitRelationProfile(id, user).then(function(res) {
-      // console.log(res);
-    });
-  }
+  // function submitRelationProfile() {
+  //   console.log(id);
+  //   ProfileService.submitRelationProfile(id, user).then(function(res) {
+  //     // console.log(res);
+  //   });
+  // }
 
   //Only get relation profiles if relation_id exists and is NaN
   if (!isNaN(relation_id)) {
@@ -547,7 +547,7 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
 
 
   function addToRelationsEvents(obj) {
-    // console.log(obj);
+    console.log(obj);
     var newObj = {
       // user_id: id,
       type: obj.type,
@@ -555,19 +555,21 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       description: obj.description,
       date: obj.date
     };
+    submitRelationEvents(id, relation_id,newObj);
+    console.log(newObj);
     // healthEventsArray.push(newObj);
     //reset form
     var master = {
       name: ''
     };
     vm.temp = angular.copy(master);
-    submitRelationEvents(newObj);
+
   }
 
 
 
   function addToRelationsCategories(obj) {
-    // console.log(typeof obj.date);
+    console.log(obj);
     var newObj = {
       // user_id: id,
       type: obj.type,
@@ -575,23 +577,26 @@ function ProfileController($routeParams, $location, $mdDialog, $route, $rootScop
       description: obj.description,
       date: obj.date
     };
+    console.log(newObj);
+    submitRelationsCategories(id, relation_id,newObj);
     //reset form
     var master = {
       name: ''
     };
     vm.temp = angular.copy(master);
-    submitRelationsCategories(newObj);
+
   }
 
 
-  function submitRelationEvents(data) {
+  function submitRelationEvents(id, relation_id, data) {
     ProfileService.submitRelationEvents(id, relation_id, data).then(function(res) {
       console.log(res);
-      submitRelationsCategories();
+      // submitRelationsCategories();
     });
   }
 
-  function submitRelationsCategories(data) {
+  function submitRelationsCategories(id, relation_id, data) {
+    console.log(data);
     ProfileService.submitRelationsCategories(id, relation_id, data).then(function(res) {
       console.log(res);
     });
