@@ -11,12 +11,12 @@
 
           </md-card-title>
         <div>
-          <form name="userForm" ng-submit='account.signup({firstname: firstname, lastname: lastname, email: email, password: password})'>
+          <form name="userForm" ng-submit='account.signup({firstname: account.firstname, lastname: account.lastname, email: account.email, password: account.password})'>
             <div layout-gt-sm="row">
 
               <md-input-container class="md-block" flex-gt-sm>
                 <label>First name</label>
-                <input ng-model="firstname" value='firstname' name='firstname' required>
+                <input ng-model="account.firstname" value='firstname' name='firstname' required>
                 <div ng-messages="userForm.firstname.$error">
                   <p ng-message="required">First name is required.</p>
                 </div>
