@@ -672,7 +672,7 @@ function FamilyController($routeParams, $location, $rootScope, $mdToast, FamilyS
     var data = {
       user_id: id,
       name: vm.mName,
-      relationship: 'mothers ' + vm.mRelations,
+      relationship: 'Mother\'s ' + vm.mRelations,
       dob: vm.mDob,
       dod: vm.mDod
     };
@@ -691,7 +691,7 @@ function FamilyController($routeParams, $location, $rootScope, $mdToast, FamilyS
     var data = {
       user_id: id,
       name: vm.fName,
-      relationship: 'fathers ' + vm.fRelations,
+      relationship: 'Father\'s ' + vm.fRelations,
       dob: vm.fDob,
       dod: vm.fDod
     };
@@ -769,7 +769,7 @@ function FamilyController($routeParams, $location, $rootScope, $mdToast, FamilyS
     });
   }
 
-  vm.relationsOptions = ('mother father sister brother').split(' ').map(function(m) {
+  vm.relationsOptions = ('Mother Father Sister Brother').split(' ').map(function(m) {
     return {
       abbrev: m
     };
