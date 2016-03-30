@@ -17,16 +17,23 @@ html, body {
   line-height: 26.4px;
 }
 
-.nav-white {
+.text-white {
   color:white;
 }
+
 .icon-svg-logo{
   vertical-align: baseline;
   height: 40px;
 }
+
+.home-cards {
+  opacity: 0.8;
+}
+/*md-toolbar {
+  position: fixed;
+}*/
 .background {
   height: 400px;
-  /*background: url(https://i.istockimg.com/image-zoom/72490607/3/380/253/stock-photo-72490607-photo-of-a-happy-family-going-for-picnic.jpg) no-repeat center center fixed;*/
   background: url('assets/family-picnic.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -34,7 +41,8 @@ html, body {
   background-size: cover;
 }
 .attr {
-  text-align: center
+  text-align: center;
+  background: none;
 }
 
 
@@ -47,6 +55,7 @@ html, body {
 
 .footer, .push {
 	height: 4em;
+  /*background: none;*/
 }
 .top-padding {
   padding-top: 150px;
@@ -55,11 +64,11 @@ html, body {
   height: 100px;
   position: relative;
 }
-.material-icons.md-40 {
-  font-size: 40px;
-}
-.material-icons.lightblue300 {
-  color: #02A8F3;
+
+
+md-list-item {
+  min-height: 30px;
+  /*font-weight: bold;*/
 }
 #table h1 {
   font-size: 2.4rem;
@@ -167,11 +176,14 @@ md-icon {
   position: relative;
   fill: white;
   /*margin:auto;*/
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
+}
+.md-button.md-icon-button {
+  padding: 5px;
 }
 #timeline-overrides .badge {
-  background-color: #03A9F4;
+  background-color: #FF5252;
   box-shadow: none;
   text-align: center;
 }
@@ -191,11 +203,12 @@ text {
   shape-rendering: crispEdges;
 }
 .header {
-  height: 300px;
+  height: 320px;
   width: 500px;
 }
 .list-cards {
-  width: 500px;
+  width: 400px;
+
 }
 .margin-top {
   margin-top: 200px;
@@ -216,3 +229,10 @@ text {
     transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
     /* Set our own color */
     color: grey; }
+
+.tiny-text {
+  font-size: 12px;
+  line-height: 14px;
+  /*margin-bottom: 5px;*/
+  color:white;
+}

@@ -1,16 +1,15 @@
 <md-dialog aria-label="search dialog" ng-controller='AccountCtrl as account' ng-cloak>
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>Add Health Event</h2>
+      <h2 class='text-white'>Add Health Event</h2>
       <span flex></span>
     </div>
   </md-toolbar>
   <md-dialog-content>
     <div class="md-dialog-content">
       <p>
-        A <strong>Health Event</strong> is any health issue that has happened in the past.
+        A <strong>health event</strong> is any health issue that has happened in the past or is a current condition.
       </br>
-
       </p>
 
       <p layout-align='center center'>
@@ -18,8 +17,8 @@
       </p>
     </div>
     <div class="md-dialog-content" layout-align='center center'>
-      <md-button aria-label='For you' class='md-raised md-primary' ng-click='account.newProfileLoad()'>For me</md-button>
-      <md-button aria-label='For family member' class='md-raised md-primary' ng-click='family.chooseFamilyMember = true'>For a family member</md-button>
+      <md-button  aria-label='For you' class='md-raised md-primary' ng-click='account.newProfileLoad()'> <span class='text-white'>For me</span></md-button>
+      <md-button aria-label='For family member' class='md-raised md-primary' ng-click='family.chooseFamilyMember = true'><span class='text-white'>For a family member</span></md-button>
     </div>
     <div class='md-dialog-content' ng-show='family.chooseFamilyMember'>
       <md-input-container>

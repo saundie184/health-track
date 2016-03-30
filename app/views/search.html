@@ -1,10 +1,7 @@
 <md-dialog aria-label="search dialog" ng-controller='AccountCtrl as account' ng-cloak>
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>Search Health Conditions in Your Family</h2>
-      <span flex></span>
-      <md-button class="md-icon-button" ng-click="search.cancel()" aria-label='Cancel'>
-      </md-button>
+      <h2 class='text-white'>Search Health Conditions in Your Family</h2>
     </div>
   </md-toolbar>
   <md-dialog-content>
@@ -38,7 +35,7 @@
                 <td >{{relation.relationship}}</td>
                 <td>
                   <md-button class="md-raised md-primary" aria-label="View profile" ng-click='account.newRelationProfileLoad(relation.id)'>
-                    View Profile
+                    <span class='text-white'>View Profile</span>
                   </md-button>
                 </td>
               </tr>
@@ -50,6 +47,6 @@
   </md-dialog-content>
   <md-dialog-actions>
       <md-button aria-label="Cancel" ng-click="search.cancel($event)">Close</md-button>
-    <md-button class='md-primary md-raised' aria-label="Find" ng-click="search.find($event, search.searchText)">Find</md-button>
+    <md-button class='md-primary md-raised' aria-label="Find" ng-click="search.find($event, search.searchText)"><span class='text-white'>Find</span></md-button>
   </md-dialog-actions>
 </md-dialog>

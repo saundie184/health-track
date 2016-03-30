@@ -2,10 +2,12 @@
   <h2>Your Family</h2>
 </div>
 <div flex layout='row' layout-align='center start'>
-  <md-button class='md-accent' ng-click='account.familyTreeLoad()'> View family members</md-button>
+  <md-button class='md-accent' ng-click='account.familyTreeLoad()'>
+    View family members</md-button>
 </div>
 <div flex layout='row' layout-align='center start' id="popupContainer">
-  <h3>Health Profile for your {{profile.relationship.relationship}}
+  <h3>Health Profile for your
+    {{profile.relationship.relationship}}
   </h3>
 </div>
 
@@ -13,40 +15,64 @@
   <div>
     <md-content layout="column" layout-gt-xs="row">
       <md-card class='header'>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">{{profile.relationship.name}}</span>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content></br>
-        <p>
-          <strong>Date of Birth:</strong>
-          {{profile.relationship.dob | date:"MM/dd/yyyy"}}</p>
-        <p>
-          <strong>Blood Type:</strong>
-          {{profile.relationship.blood_type}}</p>
-        <p>
-          <strong>Gender:</strong>
-          {{profile.relationship.sex}}</p>
-        <span>
-          <p>
-            <strong>Height:</strong>
-            {{profile.relationFeet}} ft. {{profile.relationInches}} in.
-            <strong>
-              Weight:</strong>
-            {{profile.relationHWData.weight | number:0}} lbs.
-          </p>
-          <span class="md-caption">Updated
-            {{profile.relationHWData.date | date:"MM/dd/yyyy"}}</span>
-        </span>
+        <md-card-content>
+          <md-toolbar>
+            <div class='md-toolbar-tools'>
+              <h2 class='text-white'>{{profile.relationship.name}}</h2>
+            </div>
+          </md-toolbar>
+          <md-list>
+            <md-list-item>
+              <p>
+                <strong>Date of Birth:</strong>
+                {{profile.relationship.dob | date:"MM/dd/yyyy"}}
+              </p>
+            </md-list-item>
+            <md-list-item>
+              <p>
+                <strong>Blood Type:
+                </strong>
+                {{profile.relationship.blood_type}}
+              </p>
 
-      </md-card-content>
-      <md-card-actions layout="column" layout-align='end end'>
-        <md-button class='md-primary' ng-click='account.editRelationProfile()'>Edit Profile</md-button>
-      </md-card-actions>
-    </md-card>
-</md-content>
-</div>
+            </md-list-item>
+            <md-list-item>
+              <p>
+                <strong>Gender:
+                </strong>
+                {{profile.relationship.sex}}
+              </p>
+            </md-list-item>
+            <md-list-item>
+              <p>
+                <strong>Height:
+                </strong>
+                {{profile.relationFeet}}
+                ft.
+                {{profile.relationInches}}
+                in.</p>
+
+            </md-list-item>
+            <md-list-item>
+              <p>
+                <strong>
+                  Weight:
+                </strong>
+                {{profile.relationHWData.weight | number:0}}
+                lbs.
+              </p>
+            </md-list-item>
+            <md-list-item class="hint">Updated
+              {{profile.relationHWData.date | date:"MM/dd/yyyy"}}
+            </md-list-item>
+          </md-list>
+        </md-card-content>
+        <md-card-actions layout="column" layout-align='end end'>
+          <md-button class='md-primary' ng-click='account.editRelationProfile()'>Edit Profile</md-button>
+        </md-card-actions>
+      </md-card>
+    </md-content>
+  </div>
 </div>
 <div flex layout='row' layout-align='center start'>
   <h3>{{profile.relationship.name}}'s Health Events Timeline</h3>
@@ -71,7 +97,7 @@
   <md-button class='md-default md-raised' aria-label='Reset' ng-click='profile.filterRelationsTimeline(0, 100)'>Reset</md-button>
   <md-button class='md-primary md-raised' aria-label='Filter' ng-click='profile.filterRelationsTimeline(profile.startAge, profile.endAge)'>Filter</md-button>
 </div>
-<div layout='row' flex >
+<div layout='row' flex>
   <div flex='20'></div>
   <div flex>
     <timeline id='timeline-overrides'>

@@ -58,7 +58,7 @@
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Weight in pounds</label>
-            <input ng-model='profile.hwData.weight | number:0' name='weight' placeholder='{{profile.hwData.weight | number:0}}' value='{{profile.hwData.weight}}' name='weight' required/>
+            <input ng-model='profile.hwData.weight' name='weight' placeholder='{{profile.hwData.weight | number:0}}' value='{{profile.hwData.weight}}' name='weight' required/>
             <div ng-messages="editProfile.weight.$error">
               <div ng-message="required">Required</div>
             </div>

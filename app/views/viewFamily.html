@@ -7,38 +7,12 @@
 <div flex layout='row' layout-align='center center'>
   <md-content layout="column" layout-gt-xs="row">
     <md-card class='list-cards'>
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Immediate Family</span>
-        </md-card-title-text>
-      </md-card-title>
       <md-card-content>
-        <md-list>
-          <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
-          <!-- TODO fix rows so the hover is clickable -->
-          <md-list-item ng-repeat='fam in family.familyArray' ng-click='account.newRelationProfileLoad(fam.id)' class="noright">
-            <!-- <md-button class="md-fab md-primary" aria-label="View profile">        </md-button> -->
-            <!-- <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" /> -->
-            <p >{{fam.name}}</p>
-            <p >{{fam.relationship}}</p>
-            <!-- <td>{{fam.dob | date:"MM/dd/yyyy"}}</td> -->
-            <!-- <td>{{fam.dod | date:"MM/dd/yyyy"}}</td> -->
-          </md-list-item>
-        </md-list>
-      </md-card-content>
-    </md-card>
-  </md-content>
-</div>
-
-<div flex layout='row' layout-align='center center'>
-  <md-content layout="column" layout-gt-xs="row">
-    <md-card class='list-cards'>
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Your Mother's Side</span>
-        </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
+        <md-toolbar>
+        <div class='md-toolbar-tools'>
+        <h2 class='text-white'>Your Mother's Side</h2>
+        </div>
+          </md-toolbar>
         <md-list>
           <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
           <md-list-item ng-repeat='mother in family.mothersSideArray'ng-click='account.newRelationProfileLoad(mother.id)' class="noright">
@@ -55,17 +29,34 @@
       </md-card-content>
     </md-card>
   </md-content>
-</div>
-
-<div flex layout='row' layout-align='center center'>
   <md-content layout="column" layout-gt-xs="row">
     <md-card class='list-cards'>
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Your Father's Side</span>
-        </md-card-title-text>
-      </md-card-title>
       <md-card-content>
+        <md-toolbar>
+        <div class='md-toolbar-tools'>
+        <h2 class='text-white'>Immediate Family</h2>
+        </div>
+          </md-toolbar>
+        <md-list>
+          <md-list-item ng-repeat='fam in family.familyArray' ng-click='account.newRelationProfileLoad(fam.id)' class="noright">
+            <p >{{fam.name}}</p>
+            <p >{{fam.relationship}}</p>
+            <!-- <td>{{fam.dob | date:"MM/dd/yyyy"}}</td> -->
+            <!-- <td>{{fam.dod | date:"MM/dd/yyyy"}}</td> -->
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </md-content>
+
+  <md-content layout="column" layout-gt-xs="row">
+    <md-card class='list-cards'>
+      <md-card-content>
+        <md-toolbar>
+        <div class='md-toolbar-tools'>
+        <h2 class='text-white'>Your Father's Side</h2>
+        </div>
+          </md-toolbar>
         <md-list>
           <!-- <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader> -->
           <md-list-item ng-repeat='father in family.fathersSideArray'ng-click='account.newRelationProfileLoad(father.id)' class="noright">
@@ -82,4 +73,5 @@
       </md-card-content>
     </md-card>
   </md-content>
+
 </div>
