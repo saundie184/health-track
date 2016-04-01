@@ -13,9 +13,11 @@ HealthTrack helps you track your family's medical history so you have a full per
 - Add health events like illnesses or conditions
 - View a timeline of health events for yourself and for each family member
 - Search for common health conditions among family members
- 
+
 ##Tech Notes
 - HTML, CSS, JavaScript
 - NodeJS/ExpressJS
 - AngularJS
 - Angular Material Design
+
+![HealthTrack homepage](images/homepage.png)
