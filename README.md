@@ -21,3 +21,7 @@ HealthTrack helps you track your family's medical history so you have a full per
 - Angular Material Design
 
 ![HealthTrack homepage](images/homepage.png)
+![dashboard](images/dashboard.png)
+![timeline](images/timeline.png)
+![add health event](images/addhealthevent.png)
+![search](images/search.png)
